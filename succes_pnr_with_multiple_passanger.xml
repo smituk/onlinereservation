@@ -1,0 +1,111 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <air:AirCreateReservationRsp TransactionId="982ABE540A0761141453A1C708BC633A" ResponseTime="8374" xmlns:air="http://www.travelport.com/schema/air_v20_0" xmlns:common_v17_0="http://www.travelport.com/schema/common_v17_0">
+         <common_v17_0:ResponseMessage Code="1" Type="Warning" ProviderCode="1G">TO ENSURE FARE GUARANTEE - TICKET NOW</common_v17_0:ResponseMessage>
+         <universal:UniversalRecord LocatorCode="7NGJB2" Version="0" Status="Active" xmlns:universal="http://www.travelport.com/schema/universal_v18_0">
+            <common_v17_0:BookingTraveler Key="215877" TravelerType="ADT" DOB="1967-11-01" Gender="M">
+               <common_v17_0:BookingTravelerName First="yunus" Last="kula"/>
+               <common_v17_0:PhoneNumber Key="233622" Type="Mobile" Location="SYD" CountryCode="90" Number="123232323">
+                  <common_v17_0:ProviderReservationInfoRef Key="153997"/>
+               </common_v17_0:PhoneNumber>
+               <common_v17_0:Email Key="141106" Type="P" EmailID="dd@hotmaill.com">
+                  <common_v17_0:ProviderReservationInfoRef Key="153997"/>
+               </common_v17_0:Email>
+               <common_v17_0:Address Key="129775">
+                  <common_v17_0:AddressName>addressName</common_v17_0:AddressName>
+                  <common_v17_0:Street>St Allen 25 B 1</common_v17_0:Street>
+                  <common_v17_0:City>Bourdeux</common_v17_0:City>
+                  <common_v17_0:State>CO</common_v17_0:State>
+                  <common_v17_0:PostalCode>81818</common_v17_0:PostalCode>
+                  <common_v17_0:Country>ES</common_v17_0:Country>
+                  <common_v17_0:ProviderReservationInfoRef Key="153997"/>
+               </common_v17_0:Address>
+            </common_v17_0:BookingTraveler>
+            <common_v17_0:ActionStatus Key="127072" Type="TAU" TicketDate="2013-10-10T23:59:00.000+11:00" ProviderReservationInfoRef="153997" ProviderCode="1G"/>
+            <universal:ProviderReservationInfo Key="153997" ProviderCode="1G" LocatorCode="W6TM3O" CreateDate="2013-10-08T13:04:08.308+00:00" ModifiedDate="2013-10-08T13:04:08.308+00:00" HostCreateDate="2013-10-08"/>
+            <air:AirReservation LocatorCode="H9W19Y" CreateDate="2013-10-08T13:04:07.008+00:00" ModifiedDate="2013-10-08T13:04:08.308+00:00">
+               <common_v17_0:SupplierLocator SupplierCode="KL" SupplierLocatorCode="ZW3V5G" ProviderReservationInfoRef="153997" CreateDateTime="2013-09-30T13:03:00.000+00:00"/>
+               <common_v17_0:BookingTravelerRef Key="215877"/>
+               <common_v17_0:ProviderReservationInfoRef Key="153997"/>
+               <air:AirSegment Key="249856" Group="0" Carrier="KL" FlightNumber="643" ProviderCode="1G" Origin="AMS" Destination="JFK" DepartureTime="2013-10-12T17:55:00.000+02:00" ArrivalTime="2013-10-12T19:59:00.000-04:00" TravelTime="484" Distance="3639" ClassOfService="H" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="153997" TravelOrder="1" OptionalServicesIndicator="false" AvailabilitySource="Seamless">
+                  <air:FlightDetails Key="252711" Origin="AMS" Destination="JFK" DepartureTime="2013-10-12T17:55:00.000+02:00" ArrivalTime="2013-10-12T20:00:00.000-04:00" FlightTime="485" TravelTime="485" Equipment="74E" DestinationTerminal="4"/>
+                  <common_v17_0:SellMessage>ARRIVES JFK TERMINAL 4</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v17_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="249857" Group="1" Carrier="KL" FlightNumber="642" ProviderCode="1G" Origin="JFK" Destination="AMS" DepartureTime="2013-10-16T18:00:00.000-04:00" ArrivalTime="2013-10-17T07:25:00.000+02:00" TravelTime="445" Distance="3639" ClassOfService="T" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="153997" TravelOrder="2" OptionalServicesIndicator="false" AvailabilitySource="Seamless">
+                  <air:FlightDetails Key="252712" Origin="JFK" Destination="AMS" DepartureTime="2013-10-16T18:00:00.000-04:00" ArrivalTime="2013-10-17T07:25:00.000+02:00" FlightTime="445" TravelTime="445" Equipment="772" OriginTerminal="4"/>
+                  <common_v17_0:SellMessage>DEPARTS JFK TERMINAL 4</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v17_0:SellMessage>
+                  <common_v17_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v17_0:SellMessage>
+               </air:AirSegment>
+               <air:AirPricingInfo Key="104324" TotalPrice="AUD1392.80" BasePrice="EUR555.00" ApproximateTotalPrice="AUD1392.80" ApproximateBasePrice="AUD837.00" EquivalentBasePrice="AUD837.00" Taxes="AUD555.80" LatestTicketingTime="2013-10-10T23:59:00.000+11:00" PricingMethod="Guaranteed" Exchangeable="true" IncludesVAT="false" ETicketability="Yes" ProviderCode="1G" ProviderReservationInfoRef="153997" AirPricingInfoGroup="1" PricingType="StoredFare">
+                  <air:FareInfo Key="192920" FareBasis="HKSFNL" PassengerTypeCode="ADT" Origin="AMS" Destination="JFK" EffectiveDate="2013-10-08T00:00:00.000+11:00" PrivateFare="false" NotValidBefore="2013-10-12" NotValidAfter="2013-10-12">
+                     <common_v17_0:Endorsement Value="NON ENDO/"/>
+                     <common_v17_0:Endorsement Value="FARE RSTR COULD APPLY"/>
+                     <common_v17_0:Endorsement Value="NONREF"/>
+                     <common_v17_0:Endorsement Value="NO CHGES PERMITTED"/>
+                     <common_v17_0:Endorsement Value="NONENDO"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="192921" FareBasis="TKRDNL" PassengerTypeCode="ADT" Origin="JFK" Destination="AMS" EffectiveDate="2013-10-08T00:00:00.000+11:00" PrivateFare="false" NotValidBefore="2013-10-16" NotValidAfter="2013-10-16">
+                     <common_v17_0:Endorsement Value="NON ENDO/"/>
+                     <common_v17_0:Endorsement Value="FARE RSTR COULD APPLY"/>
+                     <common_v17_0:Endorsement Value="NONREF"/>
+                     <common_v17_0:Endorsement Value="NO CHGES PERMITTED"/>
+                     <common_v17_0:Endorsement Value="NONENDO"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:BookingInfo BookingCode="H" CabinClass="Economy" FareInfoRef="192920" SegmentRef="249856"/>
+                  <air:BookingInfo BookingCode="T" CabinClass="Economy" FareInfoRef="192921" SegmentRef="249857"/>
+                  <air:TaxInfo Category="CJ" Amount="AUD19.30" Key="461241"/>
+                  <air:TaxInfo Category="RN" Amount="AUD23.20" Key="461242"/>
+                  <air:TaxInfo Category="VV" Amount="AUD3.10" Key="461243"/>
+                  <air:TaxInfo Category="AY" Amount="AUD2.90" Key="461244"/>
+                  <air:TaxInfo Category="US" Amount="AUD39.00" Key="461245"/>
+                  <air:TaxInfo Category="XA" Amount="AUD5.70" Key="461246"/>
+                  <air:TaxInfo Category="XF" Amount="AUD5.10" Key="461247">
+                     <air:TaxDetail Amount="USD4.50" OriginAirport="JFK"/>
+                  </air:TaxInfo>
+                  <air:TaxInfo Category="XY" Amount="AUD8.00" Key="461249"/>
+                  <air:TaxInfo Category="YC" Amount="AUD6.30" Key="461250"/>
+                  <air:TaxInfo Category="YR" Amount="AUD443.20" Key="461251"/>
+                  <air:FareCalc>AMS KL NYC 470.04HKSFNL KL AMS 259.67TKRDNL NUC729.71END ROE0.760562</air:FareCalc>
+                  <air:PassengerType Code="ADT" PricePTCOnly="false" BookingTravelerRef="215877">
+                     <air:FareGuaranteeInfo GuaranteeType="Guaranteed"/>
+                  </air:PassengerType>
+                  <air:PassengerType Code="ADT" PricePTCOnly="false" BookingTravelerRef="215877">
+                     <air:FareGuaranteeInfo GuaranteeType="Guaranteed"/>
+                  </air:PassengerType>
+                  <air:PassengerType Code="CNN" Age="7" PricePTCOnly="false" BookingTravelerRef="215877">
+                     <air:FareGuaranteeInfo GuaranteeType="Guaranteed"/>
+                  </air:PassengerType>
+                  <common_v17_0:BookingTravelerRef Key="215877"/>
+                  <air:TicketingModifiersRef Key="64992"/>
+               </air:AirPricingInfo>
+               <air:TicketingModifiers PlatingCarrier="KL" Key="64992">
+                  <air:DocumentSelect IssueElectronicTicket="true"/>
+               </air:TicketingModifiers>
+            </air:AirReservation>
+            <common_v17_0:AgencyInfo>
+               <common_v17_0:AgentAction ActionType="Created" AgentCode="UAPI1070394417" BranchCode="P105134" AgencyCode="S30291" EventTime="2013-10-08T13:04:00.188+00:00"/>
+            </common_v17_0:AgencyInfo>
+         </universal:UniversalRecord>
+         <common_v17_0:RequestKeyMappings>
+            <common_v17_0:KeyMapping ElementName="AirSegment" OriginalKey="5Ee+nVODTXCgjU+y0Kp7Hg==" NewKey="249856"/>
+            <common_v17_0:KeyMapping ElementName="AirSegment" OriginalKey="vvNW6/0MQy+HYRxjI0VDiw==" NewKey="249857"/>
+            <common_v17_0:KeyMapping ElementName="FlightDetails" OriginalKey="HWVxGTuIQTy+Uzd9IQdkPA==" NewKey="252712"/>
+         </common_v17_0:RequestKeyMappings>
+      </air:AirCreateReservationRsp>
+   </SOAP:Body>
+</SOAP:Envelope>

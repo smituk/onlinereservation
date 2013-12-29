@@ -1,0 +1,110 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <air:AirCreateReservationRsp TransactionId="EA45058A0A0761133BB9BFE47D0D73E6" ResponseTime="5159" xmlns:air="http://www.travelport.com/schema/air_v23_0" xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+         <common_v20_0:ResponseMessage Code="3029" Type="Warning" ProviderCode="1G">Some of the prices could not be stored because either flight departure time changes have occurred or some of the segments failed to be sold. Please verify connections, then price and store again.</common_v20_0:ResponseMessage>
+         <common_v20_0:ResponseMessage Code="1" Type="Warning" ProviderCode="1G">CHECK CONTINUITY SEGMENT 03</common_v20_0:ResponseMessage>
+         <universal:UniversalRecord LocatorCode="NL04SG" Version="0" Status="Active" xmlns:universal="http://www.travelport.com/schema/universal_v21_0">
+            <common_v20_0:BookingTraveler Key="wcNTjBYcR7WUuT4+QZkiiw==" TravelerType="ADT" DOB="1970-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunus" Last="kula"/>
+               <common_v20_0:PhoneNumber Key="SRRxLCPFSwWl95/FodkPoA==" Type="Mobile" Location="SYD" CountryCode="90" Number="5064256526" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="tWnP5hQkTGeLEZrpBU6hTg=="/>
+               </common_v20_0:PhoneNumber>
+               <common_v20_0:Email Key="rn34G3FoT8W1yOTZ69xkLw==" Type="Personel" EmailID="yonuskula@gmail.com" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="tWnP5hQkTGeLEZrpBU6hTg=="/>
+               </common_v20_0:Email>
+               <common_v20_0:SSR Key="dKdtrlk+Sl2KIXhhVpK5mw==" SegmentRef="11qkvnZ2TQu7qAv6uAmQXA==" Status="PN" Type="INFT" FreeText="LA/YONUSKU 01JAN12" Carrier="OS" ProviderReservationInfoRef="tWnP5hQkTGeLEZrpBU6hTg==" ElStat="A"/>
+               <common_v20_0:SSR Key="64u1ZL6rRdCbbNc/QZxbaQ==" SegmentRef="d2Rr8lMjQwSwDticQnDQzQ==" Status="PN" Type="INFT" FreeText="LA/YONUSKU 01JAN12" Carrier="OS" ProviderReservationInfoRef="tWnP5hQkTGeLEZrpBU6hTg==" ElStat="A"/>
+               <common_v20_0:SSR Key="rE9L113eQny7CWz+nZm1lg==" SegmentRef="dIPMz/CZR9GOWJRMT88+Uw==" Status="PN" Type="INFT" FreeText="LA/YONUSKU 01JAN12" Carrier="LH" ProviderReservationInfoRef="tWnP5hQkTGeLEZrpBU6hTg==" ElStat="A"/>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:BookingTraveler Key="2CyKB1nUQ8u+JybY0k63sg==" TravelerType="ADT" DOB="1970-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunus" Last="kulaa"/>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:BookingTraveler Key="vaxF8TgqTkurqRxpAGh05Q==" TravelerType="CNN" DOB="2003-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunuss" Last="kullaa"/>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:BookingTraveler Key="RuNwh+uwSSKKegQNA0RWIg==" TravelerType="CNN" DOB="2003-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunus" Last="kulaaaa"/>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:BookingTraveler Key="cdBzv2iJT6Gyf7xodbx+Ow==" TravelerType="INF" DOB="2012-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yonusku" Last="la"/>
+               <common_v20_0:NameRemark Key="8WlXKBL9S0uo/c8Diq0udw==" ElStat="A">
+                  <common_v20_0:RemarkData>01JAN12</common_v20_0:RemarkData>
+                  <common_v20_0:ProviderReservationInfoRef Key="tWnP5hQkTGeLEZrpBU6hTg=="/>
+               </common_v20_0:NameRemark>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:ActionStatus Key="f/N5Xu8nQGaLplTQEetUkg==" Type="TAW" TicketDate="2013-10-25T14:40:00.000+11:00" ProviderReservationInfoRef="tWnP5hQkTGeLEZrpBU6hTg==" ProviderCode="1G" ElStat="A"/>
+            <universal:ProviderReservationInfo Key="tWnP5hQkTGeLEZrpBU6hTg==" ProviderCode="1G" LocatorCode="ZBF7GI" CreateDate="2013-10-24T11:41:38.921+00:00" ModifiedDate="2013-10-24T11:41:38.921+00:00" HostCreateDate="2013-10-24"/>
+            <air:AirReservation LocatorCode="H9B4R5" CreateDate="2013-10-24T11:41:38.268+00:00" ModifiedDate="2013-10-24T11:41:38.921+00:00">
+               <common_v20_0:BookingTravelerRef Key="wcNTjBYcR7WUuT4+QZkiiw=="/>
+               <common_v20_0:BookingTravelerRef Key="2CyKB1nUQ8u+JybY0k63sg=="/>
+               <common_v20_0:BookingTravelerRef Key="vaxF8TgqTkurqRxpAGh05Q=="/>
+               <common_v20_0:BookingTravelerRef Key="RuNwh+uwSSKKegQNA0RWIg=="/>
+               <common_v20_0:BookingTravelerRef Key="cdBzv2iJT6Gyf7xodbx+Ow=="/>
+               <common_v20_0:ProviderReservationInfoRef Key="tWnP5hQkTGeLEZrpBU6hTg=="/>
+               <air:AirSegment Key="11qkvnZ2TQu7qAv6uAmQXA==" Group="0" Carrier="OS" CabinClass="Economy" FlightNumber="378" ProviderCode="1G" Origin="AMS" Destination="VIE" DepartureTime="2013-11-09T07:00:00.000+01:00" ArrivalTime="2013-11-09T08:55:00.000+01:00" TravelTime="115" ClassOfService="L" ETicketability="Yes" MarriageGroup="1" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="tWnP5hQkTGeLEZrpBU6hTg==" TravelOrder="1" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="3TVsetfsSMmDadekFW9lng==">TYROLEAN AIRWAYS</common_v20_0:SegmentRemark>
+                  <air:CodeshareInfo OperatingCarrier="VO"/>
+                  <air:FlightDetails Key="GRBD8Q/0T82f33lK4fJ5wg==" Origin="AMS" Destination="VIE" DepartureTime="2013-11-09T07:00:00.000+01:00" ArrivalTime="2013-11-09T08:55:00.000+01:00" FlightTime="115" TravelTime="115" Equipment="319" ElStat="A"/>
+                  <air:Connection Duration="95"/>
+                  <common_v20_0:SellMessage>OPERATED BY TYROLEAN AIRWAYS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY VO*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*SEE OS UPGR OFFER EUROPE.CHECK P CL AVAILABILITY*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY TYROLEAN AIRWAYS*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="d2Rr8lMjQwSwDticQnDQzQ==" Group="0" Carrier="OS" CabinClass="Economy" FlightNumber="87" ProviderCode="1G" Origin="VIE" Destination="JFK" DepartureTime="2013-11-09T10:30:00.000+01:00" ArrivalTime="2013-11-09T14:10:00.000-05:00" TravelTime="580" ClassOfService="L" ETicketability="Yes" MarriageGroup="1" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="tWnP5hQkTGeLEZrpBU6hTg==" TravelOrder="2" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="G7cGu4P0T7aiYCw+51ViNQ==">TYROLEAN AIRWAYS</common_v20_0:SegmentRemark>
+                  <air:CodeshareInfo OperatingCarrier="VO"/>
+                  <air:FlightDetails Key="fAVjVy5ITlGVzFrny2KH2Q==" Origin="VIE" Destination="JFK" DepartureTime="2013-11-09T10:30:00.000+01:00" ArrivalTime="2013-11-09T14:10:00.000-05:00" FlightTime="580" TravelTime="580" Equipment="772" DestinationTerminal="1" ElStat="A"/>
+                  <common_v20_0:SellMessage>OPERATED BY TYROLEAN AIRWAYS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>VIE PASSENGER CHECK-IN WITH AUSTRIAN STAR ALLIANCE TERMINAL 3</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ARRIVES JFK TERMINAL 1</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY VO*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*PLS INFO PAX RE MANDATORY SUBMISSION OF ALL*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*BOOKING DATA TO U.S AUTHORITIES PRIOR DEP*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*SSR DOCS DOCO DOCA CUSTOMS INFO RQSTD BY LAW*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY TYROLEAN AIRWAYS*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="dIPMz/CZR9GOWJRMT88+Uw==" Group="1" Carrier="LH" CabinClass="Economy" FlightNumber="2302" ProviderCode="1G" Origin="MUC" Destination="AMS" DepartureTime="2013-12-14T08:45:00.000+01:00" ArrivalTime="2013-12-14T10:20:00.000+01:00" TravelTime="95" ClassOfService="T" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="tWnP5hQkTGeLEZrpBU6hTg==" TravelOrder="4" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="iZ9xUZ2fTD6KAM70/YzPQQ==">LUFTHANSA CITYLINE GMBH</common_v20_0:SegmentRemark>
+                  <air:CodeshareInfo OperatingCarrier="CL"/>
+                  <air:FlightDetails Key="QDLgDSKMQ/O2pYNAA83vng==" Origin="MUC" Destination="AMS" DepartureTime="2013-12-14T08:45:00.000+01:00" ArrivalTime="2013-12-14T10:20:00.000+01:00" FlightTime="95" TravelTime="95" Equipment="E95" OriginTerminal="2" ElStat="A"/>
+                  <common_v20_0:SellMessage>OPERATED BY LUFTHANSA CITYLINE GMBH</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>DEPARTS MUC TERMINAL 2</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY CL*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY LUFTHANSA CITYLINE*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+            </air:AirReservation>
+            <universal:SegmentContinuityInfo ArrivalUnknownSegmentCount="1">
+               <universal:ArvlUnknSegment Key="xenEIMn8QmyH6hPwMfjJvg==" Origin="NYC" Destination="MUC" TravelOrder="3">
+                  <universal:BookingTravelerRef Key="wcNTjBYcR7WUuT4+QZkiiw=="/>
+                  <universal:BookingTravelerRef Key="2CyKB1nUQ8u+JybY0k63sg=="/>
+                  <universal:BookingTravelerRef Key="vaxF8TgqTkurqRxpAGh05Q=="/>
+                  <universal:BookingTravelerRef Key="RuNwh+uwSSKKegQNA0RWIg=="/>
+                  <universal:BookingTravelerRef Key="cdBzv2iJT6Gyf7xodbx+Ow=="/>
+               </universal:ArvlUnknSegment>
+            </universal:SegmentContinuityInfo>
+            <common_v20_0:AgencyInfo>
+               <common_v20_0:AgentAction ActionType="Created" AgentCode="UAPI1070394417" BranchCode="P105134" AgencyCode="S30291" EventTime="2013-10-24T11:41:34.080+00:00"/>
+            </common_v20_0:AgencyInfo>
+         </universal:UniversalRecord>
+         <air:AirSegmentSellFailureInfo>
+            <air:AirSegmentError>
+               <air:AirSegment Key="KldlNdbeQbm/XnclGBQ0eg==" Group="1" Carrier="LH" FlightNumber="411" Origin="JFK" Destination="MUC" DepartureTime="2013-12-13T17:40:00.000-05:00" ArrivalTime="2013-12-13T07:50:00.000+01:00" ClassOfService="T" ChangeOfPlane="false" OptionalServicesIndicator="false"/>
+               <air:ErrorMessage>*0 AVAIL/WL CLOSED*</air:ErrorMessage>
+            </air:AirSegmentError>
+         </air:AirSegmentSellFailureInfo>
+      </air:AirCreateReservationRsp>
+   </SOAP:Body>
+</SOAP:Envelope>

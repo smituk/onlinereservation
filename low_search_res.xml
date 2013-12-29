@@ -1,0 +1,43 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+      <SOAP:Body>
+         <SOAP:Fault>
+            <faultcode>Server.InvalidRequestException</faultcode>
+            <faultstring>[Error] :5:91: cvc-length-valid: Value '' with length = '0' is not facet-valid with respect to length '3' for type 'typeIATACode'.</faultstring>           
+<detail>
+<ErrorInfo xmlns="http://www.travelport.com/schema/air_v22_0">
+<Code>1000</Code>
+<Service>WEBSVC</Service>
+<Type>Data</Type>
+<Description>Validation failed on request message.</Description>
+<TransactionId>6A537BC10A07611201D7A607D1B39979</TransactionId>
+<Auxdata>
+<Entry>
+<Reason>
+LastElement</Reason>
+<Description>SearchOrigin Code= xmlns=http://www.travelport.com/schema/common_v19_0</Description>
+</Entry>
+</Auxdata>
+</ErrorInfo></detail>
+</SOAP:Fault>
+      </SOAP:Body>
+   </SOAP:Envelope>
+   
+   
+   
+   <SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP:Body>
+        <SOAP:Fault>
+            <faultcode>Server.System</faultcode>
+            <faultstring>000160 FLIGHT NOT FOUND SEGMENT </faultstring>
+            <detail>
+                <common_v20_0:ErrorInfo xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+                    <common_v20_0:Code>2603</common_v20_0:Code>
+                    <common_v20_0:Service>WEBSVC</common_v20_0:Service>
+                    <common_v20_0:Type>System</common_v20_0:Type>
+                    <common_v20_0:Description>No matching flight segment found in database.</common_v20_0:Description>
+                    <common_v20_0:TransactionId>2F772CDE0A07611249C0304865C164B0</common_v20_0:TransactionId>
+                </common_v20_0:ErrorInfo>
+            </detail>
+        </SOAP:Fault>
+    </SOAP:Body>
+</SOAP:Envelope>

@@ -1,0 +1,48 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <air:AirCreateReservationRsp TransactionId="E479D1320A0761133BB9BFE481CA58BB" ResponseTime="4718" xmlns:air="http://www.travelport.com/schema/air_v23_0" xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+         <common_v20_0:ResponseMessage Code="0" Type="Warning" ProviderCode="1G">NO VALID FARE FOR INPUT CRITERIA</common_v20_0:ResponseMessage>
+         <universal:UniversalRecord LocatorCode="7NJ30J" Version="0" Status="Active" xmlns:universal="http://www.travelport.com/schema/universal_v21_0">
+            <common_v20_0:BookingTraveler Key="/kVnmCTDT7KrmzHeVphFNA==" TravelerType="ADT" DOB="1970-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunus" Last="kula"/>
+               <common_v20_0:PhoneNumber Key="e0ZWNGoOSaeTCI5UQnjBig==" Type="Mobile" Location="SYD" CountryCode="90" Number="5064256526" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="4lV8qOQhQLqHiXeYHLLLFg=="/>
+               </common_v20_0:PhoneNumber>
+               <common_v20_0:Email Key="RmJOWxsQRemEsjflfEKsmw==" Type="Personel" EmailID="yonuskula@gmail.com" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="4lV8qOQhQLqHiXeYHLLLFg=="/>
+               </common_v20_0:Email>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:ActionStatus Key="PlNGgBpwRiK6+0Npfu3UcA==" Type="TAW" TicketDate="2013-10-24T11:40:00.000+11:00" ProviderReservationInfoRef="4lV8qOQhQLqHiXeYHLLLFg==" ProviderCode="1G" ElStat="A"/>
+            <universal:ProviderReservationInfo Key="4lV8qOQhQLqHiXeYHLLLFg==" ProviderCode="1G" LocatorCode="Z81DTM" CreateDate="2013-10-23T08:41:35.273+00:00" ModifiedDate="2013-10-23T08:41:35.273+00:00" HostCreateDate="2013-10-23"/>
+            <air:AirReservation LocatorCode="H9LL22" CreateDate="2013-10-23T08:41:34.347+00:00" ModifiedDate="2013-10-23T08:41:35.273+00:00">
+               <common_v20_0:SupplierLocator SupplierCode="KL" SupplierLocatorCode="26MCB6" ProviderReservationInfoRef="4lV8qOQhQLqHiXeYHLLLFg==" CreateDateTime="2013-10-23T08:41:00.000+00:00"/>
+               <common_v20_0:BookingTravelerRef Key="/kVnmCTDT7KrmzHeVphFNA=="/>
+               <common_v20_0:ProviderReservationInfoRef Key="4lV8qOQhQLqHiXeYHLLLFg=="/>
+               <air:AirSegment Key="+Ed3gnM6Tlyl0Fkum4bhsg==" Group="0" Carrier="KL" CabinClass="Economy" FlightNumber="641" ProviderCode="1G" Origin="AMS" Destination="JFK" DepartureTime="2013-11-28T13:25:00.000+01:00" ArrivalTime="2013-11-28T15:35:00.000-05:00" TravelTime="490" ClassOfService="N" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="4lV8qOQhQLqHiXeYHLLLFg==" TravelOrder="1" OptionalServicesIndicator="false" ElStat="A">
+                  <air:FlightDetails Key="mNKVxmlvTmyEMTK0TXRexQ==" Origin="AMS" Destination="JFK" DepartureTime="2013-11-28T13:25:00.000+01:00" ArrivalTime="2013-11-28T15:35:00.000-05:00" FlightTime="490" TravelTime="490" Equipment="77W" DestinationTerminal="4" ElStat="A"/>
+                  <common_v20_0:SellMessage>ARRIVES JFK TERMINAL 4</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="y3SAth6yToiiglsUhXaqTg==" Group="1" Carrier="KL" CabinClass="Economy" FlightNumber="6070" ProviderCode="1G" Origin="JFK" Destination="AMS" DepartureTime="2013-12-23T16:35:00.000-05:00" ArrivalTime="2013-12-24T05:55:00.000+01:00" TravelTime="440" ClassOfService="N" ETicketability="No" Status="PN" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="4lV8qOQhQLqHiXeYHLLLFg==" TravelOrder="2" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="wKy45YMvSZ6+T3UpQrYZHg==">DELTA AIR LINES</common_v20_0:SegmentRemark>
+                  <air:CodeshareInfo OperatingCarrier="DL"/>
+                  <air:FlightDetails Key="QD1lATutRmG7SOG8Ldv1OQ==" Origin="JFK" Destination="AMS" DepartureTime="2013-12-23T16:35:00.000-05:00" ArrivalTime="2013-12-24T05:55:00.000+01:00" FlightTime="440" TravelTime="440" Equipment="333" OriginTerminal="4" ElStat="A"/>
+                  <common_v20_0:SellMessage>OPERATED BY DELTA AIR LINES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>DEPARTS JFK TERMINAL 4</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*UNABLE - FLIGHT ON REQUEST*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+            </air:AirReservation>
+            <common_v20_0:AgencyInfo>
+               <common_v20_0:AgentAction ActionType="Created" AgentCode="UAPI1070394417" BranchCode="P105134" AgencyCode="S30291" EventTime="2013-10-23T08:41:30.764+00:00"/>
+            </common_v20_0:AgencyInfo>
+         </universal:UniversalRecord>
+      </air:AirCreateReservationRsp>
+   </SOAP:Body>
+</SOAP:Envelope>

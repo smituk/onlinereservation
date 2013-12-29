@@ -1,0 +1,123 @@
+<s:Envelope xmlns:s = "http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Body xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+        <AirCreateReservationReq  xmlns="http://www.travelport.com/schema/air_v23_0" TargetBranch="P105134" UniversalRecordLocatorCode="">
+            <BillingPointOfSaleInfo OriginApplication = "UAPI" xmlns = "http://www.travelport.com/schema/common_v20_0" ></BillingPointOfSaleInfo>
+            <BookingTraveler TravelerType="ADT" Gender="M" DOB="1967-11-01">
+                <BookingTravelerName First="yunus" Last="kula"/>
+                <PhoneNumber Type="Mobile" CountryCode="90" Number="123232323"/>
+                <Email Type="Personel" EmailID="dd@hoTMA&#x130;L.COM"/>
+            </BookingTraveler>
+            <AirPricingSolution Key="mTxOUZiuR0S9R/9LeyFtVA==" TotalPrice="EUR198.75" BasePrice="EUR120.00" ApproximateTotalPrice="EUR198.75" ApproximateBasePrice="EUR120.00" Taxes="EUR78.75">
+                <AirPricingInfo Key="S5YrWLVcTzS1o0REdzv5og==" TotalPrice="EUR198.75" BasePrice="EUR120.00" ApproximateTotalPrice="EUR198.75" ApproximateBasePrice="EUR120.00" Taxes="EUR78.75" LatestTicketingTime="2013-10-06T23:59:00.000+10:00" PricingMethod="Guaranteed" IncludesVAT="false" ETicketability="Yes" PlatingCarrier="PS" ProviderCode="1G">
+                    <FareInfo Key="+oK2ErT7R8aoQrMzgvbhRQ==" FareBasis="NRTPS4" PassengerTypeCode="ADT" Origin="AMS" Destination="IST" EffectiveDate="2013-10-07T04:50:00.000+11:00" DepartureDate="2013-10-06" Amount="NUC92.03" NotValidBefore="2013-10-06" NotValidAfter="2013-10-06">
+                        <Endorsement Value="NONEND/NO REF/RBK 100EUR"/>
+                        <FareRuleKey FareInfoRef="+oK2ErT7R8aoQrMzgvbhRQ==" ProviderCode="1G">8hKI5CcMGU7/G5z8j/CiSvIYR/AK2reE8hhH8Arat4TyGEfwCtq3hPIYR/AK2reE8hhH8Arat4SiBqSlMvperoT4XyxfL0NiHWbLEhhPHQVDDfDiJsxDNrgo4ElcuKujSThOF7Yf/4nhV4vCpzBFvkh6i15ZW5HSrYH36Z8Fk4BmEzVxG7c5HZeg/SPl7FT+Th3Stj7VuI0rM4KhoSq0Ue8tNVCLADK6AxruVY0POLolk1zMstFAZNpTkeAaCNNfS7mg3d/B31Ri+IQY1sYqZvIYR/AK2reE8hhH8Arat4TyGEfwCtq3hPIYR/AK2reE8hhH8Arat4R4/QmG/KFKt34CTB/oXB9VJOOq989pMJHVuhwcPUJA7rg8nnwBzB/OJebavImM+BgRl9xpFYKNSpZo1c9ppAqZ</FareRuleKey>
+                    </FareInfo>
+                    <FareInfo Key="ycuppp/3Q4mudq283QdJIA==" FareBasis="JRTPS4" PassengerTypeCode="ADT" Origin="IST" Destination="AMS" EffectiveDate="2013-10-07T04:50:00.000+11:00" DepartureDate="2013-10-13" Amount="NUC65.74" NotValidBefore="2013-10-13" NotValidAfter="2013-10-13">
+                        <Endorsement Value="NONEND/NO REF/RBK 100EUR"/>
+                        <FareRuleKey FareInfoRef="ycuppp/3Q4mudq283QdJIA==" ProviderCode="1G">8hKI5CcMGU7/G5z8j/CiSvIYR/AK2reE8hhH8Arat4TyGEfwCtq3hPIYR/AK2reE8hhH8Arat4SiBqSlMvperoT4XyxfL0NiHWbLEhhPHQXkBnU0sAbPfcc7/6SD0uO1SThOF7Yf/4kVpu0r+xS5CUh6i15ZW5HSdpXPoX36E+BmEzVxG7c5HZeg/SPl7FT+Th3Stj7VuI0rM4KhoSq0Ue8tNVCLADK6AxruVY0POLolk1zMstFAZNpTkeAaCNNfiT8XeG5qRB7WjWnFyPe+cPIYR/AK2reE8hhH8Arat4TyGEfwCtq3hPIYR/AK2reE8hhH8Arat4R4/QmG/KFKt34CTB/oXB9VJOOq989pMJHVuhwcPUJA7rg8nnwBzB/OJebavImM+BgRl9xpFYKNSpZo1c9ppAqZ</FareRuleKey>
+                    </FareInfo>
+                    <BookingInfo BookingCode="N" CabinClass="Economy" FareInfoRef="+oK2ErT7R8aoQrMzgvbhRQ==" SegmentRef="R2ZZg5z8T7efb8SrKwMDNA=="/>
+                    <BookingInfo BookingCode="N" CabinClass="Economy" FareInfoRef="+oK2ErT7R8aoQrMzgvbhRQ==" SegmentRef="pjOfcgYQT4erWbZRZbB8+A=="/>
+                    <BookingInfo BookingCode="J" CabinClass="Economy" FareInfoRef="ycuppp/3Q4mudq283QdJIA==" SegmentRef="XuQowLhySpON8nPGmUVI2A=="/>
+                    <BookingInfo BookingCode="J" CabinClass="Economy" FareInfoRef="ycuppp/3Q4mudq283QdJIA==" SegmentRef="xZIq3safS7mDctMcDMKPPQ=="/>
+                    <TaxInfo Category="CJ" Amount="EUR12.77" Key="daEzAvrrT8KggauGBHf4xg=="/>
+                    <TaxInfo Category="RN" Amount="EUR15.40" Key="F4eSr8PxSumedJ0VHO1QZA=="/>
+                    <TaxInfo Category="VV" Amount="EUR2.00" Key="6BMaK1zxRd+2lWjjRUV2YA=="/>
+                    <TaxInfo Category="UA" Amount="EUR6.08" Key="fVP/AK7pRAWmebNKb3VhhA=="/>
+                    <TaxInfo Category="UD" Amount="EUR3.04" Key="nmBXyYxcRb6N/lY+LIHN3g=="/>
+                    <TaxInfo Category="YK" Amount="EUR12.90" Key="4f1ZUqPTQHGOxvUockZ2mg=="/>
+                    <TaxInfo Category="TR" Amount="EUR11.38" Key="r07vRfH+RbipWBPZ0EUX6Q=="/>
+                    <TaxInfo Category="YQ" Amount="EUR15.18" Key="9gNXH2MmST64tOpq0rEw2Q=="/>
+                    <FareCalc>AMS PS X/IEV PS IST 92.03NRTPS4 PS X/IEV PS AMS 65.74JRTPS4 NUC157.77END ROE0.760562</FareCalc>
+                    <PassengerType Code="ADT" PricePTCOnly="false"/>
+                    <ChangePenalty>
+                        <Amount>EUR100.00</Amount>
+                    </ChangePenalty>
+                    <BaggageAllowances>
+                        <BaggageAllowanceInfo TravelerType="ADT" Origin="AMS" Destination="IST" Carrier="PS">
+                            <URLInfo>
+                                <URL>MYTRIPANDMORE.COM/BAGGAGEDETAILSPS.BAGG</URL>
+                            </URLInfo>
+                            <BagDetails ApplicableBags="1stChecked" BasePrice="EUR0.00" ApproximateBasePrice="EUR0.00" TotalPrice="EUR0.00" ApproximateTotalPrice="EUR0.00">
+                                <BaggageRestriction>
+                                    <TextInfo>
+                                        <Text>UPTO50LB/23KG AND UPTO62LI/158LCM</Text>
+                                    </TextInfo>
+                                </BaggageRestriction>
+                            </BagDetails>
+                            <BagDetails ApplicableBags="2ndChecked" BasePrice="EUR50.00" ApproximateBasePrice="EUR50.00" TotalPrice="EUR50.00" ApproximateTotalPrice="EUR50.00">
+                                <BaggageRestriction>
+                                    <TextInfo>
+                                        <Text>UPTO50LB/23KG AND OVER62LI/158LCM</Text>
+                                    </TextInfo>
+                                </BaggageRestriction>
+                            </BagDetails>
+                            <TextInfo>
+                                <Text>1P</Text>
+                                <Text>BAGGAGE DISCOUNTS MAY APPLY BASED ON FREQUENT FLYER STATUS/ ONLINE CHECKIN/FORM OF PAYMENT/MILITARY/ETC.</Text>
+                            </TextInfo>
+                        </BaggageAllowanceInfo>
+                        <BaggageAllowanceInfo TravelerType="ADT" Origin="IST" Destination="AMS" Carrier="PS">
+                            <URLInfo>
+                                <URL>MYTRIPANDMORE.COM/BAGGAGEDETAILSPS.BAGG</URL>
+                            </URLInfo>
+                            <BagDetails ApplicableBags="1stChecked" BasePrice="EUR0.00" ApproximateBasePrice="EUR0.00" TotalPrice="EUR0.00" ApproximateTotalPrice="EUR0.00">
+                                <BaggageRestriction>
+                                    <TextInfo>
+                                        <Text>UPTO50LB/23KG AND UPTO62LI/158LCM</Text>
+                                    </TextInfo>
+                                </BaggageRestriction>
+                            </BagDetails>
+                            <BagDetails ApplicableBags="2ndChecked" BasePrice="EUR50.00" ApproximateBasePrice="EUR50.00" TotalPrice="EUR50.00" ApproximateTotalPrice="EUR50.00">
+                                <BaggageRestriction>
+                                    <TextInfo>
+                                        <Text>UPTO50LB/23KG AND OVER62LI/158LCM</Text>
+                                    </TextInfo>
+                                </BaggageRestriction>
+                            </BagDetails>
+                            <TextInfo>
+                                <Text>1P</Text>
+                                <Text>BAGGAGE DISCOUNTS MAY APPLY BASED ON FREQUENT FLYER STATUS/ ONLINE CHECKIN/FORM OF PAYMENT/MILITARY/ETC.</Text>
+                            </TextInfo>
+                        </BaggageAllowanceInfo>
+                    </BaggageAllowances>
+                </AirPricingInfo>
+                <FareNote Key="yRa+3S1HTfG1TLMZRZUL8g==">LAST DATE TO PURCHASE TICKET: 06OCT13</FareNote>
+                <FareNote Key="ShTRxvhOTKe45NeKdi1EIg==">E-TKT REQUIRED</FareNote>
+                <FareNote Key="8cCr+Y94SVuO/1SCWhnNNQ==">FARE HAS A PLATING CARRIER RESTRICTION</FareNote>
+                <FareNote Key="7T12woHqRKO8uK0VlvQfXA==">TICKETING FEES MAY APPLY</FareNote>
+                <FareNote Key="m0b5ProMQwq96edRX20+IA==">TICKETING AGENCY 64QQ</FareNote>
+                <FareNote Key="N3r7EcLATJmE16s3Vh3lzA==">DEFAULT PLATING CARRIER PS</FareNote>
+                <AirSegment Key="R2ZZg5z8T7efb8SrKwMDNA==" Group="0" Carrier="PS" FlightNumber="102" ProviderCode="1G" Origin="AMS" Destination="KBP" DepartureTime="2013-10-06T13:10:00.000+02:00" ArrivalTime="2013-10-06T16:55:00.000+03:00" FlightTime="165" TravelTime="165" Distance="1119" ClassOfService="N" ChangeOfPlane="false" OptionalServicesIndicator="false" AvailabilitySource="StatusOverlaid">
+                    <CodeshareInfo OperatingCarrier="PS" OperatingFlightNumber="102"/>
+                    <AirAvailInfo ProviderCode="1G">
+                        <BookingCodeInfo BookingCounts="C4|D4|Z4|S4|Y4|P4|B4|K4|L4|E4|O4|R4|G4|W4|H4|V4|M4|T4|Q4|N4|J4"/>
+                    </AirAvailInfo>
+                    <FlightDetails Key="x6ls8Dy/TNWLPu4HX/ICEA==" Origin="AMS" Destination="KBP" DepartureTime="2013-10-06T13:10:00.000+02:00" ArrivalTime="2013-10-06T16:55:00.000+03:00" FlightTime="165" TravelTime="165"/>
+                </AirSegment>
+                <AirSegment Key="pjOfcgYQT4erWbZRZbB8+A==" Group="0" Carrier="PS" FlightNumber="715" ProviderCode="1G" Origin="KBP" Destination="IST" DepartureTime="2013-10-06T19:35:00.000+03:00" ArrivalTime="2013-10-06T21:30:00.000+03:00" FlightTime="115" TravelTime="115" Distance="656" ClassOfService="N" ChangeOfPlane="false" OptionalServicesIndicator="false" AvailabilitySource="StatusOverlaid">
+                    <CodeshareInfo OperatingCarrier="PS" OperatingFlightNumber="715"/>
+                    <AirAvailInfo ProviderCode="1G">
+                        <BookingCodeInfo BookingCounts="C4|D4|Z4|S4|Y4|P4|B4|K4|L4|E4|W4|H4|V4|Q4|M4|O4|R4|G4|T4|N4|J4"/>
+                    </AirAvailInfo>
+                    <FlightDetails Key="2lwhp71BR5i2mV06aUh7KQ==" Origin="KBP" Destination="IST" DepartureTime="2013-10-06T19:35:00.000+03:00" ArrivalTime="2013-10-06T21:30:00.000+03:00" FlightTime="115" TravelTime="115"/>
+                </AirSegment>
+                <AirSegment Key="XuQowLhySpON8nPGmUVI2A==" Group="1" Carrier="PS" FlightNumber="712" ProviderCode="1G" Origin="IST" Destination="KBP" DepartureTime="2013-10-13T09:35:00.000+03:00" ArrivalTime="2013-10-13T11:30:00.000+03:00" FlightTime="115" TravelTime="115" Distance="656" ClassOfService="J" ChangeOfPlane="false" OptionalServicesIndicator="false" AvailabilitySource="StatusOverlaid">
+                    <CodeshareInfo OperatingCarrier="PS" OperatingFlightNumber="712"/>
+                    <AirAvailInfo ProviderCode="1G">
+                        <BookingCodeInfo BookingCounts="C4|D4|Z4|S4|Y4|P4|B4|K4|L4|M4|E4|O4|R4|W4|H4|G4|T4|V4|Q4|N4|J4"/>
+                    </AirAvailInfo>
+                    <FlightDetails Key="wok92DuxTreXtA6hSiaO8Q==" Origin="IST" Destination="KBP" DepartureTime="2013-10-13T09:35:00.000+03:00" ArrivalTime="2013-10-13T11:30:00.000+03:00" FlightTime="115" TravelTime="115"/>
+                </AirSegment>
+                <AirSegment Key="xZIq3safS7mDctMcDMKPPQ==" Group="1" Carrier="PS" FlightNumber="101" ProviderCode="1G" Origin="KBP" Destination="AMS" DepartureTime="2013-10-14T09:40:00.000+03:00" ArrivalTime="2013-10-14T11:35:00.000+02:00" FlightTime="175" TravelTime="175" Distance="1119" ClassOfService="J" ChangeOfPlane="false" OptionalServicesIndicator="false" AvailabilitySource="StatusOverlaid">
+                    <CodeshareInfo OperatingCarrier="PS" OperatingFlightNumber="101"/>
+                    <AirAvailInfo ProviderCode="1G">
+                        <BookingCodeInfo BookingCounts="C4|D4|S4|Y4|P4|B4|K4|L4|E4|O4|R4|G4|W4|Z4|M4|T4|H4|V4|Q4|N4|J4"/>
+                    </AirAvailInfo>
+                    <FlightDetails Key="WMP3j+9UR2umc6DnbxqBiQ==" Origin="KBP" Destination="AMS" DepartureTime="2013-10-14T09:40:00.000+03:00" ArrivalTime="2013-10-14T11:35:00.000+02:00" FlightTime="175" TravelTime="175"/>
+                </AirSegment>
+            </AirPricingSolution>
+        </AirCreateReservationReq>
+    </s:Body>
+</s:Envelope>

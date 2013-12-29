@@ -1,0 +1,126 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <air:AirCreateReservationRsp TransactionId="011518F50A076114054C90C7F870A914" ResponseTime="12140" xmlns:air="http://www.travelport.com/schema/air_v23_0" xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+         <common_v20_0:ResponseMessage Code="1" Type="Warning" ProviderCode="1G">TO ENSURE FARE GUARANTEE - TICKET NOW</common_v20_0:ResponseMessage>
+         <universal:UniversalRecord LocatorCode="H9ZY42" Version="0" Status="Active" xmlns:universal="http://www.travelport.com/schema/universal_v21_0">
+            <common_v20_0:BookingTraveler Key="4cfg6X5LRQipC/Wm9oMf0g==" TravelerType="ADT" DOB="1970-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yonus" Last="kula"/>
+               <common_v20_0:PhoneNumber Key="3vaXdFN+TJaI0h9jNhnFAQ==" Type="Mobile" Location="SYD" CountryCode="90" Number="5064256526" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="+LZhxhz9TQ+vy5JMKtikDg=="/>
+               </common_v20_0:PhoneNumber>
+               <common_v20_0:Email Key="hzYbexFMTfKE88QQ34N51w==" Type="Personel" EmailID="yonus_68@hotmail.com" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="+LZhxhz9TQ+vy5JMKtikDg=="/>
+               </common_v20_0:Email>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:ActionStatus Key="odRZ5XdwSNGj1INwQyU41Q==" Type="TAW" TicketDate="2013-10-29T23:59:00.000+11:00" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" ProviderCode="1G" ElStat="A"/>
+            <universal:ProviderReservationInfo Key="+LZhxhz9TQ+vy5JMKtikDg==" ProviderCode="1G" LocatorCode="ZMQZ26" CreateDate="2013-10-28T22:00:41.078+00:00" ModifiedDate="2013-10-28T22:00:41.078+00:00" HostCreateDate="2013-10-28"/>
+            <air:AirReservation LocatorCode="7P3BW6" CreateDate="2013-10-28T22:00:39.813+00:00" ModifiedDate="2013-10-28T22:00:41.078+00:00">
+               <common_v20_0:SupplierLocator SupplierCode="VS" SupplierLocatorCode="DFQTJR" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" CreateDateTime="2013-10-28T22:00:00.000+00:00"/>
+               <common_v20_0:SupplierLocator SupplierCode="KL" SupplierLocatorCode="2629SV" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" CreateDateTime="2013-10-28T22:00:00.000+00:00"/>
+               <common_v20_0:SupplierLocator SupplierCode="BA" SupplierLocatorCode="2629SV" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" CreateDateTime="2013-10-28T22:00:00.000+00:00"/>
+               <common_v20_0:BookingTravelerRef Key="4cfg6X5LRQipC/Wm9oMf0g=="/>
+               <common_v20_0:ProviderReservationInfoRef Key="+LZhxhz9TQ+vy5JMKtikDg=="/>
+               <air:AirSegment Key="/olHcbzDT7yYTk22N3XS4A==" Group="0" Carrier="KL" CabinClass="Business" FlightNumber="1019" ProviderCode="1G" Origin="AMS" Destination="LHR" DepartureTime="2013-11-01T14:00:00.000+01:00" ArrivalTime="2013-11-01T14:25:00.000+00:00" TravelTime="85" Distance="211" ClassOfService="Z" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" TravelOrder="1" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="mINigFP2TW23CZfWNrHjnA==">KLM CITYHOPPER</common_v20_0:SegmentRemark>
+                  <air:FlightDetails Key="QtOh3iRkTQOzlUTeHjoRoA==" Origin="AMS" Destination="LHR" DepartureTime="2013-11-01T14:00:00.000+01:00" ArrivalTime="2013-11-01T14:25:00.000+00:00" FlightTime="85" TravelTime="85" Equipment="F70" DestinationTerminal="4" ElStat="A"/>
+                  <air:Connection Duration="95"/>
+                  <common_v20_0:SellMessage>OPERATED BY KLM CITYHOPPER</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ARRIVES LHR TERMINAL 4</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY KLM CITYHOPPER*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*OPERATED BY SUBSIDIARY/FRANCHISE*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="o5AO8+ZES+inC9LCRdWDXw==" Group="0" Carrier="VS" CabinClass="Economy" FlightNumber="1" ProviderCode="1G" Origin="LHR" Destination="EWR" DepartureTime="2013-11-01T16:00:00.000+00:00" ArrivalTime="2013-11-01T20:05:00.000-04:00" TravelTime="485" Distance="3463" ClassOfService="Y" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" TravelOrder="2" OptionalServicesIndicator="false" ElStat="A">
+                  <air:FlightDetails Key="poCdOOwLR8KsbzCEqkEDXg==" Origin="LHR" Destination="EWR" DepartureTime="2013-11-01T16:00:00.000+00:00" ArrivalTime="2013-11-01T20:05:00.000-04:00" FlightTime="485" TravelTime="485" Equipment="744" OriginTerminal="3" DestinationTerminal="B" ElStat="A"/>
+                  <common_v20_0:SellMessage>DEPARTS LHR TERMINAL 3  - ARRIVES EWR TERMINAL B</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>***DEPARTS LHR TRML 3 - ARRIVES EWR TRML B***</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>***PLS ENSURE DESTINATION CTC NBRS ARE IN EVERY BKG***</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>***SOME VS AIRCRAFT HAVE UPPER DECK SEATING***</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>***PLS CALL VS RESERVATIONS IF PAX HAS RESTRICTED MOBILITY***</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="9PSBhdKZQ6imQROOSsZbtg==" Group="1" Carrier="BA" CabinClass="Economy" FlightNumber="176" ProviderCode="1G" Origin="JFK" Destination="LHR" DepartureTime="2013-11-05T19:20:00.000-05:00" ArrivalTime="2013-11-06T07:20:00.000+00:00" TravelTime="420" Distance="3463" ClassOfService="Y" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" TravelOrder="3" OptionalServicesIndicator="false" ElStat="A">
+                  <air:FlightDetails Key="rkE1Kat/TWuG4wdNXwlzJg==" Origin="JFK" Destination="LHR" DepartureTime="2013-11-05T19:20:00.000-05:00" ArrivalTime="2013-11-06T07:20:00.000+00:00" FlightTime="420" TravelTime="420" Equipment="777" OriginTerminal="7" DestinationTerminal="5" ElStat="A"/>
+                  <air:Connection Duration="65"/>
+                  <common_v20_0:SellMessage>DEPARTS JFK TERMINAL 7  - ARRIVES LHR TERMINAL 5</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="u+RY3I4pToOSMzlKLYU58A==" Group="1" Carrier="BA" CabinClass="Business" FlightNumber="430" ProviderCode="1G" Origin="LHR" Destination="AMS" DepartureTime="2013-11-06T08:25:00.000+00:00" ArrivalTime="2013-11-06T10:45:00.000+01:00" TravelTime="80" Distance="211" ClassOfService="C" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" TravelOrder="4" OptionalServicesIndicator="false" ElStat="A">
+                  <air:FlightDetails Key="USujz1f5S8m9dh/Zg2+Kxg==" Origin="LHR" Destination="AMS" DepartureTime="2013-11-06T08:25:00.000+00:00" ArrivalTime="2013-11-06T10:45:00.000+01:00" FlightTime="80" TravelTime="80" Equipment="320" OriginTerminal="5" ElStat="A"/>
+                  <common_v20_0:SellMessage>DEPARTS LHR TERMINAL 5</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirPricingInfo Key="rNQKfTYeRM6DyKX77FMg0g==" TotalPrice="AUD4294.40" BasePrice="EUR2426.00" ApproximateTotalPrice="AUD4294.40" ApproximateBasePrice="AUD3656.00" EquivalentBasePrice="AUD3656.00" Taxes="AUD638.40" LatestTicketingTime="2013-10-29T23:59:00.000+11:00" TrueLastDateToTicket="2013-10-29T23:59:00.000+11:00" PricingMethod="Guaranteed" Refundable="true" Exchangeable="true" IncludesVAT="false" ETicketability="Yes" ProviderCode="1G" ProviderReservationInfoRef="+LZhxhz9TQ+vy5JMKtikDg==" AirPricingInfoGroup="1" PricingType="StoredFare" ElStat="A">
+                  <air:FareInfo Key="g/z5Zz6JRpqEBvMymWOI7A==" FareBasis="CIF" PassengerTypeCode="ADT" Origin="AMS" Destination="LHR" EffectiveDate="2013-10-28T00:00:00.000+11:00" ElStat="C">
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="Q16aPHRJSfq0XHEZP6kUhA==" FareBasis="Y2" PassengerTypeCode="ADT" Origin="LHR" Destination="EWR" EffectiveDate="2013-10-28T00:00:00.000+11:00" ElStat="C">
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="Ji2eUC8vSfquZwfnDVBpnw==" FareBasis="Y1JB" PassengerTypeCode="ADT" Origin="JFK" Destination="LHR" EffectiveDate="2013-10-28T00:00:00.000+11:00" ElStat="C">
+                     <air:FareSurcharge Key="pXSMyFB4T1S3T3lFH5VCuw==" Type="Other" Amount="NUC184.54" ElStat="A" SegmentRef="9PSBhdKZQ6imQROOSsZbtg=="/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="mTVq99E5T4iXgs3rTrLsIA==" FareBasis="CIF" PassengerTypeCode="ADT" Origin="LHR" Destination="AMS" EffectiveDate="2013-10-28T00:00:00.000+11:00" ElStat="C">
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:BookingInfo BookingCode="Z" CabinClass="Business" FareInfoRef="g/z5Zz6JRpqEBvMymWOI7A==" SegmentRef="/olHcbzDT7yYTk22N3XS4A=="/>
+                  <air:BookingInfo BookingCode="Y" CabinClass="Economy" FareInfoRef="Q16aPHRJSfq0XHEZP6kUhA==" SegmentRef="o5AO8+ZES+inC9LCRdWDXw=="/>
+                  <air:BookingInfo BookingCode="Y" CabinClass="Economy" FareInfoRef="Ji2eUC8vSfquZwfnDVBpnw==" SegmentRef="9PSBhdKZQ6imQROOSsZbtg=="/>
+                  <air:BookingInfo BookingCode="C" CabinClass="Business" FareInfoRef="mTVq99E5T4iXgs3rTrLsIA==" SegmentRef="u+RY3I4pToOSMzlKLYU58A=="/>
+                  <air:TaxInfo Category="CJ" Amount="AUD19.30" Key="PfTvUsAAS+20mfWS+iqPcQ=="/>
+                  <air:TaxInfo Category="RN" Amount="AUD23.20" Key="NafSCMOaTyK6XoApf5nrTg=="/>
+                  <air:TaxInfo Category="VV" Amount="AUD3.10" Key="OLBN9l11S7ii6/ZdmPWjAQ=="/>
+                  <air:TaxInfo Category="UB" Amount="AUD89.30" Key="szxdX7miRbK7sTiJam+zXw=="/>
+                  <air:TaxInfo Category="AY" Amount="AUD2.90" Key="SXqknyjsSOu0Qjv9fdBclA=="/>
+                  <air:TaxInfo Category="US" Amount="AUD39.00" Key="GciqHVj0TneYqEC/O07dog=="/>
+                  <air:TaxInfo Category="XA" Amount="AUD5.70" Key="o/+3yiesSUKoLYMK9LuYWA=="/>
+                  <air:TaxInfo Category="XF" Amount="AUD5.10" Key="T+miKRbMS8SOnFNpj6r0xQ==">
+                     <air:TaxDetail Amount="USD4.50" OriginAirport="JFK"/>
+                  </air:TaxInfo>
+                  <air:TaxInfo Category="XY" Amount="AUD8.00" Key="mnaEqFwRSB+M5woaYaHCmQ=="/>
+                  <air:TaxInfo Category="YC" Amount="AUD6.30" Key="ov17kReXRD+pMmpXEKS7KA=="/>
+                  <air:TaxInfo Category="YR" Amount="AUD61.80" Key="kQhz2o5MR+izQe0GqXjJLw=="/>
+                  <air:TaxInfo Category="YQ" Amount="AUD374.70" Key="OF9gbfIuSeCY4sQkqcmEaQ=="/>
+                  <air:FareCalc>AMS KL LON 430.60CIF VS NYC 892.61Y2 BA LON Q184.54 1250.90Y1JB BA AMS 430.60CIF NUC3189.25END ROE0.760562</air:FareCalc>
+                  <air:PassengerType Code="ADT" PricePTCOnly="false" BookingTravelerRef="4cfg6X5LRQipC/Wm9oMf0g==">
+                     <air:FareGuaranteeInfo GuaranteeType="Guaranteed"/>
+                  </air:PassengerType>
+                  <common_v20_0:BookingTravelerRef Key="4cfg6X5LRQipC/Wm9oMf0g=="/>
+                  <air:TicketingModifiersRef Key="xLssa9gnTC+PpPYLHM+qkw=="/>
+               </air:AirPricingInfo>
+               <air:TicketingModifiers PlatingCarrier="VS" Key="xLssa9gnTC+PpPYLHM+qkw==" ElStat="A">
+                  <air:DocumentSelect IssueElectronicTicket="true"/>
+               </air:TicketingModifiers>
+            </air:AirReservation>
+            <common_v20_0:AgencyInfo>
+               <common_v20_0:AgentAction ActionType="Created" AgentCode="UAPI1070394417" BranchCode="P105134" AgencyCode="S30291" EventTime="2013-10-28T22:00:29.256+00:00"/>
+            </common_v20_0:AgencyInfo>
+         </universal:UniversalRecord>
+      </air:AirCreateReservationRsp>
+   </SOAP:Body>
+</SOAP:Envelope>

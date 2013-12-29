@@ -1,0 +1,136 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP:Body>
+        <air:AirPriceRsp TransactionId="C2BA459E0A0761140E5883FC788A93C7" ResponseTime="6550" xmlns:air="http://www.travelport.com/schema/air_v23_0" xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+            <common_v20_0:ResponseMessage Code="0" Type="Warning" ProviderCode="1G">No Merchandising optional services returned for Flight(s) TK 1961.</common_v20_0:ResponseMessage>
+            <air:AirItinerary>
+                <air:AirSegment Key="fO+9Oay/QN+t0FCCQp7YBw==" Group="0" Carrier="KL" FlightNumber="1617" ProviderCode="1G" Origin="AMS" Destination="IST" DepartureTime="2013-12-06T20:30:00.000+01:00" ArrivalTime="2013-12-07T00:45:00.000+02:00" FlightTime="195" TravelTime="195" Distance="1384" ClassOfService="Z" ChangeOfPlane="false" OptionalServicesIndicator="false" AvailabilitySource="Seamless">
+                    <air:CodeshareInfo OperatingCarrier="KL" OperatingFlightNumber="1617"/>
+                    <air:AirAvailInfo ProviderCode="1G">
+                        <air:BookingCodeInfo BookingCounts="J9|C9|I9|Z9|Y9|B9|M9|U9|K9|H9|L9|Q9|T9|E9|N9|R9|V9"/>
+                    </air:AirAvailInfo>
+                    <air:FlightDetails Key="vz+WOSeCQ96w0v7BYar4Ew==" Origin="AMS" Destination="IST" DepartureTime="2013-12-06T20:30:00.000+01:00" ArrivalTime="2013-12-07T00:45:00.000+02:00" FlightTime="195" TravelTime="195"/>
+                </air:AirSegment>
+                <air:AirSegment Key="mqyt7p4bR7GSffqMXmnEow==" Group="1" Carrier="TK" FlightNumber="1961" ProviderCode="1G" Origin="SAW" Destination="AMS" DepartureTime="2013-12-13T12:05:00.000+02:00" ArrivalTime="2013-12-13T14:40:00.000+01:00" FlightTime="215" TravelTime="215" Distance="1384" ClassOfService="J" ChangeOfPlane="false" OptionalServicesIndicator="false" AvailabilitySource="Seamless">
+                    <air:AirAvailInfo ProviderCode="1G">
+                        <air:BookingCodeInfo BookingCounts="C9|D9|K9|J9|I9|R8|Y9|B9|M9|H9|S9|E9|Q9|T9|L9|V9|P9|W9|X9|N9|G9"/>
+                    </air:AirAvailInfo>
+                    <air:FlightDetails Key="oZC7flQlS9GalO5cFUdYTQ==" Origin="SAW" Destination="AMS" DepartureTime="2013-12-13T12:05:00.000+02:00" ArrivalTime="2013-12-13T14:40:00.000+01:00" FlightTime="215" TravelTime="215"/>
+                </air:AirSegment>
+            </air:AirItinerary>
+            <air:AirPriceResult>
+                <air:AirPricingSolution Key="UrOPVH07R7yQhqY/qp8F1w==" TotalPrice="EUR1705.17" BasePrice="EUR1578.00" ApproximateTotalPrice="EUR1705.17" ApproximateBasePrice="EUR1578.00" Taxes="EUR127.17">
+                    <air:AirSegmentRef Key="fO+9Oay/QN+t0FCCQp7YBw=="/>
+                    <air:AirSegmentRef Key="mqyt7p4bR7GSffqMXmnEow=="/>
+                    <air:AirPricingInfo Key="2N+vY/qWROqMYdCPFh0ziw==" TotalPrice="EUR1705.17" BasePrice="EUR1578.00" ApproximateTotalPrice="EUR1705.17" ApproximateBasePrice="EUR1578.00" Taxes="EUR127.17" LatestTicketingTime="2013-12-06T23:59:00.000+00:00" PricingMethod="Guaranteed" Refundable="true" IncludesVAT="false" ETicketability="No" PlatingCarrier="TK" ProviderCode="1G">
+                        <air:FareInfo Key="eUDTTPEIQeyzKu3x76vFxg==" FareBasis="CIF" PassengerTypeCode="ADT" Origin="AMS" Destination="IST" EffectiveDate="2013-12-05T12:27:00.000+00:00" DepartureDate="2013-12-06" Amount="NUC1040.30">
+                            <air:FareRuleKey FareInfoRef="eUDTTPEIQeyzKu3x76vFxg==" ProviderCode="1G">iRwxVvzHaWJvICGiajJE9VJilViIlUaNUmKVWIiVRo1SYpVYiJVGjVJilViIlUaNUmKVWIiVRo0Y7R9JFxW8CHhBrX8bSLPKRyRq0kmZfuKoowOpSX3QlZBOQLq8GtSeLfGN0bnSVR0l+H/cOKHGGRX7+lQW+WgGW2IpIAN47aclHGwNX4MaNf8P+Wk1adj9bs2Je6l3cwdohdRvfc+VTGzZcAhgOvYpBQ6ZclJ89GRbQ750jXItNRsCzthB41QUdBUi1Yt1+/q70ED7z7o3DUAgfxiFqv9hQCB/GIWq/2FAIH8Yhar/YUAgfxiFqv9hQCB/GIWq/2GYLD7+36jmUBgkKWq8uWT4tMgPx4jWiFQQmr/eMozTShI0iSbFvGXZ163H70/SEeuoil53Zh3sAAK04ypDktR0924NEzvGz0I=</air:FareRuleKey>
+                        </air:FareInfo>
+                        <air:FareInfo Key="BMAaUmWiQ5+7pYdY3hNUPg==" FareBasis="CIF" PassengerTypeCode="ADT" Origin="SAW" Destination="AMS" EffectiveDate="2013-12-05T12:27:00.000+00:00" DepartureDate="2013-12-13" Amount="NUC1040.30">
+                            <air:FareRuleKey FareInfoRef="BMAaUmWiQ5+7pYdY3hNUPg==" ProviderCode="1G">iRwxVvzHaWJvICGiajJE9VJilViIlUaNUmKVWIiVRo1SYpVYiJVGjVJilViIlUaNUmKVWIiVRo0Y7R9JFxW8CHhBrX8bSLPKRyRq0kmZfuKtLpmH/uJ71JBOQLq8GtSeGEO1tNbvL+Al+H/cOKHGGRX7+lQW+WgGZNANSM8eR80lHGwNX4MaNf8P+Wk1adj9bs2Je6l3cwdohdRvfc+VTGzZcAhgOvYpBQ6ZclJ89GRbQ750jXItNS7IQcpCce7eDRbf3iQtlAW70ED7z7o3DUAgfxiFqv9hQCB/GIWq/2FAIH8Yhar/YUAgfxiFqv9hQCB/GIWq/2GYLD7+36jmUBgkKWq8uWT4tMgPx4jWiFQQmr/eMozTShI0iSbFvGXZ163H70/SEeuoil53Zh3sAKKcW8rJ8Cnx924NEzvGz0I=</air:FareRuleKey>
+                        </air:FareInfo>
+                        <air:BookingInfo BookingCode="Z" CabinClass="Business" FareInfoRef="eUDTTPEIQeyzKu3x76vFxg==" SegmentRef="fO+9Oay/QN+t0FCCQp7YBw=="/>
+                        <air:BookingInfo BookingCode="J" CabinClass="Business" FareInfoRef="BMAaUmWiQ5+7pYdY3hNUPg==" SegmentRef="mqyt7p4bR7GSffqMXmnEow=="/>
+                        <air:TaxInfo Category="CJ" Amount="EUR12.77" Key="6yRK5MZwShmkzRPE7Pr3Nw=="/>
+                        <air:TaxInfo Category="RN" Amount="EUR15.40" Key="m3N3ZD8mRI6KG+CpKF0Y2A=="/>
+                        <air:TaxInfo Category="VV" Amount="EUR2.00" Key="TREfez6jQQWF37qBy65aJw=="/>
+                        <air:TaxInfo Category="TR" Amount="EUR15.00" Key="PWBLQOgwTk2c8DfpOEeEkw=="/>
+                        <air:TaxInfo Category="YR" Amount="EUR82.00" Key="IWmP8grJSmyUaQHtPM9NNw=="/>
+                        <air:FareCalc>AMS KL IST 1040.30CIF TK AMS 1040.30CIF NUC2080.60END ROE0.758432</air:FareCalc>
+                        <air:PassengerType Code="ADT" PricePTCOnly="false"/>
+                        <air:BaggageAllowances>
+                            <air:BaggageAllowanceInfo TravelerType="ADT" Origin="AMS" Destination="IST" Carrier="KL">
+                                <air:URLInfo>
+                                    <air:URL>MYTRIPANDMORE.COM/BAGGAGEDETAILSKL.BAGG</air:URL>
+                                </air:URLInfo>
+                                <air:BagDetails ApplicableBags="1stChecked" BasePrice="EUR0.00" ApproximateBasePrice="EUR0.00" TotalPrice="EUR0.00" ApproximateTotalPrice="EUR0.00">
+                                    <air:BaggageRestriction>
+                                        <air:TextInfo>
+                                            <air:Text>UPTO70LB/32KG AND UPTO62LI/158LCM</air:Text>
+                                        </air:TextInfo>
+                                    </air:BaggageRestriction>
+                                </air:BagDetails>
+                                <air:BagDetails ApplicableBags="2ndChecked" BasePrice="EUR0.00" ApproximateBasePrice="EUR0.00" TotalPrice="EUR0.00" ApproximateTotalPrice="EUR0.00">
+                                    <air:BaggageRestriction>
+                                        <air:TextInfo>
+                                            <air:Text>UPTO70LB/32KG AND UPTO62LI/158LCM</air:Text>
+                                        </air:TextInfo>
+                                    </air:BaggageRestriction>
+                                </air:BagDetails>
+                                <air:TextInfo>
+                                    <air:Text>2P</air:Text>
+                                    <air:Text>BAGGAGE DISCOUNTS MAY APPLY BASED ON FREQUENT FLYER STATUS/ ONLINE CHECKIN/FORM OF PAYMENT/MILITARY/ETC.</air:Text>
+                                </air:TextInfo>
+                            </air:BaggageAllowanceInfo>
+                            <air:BaggageAllowanceInfo TravelerType="ADT" Origin="IST" Destination="AMS" Carrier="TK">
+                                <air:URLInfo>
+                                    <air:URL>MYTRIPANDMORE.COM/BAGGAGEDETAILSTK.BAGG</air:URL>
+                                </air:URLInfo>
+                                <air:BagDetails ApplicableBags="1stChecked">
+                                    <air:BaggageRestriction>
+                                        <air:TextInfo>
+                                            <air:Text>CHGS MAY APPLY IF BAGS EXCEED TTL WT ALLOWANCE</air:Text>
+                                        </air:TextInfo>
+                                    </air:BaggageRestriction>
+                                </air:BagDetails>
+                                <air:BagDetails ApplicableBags="2ndChecked">
+                                    <air:BaggageRestriction>
+                                        <air:TextInfo>
+                                            <air:Text>CHGS MAY APPLY IF BAGS EXCEED TTL WT ALLOWANCE</air:Text>
+                                        </air:TextInfo>
+                                    </air:BaggageRestriction>
+                                </air:BagDetails>
+                                <air:TextInfo>
+                                    <air:Text>40K</air:Text>
+                                    <air:Text>BAGGAGE DISCOUNTS MAY APPLY BASED ON FREQUENT FLYER STATUS/ ONLINE CHECKIN/FORM OF PAYMENT/MILITARY/ETC.</air:Text>
+                                </air:TextInfo>
+                            </air:BaggageAllowanceInfo>
+                        </air:BaggageAllowances>
+                    </air:AirPricingInfo>
+                    <air:FareNote Key="Aas1sYRRRm6MI4t+zpNxeA==">LAST DATE TO PURCHASE TICKET: 06DEC13</air:FareNote>
+                    <air:FareNote Key="u/akUvfXRnaxC3IlqTXLjA==">PAPER TICKET REQUIRED</air:FareNote>
+                    <air:FareNote Key="m0QhUOasT368xnnmpHcf4A==">TICKETING FEES MAY APPLY</air:FareNote>
+                    <air:FareNote Key="Cpltnhy5QjSNoauplZ7Q3g==">TICKETING AGENCY 64K6</air:FareNote>
+                    <air:FareNote Key="XDZgnwCFQ1OqYt3+IOClzg==">DEFAULT PLATING CARRIER TK</air:FareNote>
+                    <air:OptionalServices>
+                        <air:OptionalServicesTotal TotalPrice="EUR145.58" BasePrice="EUR145.58"/>
+                        <air:OptionalService Type="Baggage" TotalPrice="EUR55.58" SupplierCode="KL" PerTraveler="false" CreateDate="2013-12-05T12:27:44.932+00:00" ServiceStatus="Offered" SequenceNumber="100005" ServiceSubCode="0AB" SSRCode="ASVC" IssuanceReason="C" AssessIndicator="MileageOrCurrency" ProviderCode="1G" Quantity="1" BasePrice="EUR55.58" ApproximateTotalPrice="GBP47.08" ApproximateBasePrice="GBP47.08" Taxes="EUR0.00" OptionalServicesRuleRef="fE9+U3D/ScaIKLAwJWQ/Hg==">
+                            <common_v20_0:ServiceData/>
+                            <common_v20_0:ServiceData AirSegmentRef="fO+9Oay/QN+t0FCCQp7YBw=="/>
+                            <common_v20_0:ServiceInfo>
+                                <common_v20_0:Description>TEST PREPAID BAG</common_v20_0:Description>
+                            </common_v20_0:ServiceInfo>
+                            <air:EMD FulfillmentType="2" AssociatedItem="Flight" RefundReissueIndicator="Refundable" Commissionable="false" Booking="SSR"/>
+                        </air:OptionalService>
+                        <air:OptionalService Type="Baggage" TotalPrice="EUR45.00" SupplierCode="KL" PerTraveler="false" CreateDate="2013-12-05T12:27:44.932+00:00" ServiceStatus="Offered" SequenceNumber="240500" ServiceSubCode="0CC" SSRCode="ABAG" IssuanceReason="C" AssessIndicator="MileageOrCurrency" Private="true" ProviderCode="1G" Quantity="1" BasePrice="EUR45.00" ApproximateTotalPrice="GBP38.12" ApproximateBasePrice="GBP38.12" Taxes="EUR0.00" OptionalServicesRuleRef="BrI9TnZKSt6WUXI4GKcLBQ==">
+                            <common_v20_0:ServiceData/>
+                            <common_v20_0:ServiceData AirSegmentRef="fO+9Oay/QN+t0FCCQp7YBw=="/>
+                            <common_v20_0:ServiceInfo>
+                                <common_v20_0:Description>1ST ADDITIONAL BAG</common_v20_0:Description>
+                            </common_v20_0:ServiceInfo>
+                            <air:EMD FulfillmentType="2" AssociatedItem="Flight" RefundReissueIndicator="Refundable" Commissionable="false" Booking="SSR"/>
+                            <air:FeeApplication Code="4">Per Traveler</air:FeeApplication>
+                        </air:OptionalService>
+                        <air:OptionalService Type="Baggage" TotalPrice="EUR45.00" SupplierCode="KL" PerTraveler="false" CreateDate="2013-12-05T12:27:44.932+00:00" ServiceStatus="Offered" SequenceNumber="134250" ServiceSubCode="0CE" SSRCode="CBAG" IssuanceReason="C" AssessIndicator="MileageOrCurrency" Private="true" ProviderCode="1G" Quantity="1" BasePrice="EUR45.00" ApproximateTotalPrice="GBP38.12" ApproximateBasePrice="GBP38.12" Taxes="EUR0.00" OptionalServicesRuleRef="wmXgLHHpSQmTAYeJd8XlLA==">
+                            <common_v20_0:ServiceData/>
+                            <common_v20_0:ServiceData AirSegmentRef="fO+9Oay/QN+t0FCCQp7YBw=="/>
+                            <common_v20_0:ServiceInfo>
+                                <common_v20_0:Description>3RD OR MORE ADDITIONAL BAG</common_v20_0:Description>
+                            </common_v20_0:ServiceInfo>
+                            <air:EMD FulfillmentType="2" AssociatedItem="Flight" RefundReissueIndicator="Refundable" Commissionable="false" Booking="SSR"/>
+                            <air:FeeApplication Code="3">Per Item</air:FeeApplication>
+                        </air:OptionalService>
+                        <air:OptionalServiceRules Key="fE9+U3D/ScaIKLAwJWQ/Hg==">
+                            <common_v20_0:ApplicationRules RequiredForAllTravelers="false"/>
+                        </air:OptionalServiceRules>
+                        <air:OptionalServiceRules Key="BrI9TnZKSt6WUXI4GKcLBQ==">
+                            <common_v20_0:ApplicationRules RequiredForAllTravelers="false"/>
+                        </air:OptionalServiceRules>
+                        <air:OptionalServiceRules Key="wmXgLHHpSQmTAYeJd8XlLA==">
+                            <common_v20_0:ApplicationRules RequiredForAllTravelers="false"/>
+                        </air:OptionalServiceRules>
+                    </air:OptionalServices>
+                </air:AirPricingSolution>
+            </air:AirPriceResult>
+        </air:AirPriceRsp>
+    </SOAP:Body>
+</SOAP:Envelope>

@@ -1,0 +1,25 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <SOAP:Fault>
+         <faultcode>Server.Business</faultcode>
+         <faultstring>General air service Error.</faultstring>
+         <detail>
+            <air:AvailabilityErrorInfo xmlns:air="http://www.travelport.com/schema/air_v23_0" xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+               <common_v20_0:Code>3000</common_v20_0:Code>
+               <common_v20_0:Service>AIRSVC</common_v20_0:Service>
+               <common_v20_0:Type>Business</common_v20_0:Type>
+               <common_v20_0:Description>General air service Error.</common_v20_0:Description>
+               <common_v20_0:TransactionId>EAC580B10A076114054C90C7400F0249</common_v20_0:TransactionId>
+               <air:AirSegmentError>
+                  <air:AirSegment Key="d0Thta1vRl+zSDp/TjdBqA==" Group="0" Carrier="FI" FlightNumber="503" Origin="AMS" Destination="KEF" DepartureTime="2013-11-16T13:20:00.000+01:00" ArrivalTime="2013-11-16T15:30:00.000+00:00" ClassOfService="A" ChangeOfPlane="false" OptionalServicesIndicator="false"/>
+                  <air:ErrorMessage>*0 AVAIL/WL OPEN*</air:ErrorMessage>
+               </air:AirSegmentError>
+               <air:AirSegmentError>
+                  <air:AirSegment Key="/8H+nWMURxSD8vo4HoQXLA==" Group="0" Carrier="FI" FlightNumber="623" Origin="KEF" Destination="EWR" DepartureTime="2013-11-16T17:00:00.000+00:00" ArrivalTime="2013-11-16T18:00:00.000-05:00" ClassOfService="A" ChangeOfPlane="false" OptionalServicesIndicator="false"/>
+                  <air:ErrorMessage>*0 AVAIL/WL OPEN*</air:ErrorMessage>
+               </air:AirSegmentError>
+            </air:AvailabilityErrorInfo>
+         </detail>
+      </SOAP:Fault>
+   </SOAP:Body>
+</SOAP:Envelope>

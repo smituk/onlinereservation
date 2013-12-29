@@ -1,0 +1,54 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <air:AirCreateReservationRsp TransactionId="E6235A8C0A076114054C90C70C0404F7" ResponseTime="3997" xmlns:air="http://www.travelport.com/schema/air_v23_0" xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+         <common_v20_0:ResponseMessage Code="3029" Type="Warning" ProviderCode="1G">Some of the prices could not be stored because either flight departure time changes have occurred or some of the segments failed to be sold. Please verify connections, then price and store again.</common_v20_0:ResponseMessage>
+         <universal:UniversalRecord LocatorCode="7NBLCL" Version="0" Status="Active" xmlns:universal="http://www.travelport.com/schema/universal_v21_0">
+            <common_v20_0:BookingTraveler Key="YoR173n5TZS1vhOYDkZZLg==" TravelerType="ADT" DOB="1970-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunus" Last="kula"/>
+               <common_v20_0:PhoneNumber Key="Lo5MPBkmS4qhwEo9T9Y2tA==" Type="Mobile" Location="SYD" CountryCode="90" Number="5064256526" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="c0/iDoO3T9uE8EAoiptXrA=="/>
+               </common_v20_0:PhoneNumber>
+               <common_v20_0:Email Key="q7F5tISzSsSQGM/sKlflFg==" Type="Personel" EmailID="yonuskula@gmail.com" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="c0/iDoO3T9uE8EAoiptXrA=="/>
+               </common_v20_0:Email>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:ActionStatus Key="YUTiIwSRSMim3sf3GrkwRw==" Type="TAW" TicketDate="2013-10-24T19:25:00.000+11:00" ProviderReservationInfoRef="c0/iDoO3T9uE8EAoiptXrA==" ProviderCode="1G" ElStat="A"/>
+            <universal:ProviderReservationInfo Key="c0/iDoO3T9uE8EAoiptXrA==" ProviderCode="1G" LocatorCode="Z72BJO" CreateDate="2013-10-23T16:26:22.521+00:00" ModifiedDate="2013-10-23T16:26:22.521+00:00" HostCreateDate="2013-10-23"/>
+            <air:AirReservation LocatorCode="7NDP4C" CreateDate="2013-10-23T16:26:21.878+00:00" ModifiedDate="2013-10-23T16:26:22.521+00:00">
+               <common_v20_0:BookingTravelerRef Key="YoR173n5TZS1vhOYDkZZLg=="/>
+               <common_v20_0:ProviderReservationInfoRef Key="c0/iDoO3T9uE8EAoiptXrA=="/>
+               <air:AirSegment Key="FJbriw7BRpO6afdmB/DxXQ==" Group="0" Carrier="EI" CabinClass="Economy" FlightNumber="108" ProviderCode="1G" Origin="JFK" Destination="DUB" DepartureTime="2013-12-11T20:40:00.000-05:00" ArrivalTime="2013-12-12T08:25:00.000+00:00" TravelTime="405" ClassOfService="W" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="c0/iDoO3T9uE8EAoiptXrA==" TravelOrder="1" OptionalServicesIndicator="false" ElStat="A">
+                  <air:FlightDetails Key="UsAW5oR5Rrm/w2qJ2iQnEQ==" Origin="JFK" Destination="DUB" DepartureTime="2013-12-11T20:40:00.000-05:00" ArrivalTime="2013-12-12T08:25:00.000+00:00" FlightTime="405" TravelTime="405" Equipment="330" OriginTerminal="5" DestinationTerminal="2" ElStat="A"/>
+                  <air:Connection Duration="70"/>
+                  <common_v20_0:SellMessage>DEPARTS JFK TERMINAL 5  - ARRIVES DUB TERMINAL 2</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="VSS8o+mMQSKLbC9dqGSn/Q==" Group="0" Carrier="EI" CabinClass="Economy" FlightNumber="604" ProviderCode="1G" Origin="DUB" Destination="AMS" DepartureTime="2013-12-12T09:35:00.000+00:00" ArrivalTime="2013-12-12T12:10:00.000+01:00" TravelTime="95" ClassOfService="W" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="c0/iDoO3T9uE8EAoiptXrA==" TravelOrder="2" OptionalServicesIndicator="false" ElStat="A">
+                  <air:FlightDetails Key="SFFXK5MESRaiD7CdRzqScw==" Origin="DUB" Destination="AMS" DepartureTime="2013-12-12T09:35:00.000+00:00" ArrivalTime="2013-12-12T12:10:00.000+01:00" FlightTime="95" TravelTime="95" Equipment="320" OriginTerminal="2" ElStat="A"/>
+                  <common_v20_0:SellMessage>DEPARTS DUB TERMINAL 2</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+            </air:AirReservation>
+            <common_v20_0:AgencyInfo>
+               <common_v20_0:AgentAction ActionType="Created" AgentCode="UAPI1070394417" BranchCode="P105134" AgencyCode="S30291" EventTime="2013-10-23T16:26:18.724+00:00"/>
+            </common_v20_0:AgencyInfo>
+         </universal:UniversalRecord>
+         <air:AirSegmentSellFailureInfo>
+            <air:AirSegmentError>
+               <air:AirSegment Key="pyS12NVfSviMmglTtg3xng==" Group="0" Carrier="EI" FlightNumber="611" Origin="AMS" Destination="DUB" DepartureTime="2013-11-03T20:30:00.000+01:00" ArrivalTime="2013-11-03T21:10:00.000+00:00" ClassOfService="W" ChangeOfPlane="false" OptionalServicesIndicator="false"/>
+               <air:ErrorMessage>*0 AVAIL/WL CLOSED*</air:ErrorMessage>
+            </air:AirSegmentError>
+            <air:AirSegmentError>
+               <air:AirSegment Key="2Q3gxsa/RSKxdImMarLj/Q==" Group="0" Carrier="EI" FlightNumber="105" Origin="DUB" Destination="JFK" DepartureTime="2013-11-04T10:50:00.000+00:00" ArrivalTime="2013-11-04T13:25:00.000-05:00" ClassOfService="W" ChangeOfPlane="false" OptionalServicesIndicator="false"/>
+               <air:ErrorMessage>*0 AVAIL/WL CLOSED*</air:ErrorMessage>
+            </air:AirSegmentError>
+         </air:AirSegmentSellFailureInfo>
+      </air:AirCreateReservationRsp>
+   </SOAP:Body>
+</SOAP:Envelope>

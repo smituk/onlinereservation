@@ -1,0 +1,85 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <air:AirCreateReservationRsp TransactionId="9CD1EC5E0A0761143BB54DBC9745067B" ResponseTime="3556" xmlns:air="http://www.travelport.com/schema/air_v20_0" xmlns:common_v17_0="http://www.travelport.com/schema/common_v17_0">
+         <air:AirSolutionChangedInfo ReasonCode="Price">
+            <air:AirPricingSolution Key="0T" TotalPrice="AUD3811.20" BasePrice="USD1521.00" Taxes="AUD2089.20">
+               <air:AirSegment Key="1T" Group="0" Carrier="KL" FlightNumber="644" ProviderCode="1G" Origin="JFK" Destination="AMS" DepartureTime="2013-10-24T22:55:00.000-04:00" ArrivalTime="2013-10-25T12:10:00.000+02:00" TravelTime="435" Distance="3639" ClassOfService="N" ETicketability="Yes" Status="HS" GuaranteedPaymentCarrier="No">
+                  <air:FlightDetails Key="2T" Origin="JFK" Destination="AMS" DepartureTime="2013-10-24T22:55:00.000-04:00" ArrivalTime="2013-10-25T12:10:00.000+02:00"/>
+               </air:AirSegment>
+               <air:AirSegment Key="3T" Group="1" Carrier="KL" FlightNumber="641" ProviderCode="1G" Origin="AMS" Destination="JFK" DepartureTime="2013-11-29T13:25:00.000+01:00" ArrivalTime="2013-11-29T15:35:00.000-05:00" TravelTime="490" Distance="3639" ClassOfService="N" ETicketability="Yes" Status="HS" GuaranteedPaymentCarrier="No">
+                  <air:FlightDetails Key="4T" Origin="AMS" Destination="JFK" DepartureTime="2013-11-29T13:25:00.000+01:00" ArrivalTime="2013-11-29T15:35:00.000-05:00"/>
+               </air:AirSegment>
+               <air:AirPricingInfo Key="5T" TotalPrice="AUD1322.40" BasePrice="USD553.00" EquivalentBasePrice="AUD626.00" Taxes="AUD696.40" LatestTicketingTime="2013-10-10T23:59:00.000+11:00" PricingMethod="Auto" Exchangeable="true" IncludesVAT="false" ETicketability="Yes" ProviderCode="1G" ProviderReservationInfoRef="24T" PricingType="StoredFare">
+                  <air:FareInfo Key="16T" FareBasis="NKXB74US" PassengerTypeCode="ADT" Origin="JFK" Destination="AMS" EffectiveDate="2013-10-09T00:00:00.000+11:00" PrivateFare="false" NotValidBefore="2013-10-24" NotValidAfter="2013-10-24">
+                     <common_v17_0:Endorsement Value="NONREF/SAPEX"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="19T" FareBasis="NKWB74US" PassengerTypeCode="ADT" Origin="AMS" Destination="JFK" EffectiveDate="2013-10-09T00:00:00.000+11:00" PrivateFare="false" NotValidBefore="2013-11-29" NotValidAfter="2013-11-29">
+                     <common_v17_0:Endorsement Value="NONREF/SAPEX"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:BookingInfo BookingCode="N" CabinClass="Economy" FareInfoRef="16T" SegmentRef="1T"/>
+                  <air:BookingInfo BookingCode="N" CabinClass="Economy" FareInfoRef="19T" SegmentRef="3T"/>
+                  <air:TaxInfo Category="AY" Amount="AUD2.90" Key="6T"/>
+                  <air:TaxInfo Category="US" Amount="AUD39.00" Key="7T"/>
+                  <air:TaxInfo Category="XA" Amount="AUD5.70" Key="8T"/>
+                  <air:TaxInfo Category="XF" Amount="AUD5.10" Key="9T">
+                     <air:TaxDetail Amount="USD4.50" OriginAirport="JFK"/>
+                  </air:TaxInfo>
+                  <air:TaxInfo Category="XY" Amount="AUD8.00" Key="10T"/>
+                  <air:TaxInfo Category="YC" Amount="AUD6.30" Key="11T"/>
+                  <air:TaxInfo Category="CJ" Amount="AUD19.30" Key="12T"/>
+                  <air:TaxInfo Category="RN" Amount="AUD23.20" Key="13T"/>
+                  <air:TaxInfo Category="VV" Amount="AUD3.10" Key="14T"/>
+                  <air:TaxInfo Category="YR" Amount="AUD583.80" Key="15T"/>
+                  <air:FareCalc>NYC KL AMS 261.50NKXB74US KL NYC 291.50NKWB74US NUC553.00END ROE1.0</air:FareCalc>
+                  <air:PassengerType Code="ADT" PricePTCOnly="false" BookingTravelerRef="0"/>
+                  <air:PassengerType Code="ADT" PricePTCOnly="false" BookingTravelerRef="1"/>
+                  <common_v17_0:BookingTravelerRef Key="0"/>
+                  <common_v17_0:BookingTravelerRef Key="1"/>
+               </air:AirPricingInfo>
+               <air:AirPricingInfo Key="25T" TotalPrice="AUD1166.40" BasePrice="USD415.00" EquivalentBasePrice="AUD470.00" Taxes="AUD696.40" LatestTicketingTime="2013-10-10T23:59:00.000+11:00" PricingMethod="Auto" Exchangeable="true" IncludesVAT="false" ETicketability="Yes" ProviderCode="1G" ProviderReservationInfoRef="24T" PricingType="StoredFare">
+                  <air:FareInfo Key="36T" FareBasis="NKXB74US" PassengerTypeCode="CNN" Origin="JFK" Destination="AMS" EffectiveDate="2013-10-09T00:00:00.000+11:00" PrivateFare="false" NotValidBefore="2013-10-24" NotValidAfter="2013-10-24">
+                     <common_v17_0:Endorsement Value="NONREF/SAPEX"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="39T" FareBasis="NKWB74US" PassengerTypeCode="CNN" Origin="AMS" Destination="JFK" EffectiveDate="2013-10-09T00:00:00.000+11:00" PrivateFare="false" NotValidBefore="2013-11-29" NotValidAfter="2013-11-29">
+                     <common_v17_0:Endorsement Value="NONREF/SAPEX"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:BookingInfo BookingCode="N" CabinClass="Economy" FareInfoRef="36T" SegmentRef="1T"/>
+                  <air:BookingInfo BookingCode="N" CabinClass="Economy" FareInfoRef="39T" SegmentRef="3T"/>
+                  <air:TaxInfo Category="AY" Amount="AUD2.90" Key="26T"/>
+                  <air:TaxInfo Category="US" Amount="AUD39.00" Key="27T"/>
+                  <air:TaxInfo Category="XA" Amount="AUD5.70" Key="28T"/>
+                  <air:TaxInfo Category="XF" Amount="AUD5.10" Key="29T">
+                     <air:TaxDetail Amount="USD4.50" OriginAirport="JFK"/>
+                  </air:TaxInfo>
+                  <air:TaxInfo Category="XY" Amount="AUD8.00" Key="30T"/>
+                  <air:TaxInfo Category="YC" Amount="AUD6.30" Key="31T"/>
+                  <air:TaxInfo Category="CJ" Amount="AUD19.30" Key="32T"/>
+                  <air:TaxInfo Category="RN" Amount="AUD23.20" Key="33T"/>
+                  <air:TaxInfo Category="VV" Amount="AUD3.10" Key="34T"/>
+                  <air:TaxInfo Category="YR" Amount="AUD583.80" Key="35T"/>
+                  <air:FareCalc>NYC KL AMS 196.12NKXB74US/CH25 KL NYC 218.62NKWB74US/CH25 NUC414.74END ROE1.0</air:FareCalc>
+                  <air:PassengerType Code="CNN" Age="7" PricePTCOnly="false" BookingTravelerRef="2"/>
+                  <common_v17_0:BookingTravelerRef Key="2"/>
+               </air:AirPricingInfo>
+            </air:AirPricingSolution>
+         </air:AirSolutionChangedInfo>
+         <common_v17_0:RequestKeyMappings/>
+      </air:AirCreateReservationRsp>
+   </SOAP:Body>
+</SOAP:Envelope>

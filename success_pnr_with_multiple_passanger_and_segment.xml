@@ -1,0 +1,289 @@
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP:Body>
+      <air:AirCreateReservationRsp TransactionId="FB3DD07A0A076111763613F6DB0667A7" ResponseTime="4755" xmlns:air="http://www.travelport.com/schema/air_v23_0" xmlns:common_v20_0="http://www.travelport.com/schema/common_v20_0">
+         <common_v20_0:ResponseMessage Code="1" Type="Warning" ProviderCode="1G">TO ENSURE FARE GUARANTEE - TICKET NOW</common_v20_0:ResponseMessage>
+         <universal:UniversalRecord LocatorCode="NL30JT" Version="0" Status="Active" xmlns:universal="http://www.travelport.com/schema/universal_v21_0">
+            <common_v20_0:BookingTraveler Key="Irdow8FLScWf4FLmfsSHdw==" TravelerType="ADT" DOB="1970-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yonus" Last="kula"/>
+               <common_v20_0:PhoneNumber Key="DX/zzO2OTkSdrIgtW38uyQ==" Type="Mobile" Location="SYD" CountryCode="90" Number="5064256526" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="taSAsM/XSia6BL7CqQ7a8A=="/>
+               </common_v20_0:PhoneNumber>
+               <common_v20_0:Email Key="B/lVY6kjSDiSX2pLOUCTzA==" Type="Personel" EmailID="yonuskula@gmail.com" ElStat="A">
+                  <common_v20_0:ProviderReservationInfoRef Key="taSAsM/XSia6BL7CqQ7a8A=="/>
+               </common_v20_0:Email>
+               <common_v20_0:SSR Key="yGfnU4G6RjqvVTBw3gSBfw==" SegmentRef="vJE18PDxRJ29yPgI/bK/qw==" Status="PN" Type="INFT" FreeText="KULAAAA/YUNUS 01NOV11" Carrier="UA" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" ElStat="A"/>
+               <common_v20_0:SSR Key="/Y3v0EieQyuYwp6C8ky+1g==" SegmentRef="PodQlewaTw6Ber8BXHb4Zg==" Status="KK" Type="INFT" FreeText="KULAAAA/YUNUS 01NOV11" Carrier="UA" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" ElStat="A"/>
+               <common_v20_0:SSR Key="U5XGuFoWS2qn7eXZaR1p5Q==" SegmentRef="qpq+01ctQQiiMh93ymxzyA==" Status="PN" Type="INFT" FreeText="KULAAAA/YUNUS 01NOV11" Carrier="UA" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" ElStat="A"/>
+               <common_v20_0:SSR Key="eKGWWaqLRZqcwujp7q1vJw==" SegmentRef="TOyBwYJwSj68ZeBMFIrM8g==" Status="PN" Type="INFT" FreeText="KULAAAA/YUNUS 01NOV11" Carrier="UA" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" ElStat="A"/>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:BookingTraveler Key="zvqp3WlvSz6rcBQ4Z9Yojg==" TravelerType="CNN" DOB="2002-01-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunus" Last="kulaa"/>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:BookingTraveler Key="I4zn326tR1Ox612dXjgTSA==" TravelerType="INF" DOB="2011-11-01" Gender="M" ElStat="A">
+               <common_v20_0:BookingTravelerName First="yunus" Last="kulaaaa"/>
+               <common_v20_0:NameRemark Key="2VBsmEakQJqqKAQ02Xaq5w==" ElStat="A">
+                  <common_v20_0:RemarkData>01NOV11</common_v20_0:RemarkData>
+                  <common_v20_0:ProviderReservationInfoRef Key="taSAsM/XSia6BL7CqQ7a8A=="/>
+               </common_v20_0:NameRemark>
+            </common_v20_0:BookingTraveler>
+            <common_v20_0:ActionStatus Key="rHF1EiXGTrCzINxYOFVzUA==" Type="TAW" TicketDate="2013-10-30T20:46:00.000+11:00" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" ProviderCode="1G" ElStat="A"/>
+            <universal:ProviderReservationInfo Key="taSAsM/XSia6BL7CqQ7a8A==" ProviderCode="1G" LocatorCode="ZL44KW" CreateDate="2013-10-27T18:47:18.673+00:00" ModifiedDate="2013-10-27T18:47:18.673+00:00" HostCreateDate="2013-10-27"/>
+            <air:AirReservation LocatorCode="ZKWL3M" CreateDate="2013-10-27T18:47:17.634+00:00" ModifiedDate="2013-10-27T18:47:18.673+00:00">
+               <common_v20_0:SupplierLocator SupplierCode="UA" SupplierLocatorCode="K5SR5S" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" CreateDateTime="2013-10-27T18:47:00.000+00:00"/>
+               <common_v20_0:BookingTravelerRef Key="Irdow8FLScWf4FLmfsSHdw=="/>
+               <common_v20_0:BookingTravelerRef Key="zvqp3WlvSz6rcBQ4Z9Yojg=="/>
+               <common_v20_0:BookingTravelerRef Key="I4zn326tR1Ox612dXjgTSA=="/>
+               <common_v20_0:ProviderReservationInfoRef Key="taSAsM/XSia6BL7CqQ7a8A=="/>
+               <air:AirSegment Key="vJE18PDxRJ29yPgI/bK/qw==" Group="0" Carrier="UA" CabinClass="Economy" FlightNumber="9195" ProviderCode="1G" Origin="AMS" Destination="FRA" DepartureTime="2013-11-25T08:55:00.000+01:00" ArrivalTime="2013-11-25T10:05:00.000+01:00" TravelTime="70" Distance="228" ClassOfService="Q" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" TravelOrder="1" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="d2KB3yw2TXKLBqxWM5E9ZQ==">DEUTSCHE LUFTHANSA AG</common_v20_0:SegmentRemark>
+                  <air:CodeshareInfo OperatingCarrier="LH"/>
+                  <air:FlightDetails Key="+LTOOuTkSf6IDgDiJ7kcXA==" Origin="AMS" Destination="FRA" DepartureTime="2013-11-25T08:55:00.000+01:00" ArrivalTime="2013-11-25T10:05:00.000+01:00" FlightTime="70" TravelTime="70" Equipment="319" DestinationTerminal="1" ElStat="A"/>
+                  <air:Connection Duration="60"/>
+                  <common_v20_0:SellMessage>OPERATED BY DEUTSCHE LUFTHANSA AG</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>AMS PASSENGER CHECK-IN WITH LUFTHANSA</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ARRIVES FRA TERMINAL 1</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>VALID FOR ONLINE CONNECTIONS ONLY</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="PodQlewaTw6Ber8BXHb4Zg==" Group="0" Carrier="UA" CabinClass="Economy" FlightNumber="51" ProviderCode="1G" Origin="FRA" Destination="EWR" DepartureTime="2013-11-25T11:05:00.000+01:00" ArrivalTime="2013-11-25T14:10:00.000-05:00" TravelTime="545" Distance="3851" ClassOfService="Q" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" TravelOrder="2" OptionalServicesIndicator="false" ElStat="A">
+                  <air:FlightDetails Key="8gJ67awxS3K+KjMKnuqwng==" Origin="FRA" Destination="EWR" DepartureTime="2013-11-25T11:05:00.000+01:00" ArrivalTime="2013-11-25T14:10:00.000-05:00" FlightTime="545" TravelTime="545" Equipment="764" OriginTerminal="1" DestinationTerminal="B" ElStat="A"/>
+                  <common_v20_0:SellMessage>DEPARTS FRA TERMINAL 1  - ARRIVES EWR TERMINAL B</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*ADV PAX FLT ARRIVES TERMINAL-B*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>*ADV PAX FLT DEPARTS TERMINAL-1*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>* BUSINESSFIRST OFFERED THIS FLIGHT*</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="qpq+01ctQQiiMh93ymxzyA==" Group="1" Carrier="UA" CabinClass="Economy" FlightNumber="8838" ProviderCode="1G" Origin="EWR" Destination="FRA" DepartureTime="2013-11-30T18:10:00.000-05:00" ArrivalTime="2013-12-01T07:45:00.000+01:00" TravelTime="455" Distance="3851" ClassOfService="Q" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" TravelOrder="3" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="KXNRAHxATa+FDSJfHf8snA==">DEUTSCHE LUFTHANSA AG</common_v20_0:SegmentRemark>
+                  <air:CodeshareInfo OperatingCarrier="LH"/>
+                  <air:FlightDetails Key="VoOLzIDCQDi5R9yZ9OpgQw==" Origin="EWR" Destination="FRA" DepartureTime="2013-11-30T18:10:00.000-05:00" ArrivalTime="2013-12-01T07:45:00.000+01:00" FlightTime="455" TravelTime="455" Equipment="744" OriginTerminal="B" DestinationTerminal="1" ElStat="A"/>
+                  <air:Connection Duration="60"/>
+                  <common_v20_0:SellMessage>OPERATED BY DEUTSCHE LUFTHANSA AG</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>EWR PASSENGER CHECK-IN WITH LUFTHANSA</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>DEPARTS EWR TERMINAL B  - ARRIVES FRA TERMINAL 1</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirSegment Key="TOyBwYJwSj68ZeBMFIrM8g==" Group="1" Carrier="UA" CabinClass="Economy" FlightNumber="9161" ProviderCode="1G" Origin="FRA" Destination="AMS" DepartureTime="2013-12-01T08:45:00.000+01:00" ArrivalTime="2013-12-01T10:00:00.000+01:00" TravelTime="75" Distance="228" ClassOfService="Q" ETicketability="Yes" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" TravelOrder="4" OptionalServicesIndicator="false" ElStat="A">
+                  <common_v20_0:SegmentRemark Key="cVIqY26RSNeEFzJpXj8zGQ==">DEUTSCHE LUFTHANSA AG</common_v20_0:SegmentRemark>
+                  <air:CodeshareInfo OperatingCarrier="LH"/>
+                  <air:FlightDetails Key="LI5aAIhiQE6sjgrZmPWsTw==" Origin="FRA" Destination="AMS" DepartureTime="2013-12-01T08:45:00.000+01:00" ArrivalTime="2013-12-01T10:00:00.000+01:00" FlightTime="75" TravelTime="75" Equipment="733" OriginTerminal="1" ElStat="A"/>
+                  <common_v20_0:SellMessage>OPERATED BY DEUTSCHE LUFTHANSA AG</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FRA PASSENGER CHECK-IN WITH LUFTHANSA</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>DEPARTS FRA TERMINAL 1</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>VALID FOR ONLINE CONNECTIONS ONLY</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>ADD ADVANCE PASSENGER INFORMATION SSRS DOCA/DOCO/DOCS</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>PERSONAL DATA WHICH IS PROVIDED TO US IN CONNECTION</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>WITH YOUR TRAVEL MAY BE PASSED TO GOVERNMENT AUTHORITIES</common_v20_0:SellMessage>
+                  <common_v20_0:SellMessage>FOR BORDER CONTROL AND AVIATION SECURITY PURPOSES</common_v20_0:SellMessage>
+               </air:AirSegment>
+               <air:AirPricingInfo Key="KZ4wDEmPRFeysPz1LeF24Q==" TotalPrice="AUD1701.60" BasePrice="EUR650.00" ApproximateTotalPrice="AUD1701.60" ApproximateBasePrice="AUD980.00" EquivalentBasePrice="AUD980.00" Taxes="AUD721.60" LatestTicketingTime="2013-10-28T23:59:00.000+11:00" TrueLastDateToTicket="2013-10-28T23:59:00.000+11:00" PricingMethod="Guaranteed" Refundable="true" Exchangeable="true" IncludesVAT="false" ETicketability="Yes" ProviderCode="1G" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" AirPricingInfoGroup="1" PricingType="StoredFare" ElStat="A">
+                  <air:FareInfo Key="viazD8nhTkGfuyU6hTrjew==" FareBasis="QLRCNLW" PassengerTypeCode="ADT" Origin="AMS" Destination="FRA" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-25" NotValidAfter="2013-11-25" ElStat="C">
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="usU0DeyNQEqsZ0+AztyexA==" FareBasis="QLRCNLW" PassengerTypeCode="ADT" Origin="FRA" Destination="EWR" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-25" NotValidAfter="2013-11-25" ElStat="C">
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="L4JGzzCIRS+1oy+/r7iXpA==" FareBasis="QLRCNLW" PassengerTypeCode="ADT" Origin="EWR" Destination="FRA" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-30" NotValidAfter="2013-11-30" ElStat="C">
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="O2qsEBiqQ2W+dXLh+HTNDw==" FareBasis="QLRCNLW" PassengerTypeCode="ADT" Origin="FRA" Destination="AMS" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-12-01" NotValidAfter="2013-12-01" ElStat="C">
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="viazD8nhTkGfuyU6hTrjew==" SegmentRef="vJE18PDxRJ29yPgI/bK/qw=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="usU0DeyNQEqsZ0+AztyexA==" SegmentRef="PodQlewaTw6Ber8BXHb4Zg=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="L4JGzzCIRS+1oy+/r7iXpA==" SegmentRef="qpq+01ctQQiiMh93ymxzyA=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="O2qsEBiqQ2W+dXLh+HTNDw==" SegmentRef="TOyBwYJwSj68ZeBMFIrM8g=="/>
+                  <air:TaxInfo Category="CJ" Amount="AUD19.30" Key="0tPY6QRXQduaK1oe3XSBEg=="/>
+                  <air:TaxInfo Category="RN" Amount="AUD23.20" Key="m1V1f/MXTOiU4UoKnACn0g=="/>
+                  <air:TaxInfo Category="VV" Amount="AUD3.10" Key="V0RKXgnbSX2wW7hfI9r4iA=="/>
+                  <air:TaxInfo Category="DE" Amount="AUD21.40" Key="Htp8dYfNSV+xjJnm+f4hLw=="/>
+                  <air:TaxInfo Category="RA" Amount="AUD60.00" Key="v+0H5aRzT5C3tmzAvCv+eQ=="/>
+                  <air:TaxInfo Category="AY" Amount="AUD2.90" Key="DZM8AEg9QeaBUVTemZge8A=="/>
+                  <air:TaxInfo Category="US" Amount="AUD39.00" Key="heKinFw2QTyBFlfddEtgyw=="/>
+                  <air:TaxInfo Category="XA" Amount="AUD5.70" Key="8ZZVQjgZQ7a46BTvS/7MIw=="/>
+                  <air:TaxInfo Category="XF" Amount="AUD5.10" Key="NPiUBYKYQfiD3mLUfOJjYQ==">
+                     <air:TaxDetail Amount="USD4.50" OriginAirport="EWR"/>
+                  </air:TaxInfo>
+                  <air:TaxInfo Category="XY" Amount="AUD8.00" Key="1FgZWGOJSTqQxyP+NAoesw=="/>
+                  <air:TaxInfo Category="YC" Amount="AUD6.30" Key="yrG8WCtHS7ONyFaPob1W2A=="/>
+                  <air:TaxInfo Category="YQ" Amount="AUD527.60" Key="L1P05BJpQMOw1Zk86nk4DA=="/>
+                  <air:FareCalc>AMS UA X/FRA UA EWR 427.31QLRCNLW UA X/FRA UA AMS 427.31QLRCNLW NUC854.62END ROE0.760562</air:FareCalc>
+                  <air:PassengerType Code="ADT" PricePTCOnly="false" BookingTravelerRef="Irdow8FLScWf4FLmfsSHdw==">
+                     <air:FareGuaranteeInfo GuaranteeType="Guaranteed"/>
+                  </air:PassengerType>
+                  <common_v20_0:BookingTravelerRef Key="Irdow8FLScWf4FLmfsSHdw=="/>
+                  <air:ChangePenalty>
+                     <air:Amount>AUD180.00</air:Amount>
+                  </air:ChangePenalty>
+                  <air:CancelPenalty>
+                     <air:Amount>AUD271.00</air:Amount>
+                  </air:CancelPenalty>
+                  <air:TicketingModifiersRef Key="HE3L89KDTOSFW4re1F1Fow=="/>
+               </air:AirPricingInfo>
+               <air:AirPricingInfo Key="GMc4Bo/hQ3e2fGXRj06YNA==" TotalPrice="AUD1457.60" BasePrice="EUR488.00" ApproximateTotalPrice="AUD1457.60" ApproximateBasePrice="AUD736.00" EquivalentBasePrice="AUD736.00" Taxes="AUD721.60" LatestTicketingTime="2013-10-28T23:59:00.000+11:00" TrueLastDateToTicket="2013-10-28T23:59:00.000+11:00" PricingMethod="Guaranteed" Refundable="true" Exchangeable="true" IncludesVAT="false" ETicketability="Yes" ProviderCode="1G" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" AirPricingInfoGroup="1" PricingType="StoredFare" ElStat="A">
+                  <air:FareInfo Key="w3PYvbevRH2tfWMoQrGI5w==" FareBasis="QLRCNLW/" PassengerTypeCode="CNN" Origin="AMS" Destination="FRA" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-25" NotValidAfter="2013-11-25" ElStat="C">
+                     <air:FareTicketDesignator Value="CH25"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="vN4B48xNSj2IO7tr0uwwJg==" FareBasis="QLRCNLW/" PassengerTypeCode="CNN" Origin="FRA" Destination="EWR" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-25" NotValidAfter="2013-11-25" ElStat="C">
+                     <air:FareTicketDesignator Value="CH25"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="kdVgFuCbRmizXLf6WDAe9g==" FareBasis="QLRCNLW/" PassengerTypeCode="CNN" Origin="EWR" Destination="FRA" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-30" NotValidAfter="2013-11-30" ElStat="C">
+                     <air:FareTicketDesignator Value="CH25"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="dTPAnfHiQWyMHwYtJQtFNg==" FareBasis="QLRCNLW/" PassengerTypeCode="CNN" Origin="FRA" Destination="AMS" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-12-01" NotValidAfter="2013-12-01" ElStat="C">
+                     <air:FareTicketDesignator Value="CH25"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="w3PYvbevRH2tfWMoQrGI5w==" SegmentRef="vJE18PDxRJ29yPgI/bK/qw=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="vN4B48xNSj2IO7tr0uwwJg==" SegmentRef="PodQlewaTw6Ber8BXHb4Zg=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="kdVgFuCbRmizXLf6WDAe9g==" SegmentRef="qpq+01ctQQiiMh93ymxzyA=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="dTPAnfHiQWyMHwYtJQtFNg==" SegmentRef="TOyBwYJwSj68ZeBMFIrM8g=="/>
+                  <air:TaxInfo Category="CJ" Amount="AUD19.30" Key="1RzJrsupTj6+j29dRU2FPA=="/>
+                  <air:TaxInfo Category="RN" Amount="AUD23.20" Key="y34mRWQLTsOgwJtZzzot9w=="/>
+                  <air:TaxInfo Category="VV" Amount="AUD3.10" Key="RRyALl6xTY+JZ2xcP6+v4w=="/>
+                  <air:TaxInfo Category="DE" Amount="AUD21.40" Key="SeD8KKsZS+mQEOQZFgBYHQ=="/>
+                  <air:TaxInfo Category="RA" Amount="AUD60.00" Key="chR0J9e/RLazt0NVl0iaXQ=="/>
+                  <air:TaxInfo Category="AY" Amount="AUD2.90" Key="zhJkj05GRSShh3r/XiCwXg=="/>
+                  <air:TaxInfo Category="US" Amount="AUD39.00" Key="QfzPQNjSTyGyc6Qlk/iKuA=="/>
+                  <air:TaxInfo Category="XA" Amount="AUD5.70" Key="P1nZOeI0T5e4uZ//67QWlQ=="/>
+                  <air:TaxInfo Category="XF" Amount="AUD5.10" Key="YBOA8/UrQVGXwmwm0V1yNQ==">
+                     <air:TaxDetail Amount="USD4.50" OriginAirport="EWR"/>
+                  </air:TaxInfo>
+                  <air:TaxInfo Category="XY" Amount="AUD8.00" Key="fW602baDSEO4d8dI0wvyuw=="/>
+                  <air:TaxInfo Category="YC" Amount="AUD6.30" Key="jM0JbACWSXKukG1iks5Pnw=="/>
+                  <air:TaxInfo Category="YQ" Amount="AUD527.60" Key="cARg5O0uRgOm8btl85U7kQ=="/>
+                  <air:FareCalc>AMS UA X/FRA UA EWR 320.48QLRCNLW/CH25 UA X/FRA UA AMS 320.48QLRCNLW/CH25 NUC640.96END ROE0.760562</air:FareCalc>
+                  <air:PassengerType Code="CNN" Age="11" PricePTCOnly="false" BookingTravelerRef="zvqp3WlvSz6rcBQ4Z9Yojg==">
+                     <air:FareGuaranteeInfo GuaranteeType="Guaranteed"/>
+                  </air:PassengerType>
+                  <common_v20_0:BookingTravelerRef Key="zvqp3WlvSz6rcBQ4Z9Yojg=="/>
+                  <air:ChangePenalty>
+                     <air:Amount>AUD180.00</air:Amount>
+                  </air:ChangePenalty>
+                  <air:CancelPenalty>
+                     <air:Amount>AUD271.00</air:Amount>
+                  </air:CancelPenalty>
+                  <air:TicketingModifiersRef Key="HE3L89KDTOSFW4re1F1Fow=="/>
+               </air:AirPricingInfo>
+               <air:AirPricingInfo Key="KxsJDaS5TtKju5ngmaaRvw==" TotalPrice="AUD159.90" BasePrice="EUR65.00" ApproximateTotalPrice="AUD159.90" ApproximateBasePrice="AUD98.00" EquivalentBasePrice="AUD98.00" Taxes="AUD61.90" LatestTicketingTime="2013-10-28T23:59:00.000+11:00" TrueLastDateToTicket="2013-10-28T23:59:00.000+11:00" PricingMethod="Guaranteed" Refundable="true" Exchangeable="true" IncludesVAT="false" ETicketability="Yes" ProviderCode="1G" ProviderReservationInfoRef="taSAsM/XSia6BL7CqQ7a8A==" AirPricingInfoGroup="1" PricingType="StoredFare" ElStat="A">
+                  <air:FareInfo Key="Io30PSd3Sc+9vNqY+cpjiQ==" FareBasis="QLRCNLW/" PassengerTypeCode="INF" Origin="AMS" Destination="FRA" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-25" NotValidAfter="2013-11-25" ElStat="C">
+                     <air:FareTicketDesignator Value="IN90"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="tR6q983KSh6unSXrFUvUNA==" FareBasis="QLRCNLW/" PassengerTypeCode="INF" Origin="FRA" Destination="EWR" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-25" NotValidAfter="2013-11-25" ElStat="C">
+                     <air:FareTicketDesignator Value="IN90"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="DZJsDsaAQuaoFvkH49qHzA==" FareBasis="QLRCNLW/" PassengerTypeCode="INF" Origin="EWR" Destination="FRA" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-11-30" NotValidAfter="2013-11-30" ElStat="C">
+                     <air:FareTicketDesignator Value="IN90"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:FareInfo Key="kAoPt4sYRkWOW3XtvVyzDw==" FareBasis="QLRCNLW/" PassengerTypeCode="INF" Origin="FRA" Destination="AMS" EffectiveDate="2013-10-27T00:00:00.000+11:00" NotValidBefore="2013-12-01" NotValidAfter="2013-12-01" ElStat="C">
+                     <air:FareTicketDesignator Value="IN90"/>
+                     <common_v20_0:Endorsement Value="FL/CNX/CHG RESTRICTED"/>
+                     <common_v20_0:Endorsement Value="CHECK FARE NOTE"/>
+                     <air:BaggageAllowance>
+                        <air:NumberOfPieces>1</air:NumberOfPieces>
+                        <air:MaxWeight/>
+                     </air:BaggageAllowance>
+                  </air:FareInfo>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="Io30PSd3Sc+9vNqY+cpjiQ==" SegmentRef="vJE18PDxRJ29yPgI/bK/qw=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="tR6q983KSh6unSXrFUvUNA==" SegmentRef="PodQlewaTw6Ber8BXHb4Zg=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="DZJsDsaAQuaoFvkH49qHzA==" SegmentRef="qpq+01ctQQiiMh93ymxzyA=="/>
+                  <air:BookingInfo BookingCode="Q" CabinClass="Economy" FareInfoRef="kAoPt4sYRkWOW3XtvVyzDw==" SegmentRef="TOyBwYJwSj68ZeBMFIrM8g=="/>
+                  <air:TaxInfo Category="AY" Amount="AUD2.90" Key="S2HTIZcdTEuoS3jiwobFnA=="/>
+                  <air:TaxInfo Category="US" Amount="AUD39.00" Key="EFbifDYaSMqZDitBugUkNQ=="/>
+                  <air:TaxInfo Category="XA" Amount="AUD5.70" Key="8iVGCO4VSAG2W4vXjCzw1g=="/>
+                  <air:TaxInfo Category="XY" Amount="AUD8.00" Key="vrgDmG+iREiZZJUMPTKBLQ=="/>
+                  <air:TaxInfo Category="YC" Amount="AUD6.30" Key="kUUXnGnoRbK9eURONjXHDQ=="/>
+                  <air:FareCalc>AMS UA X/FRA UA EWR 42.73QLRCNLW/IN90 UA X/FRA UA AMS 42.73QLRCNLW/IN90 NUC85.46END ROE0.760562</air:FareCalc>
+                  <air:PassengerType Code="INF" Age="1" PricePTCOnly="false" BookingTravelerRef="I4zn326tR1Ox612dXjgTSA==">
+                     <air:FareGuaranteeInfo GuaranteeType="Guaranteed"/>
+                  </air:PassengerType>
+                  <common_v20_0:BookingTravelerRef Key="I4zn326tR1Ox612dXjgTSA=="/>
+                  <air:ChangePenalty>
+                     <air:Amount>AUD180.00</air:Amount>
+                  </air:ChangePenalty>
+                  <air:CancelPenalty>
+                     <air:Amount>AUD271.00</air:Amount>
+                  </air:CancelPenalty>
+                  <air:TicketingModifiersRef Key="HE3L89KDTOSFW4re1F1Fow=="/>
+               </air:AirPricingInfo>
+               <air:TicketingModifiers PlatingCarrier="UA" Key="HE3L89KDTOSFW4re1F1Fow==" ElStat="A">
+                  <air:DocumentSelect IssueElectronicTicket="true"/>
+               </air:TicketingModifiers>
+            </air:AirReservation>
+            <common_v20_0:AgencyInfo>
+               <common_v20_0:AgentAction ActionType="Created" AgentCode="UAPI1070394417" BranchCode="P105134" AgencyCode="S30291" EventTime="2013-10-27T18:47:14.407+00:00"/>
+            </common_v20_0:AgencyInfo>
+         </universal:UniversalRecord>
+      </air:AirCreateReservationRsp>
+   </SOAP:Body>
+</SOAP:Envelope>
