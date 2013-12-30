@@ -4,6 +4,7 @@
             <common_v20_0:ResponseMessage Code="0" Type="Warning" ProviderCode="1G">No Merchandising optional services returned for Flight(s) TK 1961.</common_v20_0:ResponseMessage>
             <air:AirItinerary>
                 <air:AirSegment Key="fO+9Oay/QN+t0FCCQp7YBw==" Group="0" Carrier="KL" FlightNumber="1617" ProviderCode="1G" Origin="AMS" Destination="IST" DepartureTime="2013-12-06T20:30:00.000+01:00" ArrivalTime="2013-12-07T00:45:00.000+02:00" FlightTime="195" TravelTime="195" Distance="1384" ClassOfService="Z" ChangeOfPlane="false" OptionalServicesIndicator="false" AvailabilitySource="Seamless">
+                    
                     <air:CodeshareInfo OperatingCarrier="KL" OperatingFlightNumber="1617"/>
                     <air:AirAvailInfo ProviderCode="1G">
                         <air:BookingCodeInfo BookingCounts="J9|C9|I9|Z9|Y9|B9|M9|U9|K9|H9|L9|Q9|T9|E9|N9|R9|V9"/>
