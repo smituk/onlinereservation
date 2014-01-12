@@ -24,6 +24,10 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
     private $oneInfTax;
     private $currency;
     private $airportArray;
+    private $airSegmentArray;
+    private $fareInfoArray;
+    private $airlineArray;
+    private $legArray;
 
     public function __construct($searchCriteria) {
         $this->searchCriteria = $searchCriteria;
@@ -38,7 +42,14 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
         $responseXML = new SimpleXMLElement($responseXml);
         $responseXML->registerXPathNamespace("ns", CorendonAccount::getDefaultNameSpace());
         $airPriceSolutionArray = array();
+        loadClass(APPPATH . "/models/fly_search/low_fare_search_result.php");
+        $lowFareSearchResult = new LowFareSearchResult();
 
+        $this->airSegmentArray = array();
+        $this->airportArray = array();
+        $this->fareInfoArray = array();
+        $this->airlineArray = array();
+        $lowFareSearchResult->errorCode = ErrorCodes::SUCCESS;
         foreach ($responseXML->xpath("//ns:RSGetAvailableFares") as $getAvaibleFareXML) {
             $this->oneAdultFare = $getAvaibleFareXML->FAREADT;
             $this->oneChildFare = $getAvaibleFareXML->FARECHD;
@@ -61,12 +72,20 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
             $airPriceSolutionObject->taxes = $currency . $totalTaxAmount;
             $airPriceSolutionObject->apprixomate_total_price_amount = $totalBaseAmount + $totalTaxAmount;
             $airPriceSolutionObject->taxes_amount = $totalTaxAmount;
-            $airPriceSolutionObject->air_pricing_info = $this->airPriceInfoXMLToObject();
-            $airPriceSolutionObject->journeys = $this->convertJourneyObject($getAvaibleFareXML, $airPriceSolutionObject);
+            $airPriceSolutionObject = $this->setAirPricingInfoAndJourney($airPriceSolutionObject, $getAvaibleFareXML);
+            //$airPriceSolutionObject->air_pricing_info = $this->airPriceInfoXMLToObject();
+            //$airPriceSolutionObject->journeys = $this->convertJourneyObject($getAvaibleFareXML, $airPriceSolutionObject);
             array_push($airPriceSolutionArray, $airPriceSolutionObject);
         }
-            
-        return $this->combineAirPriceSolutions($airPriceSolutionArray);
+        $lowFareSearchResult->airPriceSolutionArray = $airPriceSolutionArray;
+        $lowFareSearchResult->airSegmentArray = $this->airSegmentArray;
+        $lowFareSearchResult->airSegmentArray[Fly_Constant::COMBINATION_AIR_COMPANY] = AirlineService::getAirlineByIATACode(Fly_Constant::COMBINATION_AIR_COMPANY);
+        $lowFareSearchResult->fareInfoArray = $this->fareInfoArray;
+        $lowFareSearchResult->airlineArray = $this->airlineArray;
+        $lowFareSearchResult->airportArray = $this->airportArray;
+        $lowFareSearchResult->apiCode = Fly_Constant::CORENDON_API_CODE;
+        //file_put_contents("cdfefe.json", json_encode($lowFareSearchResult));
+        return $this->combineAirPriceSolutions($lowFareSearchResult);
     }
 
     public function prepareXml() {
@@ -150,50 +169,118 @@ EOM;
         if ($this->searchCriteria->yetiskinnumber > 0) {
             $airPriceInfoObject = new AirPricingInfo();
             $airPriceInfoObject->key = substr(md5(microtime()), 0, 10);
-            $airPriceInfoObject->approximate_base_price = $this->currency . $this->oneAdultFare;
-            $airPriceInfoObject->approximate_base_price_amount = (int) $this->oneAdultFare;
-            $airPriceInfoObject->approximate_total_price = $this->currency . ((int) $this->oneAdultFare + (int) $this->oneAdultTax);
-            $airPriceInfoObject->approximate_total_price_amout = (int) $this->oneAdultFare + (int) $this->oneAdultTax;
+            $airPriceInfoObject->approximateBasePrice = $this->currency . $this->oneAdultFare;
+            $airPriceInfoObject->approximateBasePriceAmount = (int) $this->oneAdultFare;
+            $airPriceInfoObject->approximateTotalPrice = $this->currency . ((int) $this->oneAdultFare + (int) $this->oneAdultTax);
+            $airPriceInfoObject->approximateTotalPriceAmout = (int) $this->oneAdultFare + (int) $this->oneAdultTax;
             $airPriceInfoObject->taxes = $this->currency . $this->oneAdultTax;
-            $airPriceInfoObject->taxes_amount = (int) $this->oneAdultTax;
+            $airPriceInfoObject->taxesAmount = (int) $this->oneAdultTax;
 
-            $airPriceInfoObject->passenger_type = "ADT";
-            $airPriceInfoObject->passenger_count = $this->searchCriteria->yetiskinnumber;
-            $airPriceInfoObject->passenger_type_desc = "Yetişkin";
+            $airPriceInfoObject->passengerType = "ADT";
+            $airPriceInfoObject->passengerCount = $this->searchCriteria->yetiskinnumber;
+            $airPriceInfoObject->passengerTypeDesc = "Yetişkin";
             array_push($airPriceInfoArray, $airPriceInfoObject);
         }
         if ($this->searchCriteria->cocuknumber > 0) {
             $airPriceInfoObject = new AirPricingInfo();
             $airPriceInfoObject->key = substr(md5(microtime()), 0, 10);
-            $airPriceInfoObject->approximate_base_price = $this->currency . $this->oneChildFare;
-            $airPriceInfoObject->approximate_base_price_amount = (int) $this->oneChildFare;
-            $airPriceInfoObject->approximate_total_price = $this->currency . ((int) $this->oneChildFare + (int) $this->oneChildTax);
-            $airPriceInfoObject->approximate_total_price_amout = (int) $this->oneChildFare + (int) $this->oneChildTax;
+            $airPriceInfoObject->approximateBasePrice = $this->currency . $this->oneChildFare;
+            $airPriceInfoObject->approximateBasePriceAmount = (int) $this->oneChildFare;
+            $airPriceInfoObject->approximateTotalPrice = $this->currency . ((int) $this->oneChildFare + (int) $this->oneChildTax);
+            $airPriceInfoObject->approximateTotalPriceAmout = (int) $this->oneChildFare + (int) $this->oneChildTax;
             $airPriceInfoObject->taxes = $this->currency . $this->oneChildTax;
-            $airPriceInfoObject->taxes_amount = (int) $this->oneChildTax;
+            $airPriceInfoObject->taxesAmount = (int) $this->oneChildTax;
 
-            $airPriceInfoObject->passenger_type = "CNN";
-            $airPriceInfoObject->passenger_count = $this->searchCriteria->cocuknumber;
-            $airPriceInfoObject->passenger_type_desc = "Çocuk";
+            $airPriceInfoObject->passengerType = "CNN";
+            $airPriceInfoObject->passengerCount = $this->searchCriteria->cocuknumber;
+            $airPriceInfoObject->passengerTypeDesc = "Çocuk";
             array_push($airPriceInfoArray, $airPriceInfoObject);
         }
 
         if ($this->searchCriteria->bebeknumber > 0) {
             $airPriceInfoObject = new AirPricingInfo();
             $airPriceInfoObject->key = substr(md5(microtime()), 0, 10);
-            $airPriceInfoObject->approximate_base_price = $this->currency . $this->oneInfFare;
-            $airPriceInfoObject->approximate_base_price_amount = (int) $this->oneInfFare;
-            $airPriceInfoObject->approximate_total_price = $this->currency . ((int) $this->oneInfFare + (int) $this->oneInfTax);
-            $airPriceInfoObject->approximate_total_price_amout = (int) $this->oneInfFare + (int) $this->oneInfTax;
+            $airPriceInfoObject->approximateBasePrice = $this->currency . $this->oneInfFare;
+            $airPriceInfoObject->approximateTotalPriceAmout = (int) $this->oneInfFare;
+            $airPriceInfoObject->approximateTotalPrice = $this->currency . ((int) $this->oneInfFare + (int) $this->oneInfTax);
+            $airPriceInfoObject->approximateTotalPriceAmout = (int) $this->oneInfFare + (int) $this->oneInfTax;
             $airPriceInfoObject->taxes = $this->currency . $this->oneInfTax;
-            $airPriceInfoObject->taxes_amount = (int) $this->oneInfTax;
+            $airPriceInfoObject->taxesAmount = (int) $this->oneInfTax;
 
-            $airPriceInfoObject->passenger_type = "INF";
-            $airPriceInfoObject->passenger_count = $this->searchCriteria->bebeknumber;
-            $airPriceInfoObject->passenger_type_desc = "Bebek";
+            $airPriceInfoObject->passengerType = "INF";
+            $airPriceInfoObject->passengerCount = $this->searchCriteria->bebeknumber;
+            $airPriceInfoObject->passengerTypeDesc = "Bebek";
             array_push($airPriceInfoArray, $airPriceInfoObject);
         }
         return $airPriceInfoArray;
+    }
+
+    private function setAirPricingInfoAndJourney(AirPricingSolution $airPriceSolution, $rSGetAvailableFaresXML) {
+        $airPriceSolution->legs = array();
+        $airPriceSolution->airPricingInfoArray = $this->airPriceInfoXMLToObject();
+        $isFirstFlightOut = true;
+        $isFirstFlightIn = true;
+        $legIndexCount = 0;
+        $legObject = null;
+        foreach ($rSGetAvailableFaresXML->FLIGHTSOUT->FLIGHT_STRC as $flightXML) {
+
+            if ($isFirstFlightOut) {
+                $legObject = $this->createLeg($legIndexCount, $this->searchCriteria);
+                $airPriceSolution->addLeg($legObject);
+                $isFirstFlightOut = false;
+                $legIndexCount++;
+            }
+            $journey = $this->createJourneyObject($airPriceSolution, $flightXML);
+            $legObject->addAvaibleJourney($journey);
+        }
+
+        if (isset($rSGetAvailableFaresXML->FLIGHTSIN->FLIGHT_STRC)) {
+            foreach ($rSGetAvailableFaresXML->FLIGHTSIN->FLIGHT_STRC as $flightXML) {
+                if ($isFirstFlightIn) {
+                    $legObject = $this->createLeg($legIndexCount, $this->searchCriteria);
+                    $airPriceSolution->addLeg($legObject);
+                    $isFirstFlightIn = false;
+                    $legIndexCount++;
+                }
+
+                $journey = $this->createJourneyObject($airPriceSolution, $flightXML);
+                $legObject->addAvaibleJourney($journey);
+            }
+        }
+        return $airPriceSolution;
+    }
+
+    private function createLeg($legIndexCount, Fly_search_criteria $searchCriteria) {
+        loadClass(APPPATH . "/models/fly_search/air_leg.php");
+
+        if (!isset($this->legArray)) {
+            $this->legArray = array();
+            $legObject = new AirLeg();
+            $legObject->key = substr(md5(microtime()), 0, 10);
+            $searchAirLeg = $this->searchCriteria->searchAirLegs[$legIndexCount];
+            $legObject->origin = $searchAirLeg->originSearchLocation->airport;
+            $legObject->destination = $searchAirLeg->destinationSearchLocation->airport;
+            $legObject->direction = "G";
+            if ($legIndexCount == 1 && $searchCriteria->flydirection == "2") {
+                $legObject->direction = "R";
+            }
+            array_push($this->legArray, $legObject);
+        }else{
+            if(!isset($this->legArray[$legIndexCount])){
+                 $legObject = new AirLeg();
+            $legObject->key = substr(md5(microtime()), 0, 10);
+            $searchAirLeg = $this->searchCriteria->searchAirLegs[$legIndexCount];
+            $legObject->origin = $searchAirLeg->originSearchLocation->airport;
+            $legObject->destination = $searchAirLeg->destinationSearchLocation->airport;
+            $legObject->direction = "G";
+            if ($legIndexCount == 1 && $searchCriteria->flydirection == "2") {
+                $legObject->direction = "R";
+            }
+            array_push($this->legArray, $legObject);
+            }
+        }
+        
+        return clone $this->legArray[$legIndexCount];
     }
 
     private function convertJourneyObject($rSGetAvailableFaresXML, $airPriceSolution) {
@@ -204,9 +291,9 @@ EOM;
             $journeyObject->air_price_solution_key_ref = $airPriceSolution->key;
             array_push($journeyArrays, $journeyObject);
         }
-         if(!isset($rSGetAvailableFaresXML->FLIGHTSIN)){
-             return $journeyArrays;
-         }
+        if (!isset($rSGetAvailableFaresXML->FLIGHTSIN)) {
+            return $journeyArrays;
+        }
         foreach ($rSGetAvailableFaresXML->FLIGHTSIN->FLIGHT_STRC as $flightXML) {
             $journeyObject = $this->createJourneyObject($flightXML);
             $journeyObject->type = Fly_Constant::RETURN_JOURNEY_TYPE;
@@ -216,52 +303,47 @@ EOM;
         return $journeyArrays;
     }
 
-    private function createJourneyObject($flightXML) {
-        $bookingClass = $flightXML->CLASSOFFLIGHT;
+    private function createJourneyObject(AirPricingSolution $airPriceSolution, $flightXML) {
+        loadClass(APPPATH . "/models/fly_search/journey.php");
+        $bookingClass = (string) $flightXML->CLASSOFFLIGHT;
+        $cabinClass = "Economy";
         $journeyObject = new Journey();
-        $journeyObject->key = Fly_seach_helper::create_unique_solution_key();
-        $journeyObject->identifier = (string)$flightXML->FLIGHTIDENTIFIER;
-        $journeyObject->type = Fly_Constant::DEPARTURE_JOURNEY_TYPE;
-        $journeyObject->air_segment_keys = array();
-        $journeyObject->air_segment_items = array();
+        $journeyObject->key = substr(md5(microtime()), 0, 10);
+        $journeyObject->identifier = (string) $flightXML->FLIGHTIDENTIFIER;
+        $journeyObject->airPriceSolutionKeyRef = $airPriceSolution->key;
+
+        loadClass(APPPATH . "/models/fly_search/air_segment.php");
+        loadClass(APPPATH . "/models/fly_search/book_info.php");
         foreach ($flightXML->SEGMENTS->FSEGMENT_STRC as $flightSegmentXML) {
             $airSegmentObject = new AirSegment();
-            $airSegmentObject->key = substr(md5(microtime()), 0, 10);
+            $airSegmentObject->key = substr(md5($journeyObject->identifier), 0, 10);
             $airSegmentObject->carrier = (string) $flightSegmentXML->CARRIERCODE;
-            
-
-            $airCompanyObject = AirlineService::getAirlineByIATACode($airSegmentObject->carrier);
-            if (isset($airCompanyObject)) {
-                $airSegmentObject->carrierName = $airCompanyObject->name;
-            } else {
-                $airSegmentObject->carrierName = $airSegmentObject->carrier;
+            if (!isset($this->airlineArray[$airSegmentObject->carrier])) {
+                $airCompanyObject = AirlineService::getAirlineByIATACode($airSegmentObject->carrier);
+                $this->airlineArray[$airSegmentObject->carrier] = $airCompanyObject;
             }
-
-
-            $airSegmentObject->flight_number = (string) $flightSegmentXML->FLIGHTNUMBER;
+            $airSegmentObject->flightNumber = (string) $flightSegmentXML->FLIGHTNUMBER;
             $airSegmentObject->origin = (string) $flightSegmentXML->DEPARTURECODE;
-            $originAirportObject  = null;
-           if(!isset($this->airportArray[ $airSegmentObject->origin])){
+            $airSegmentObject->destination = (string) $flightSegmentXML->ARRIVALCODE;
+            $avaibleSeatCount = (string) $flightSegmentXML->AVAILSEATS;
+
+            $airSegmentObject->bookingCounts = $bookingClass . $avaibleSeatCount;
+            if (!isset($this->airportArray[$airSegmentObject->origin])) {
                 $airportService = AirportService::getInstance();
-                $originAirportObject = $airportService->getAirportDetail($airSegmentObject->origin);  
+                $originAirportObject = $airportService->getAirportDetail($airSegmentObject->origin);
                 $this->airportArray[$airSegmentObject->origin] = $originAirportObject;
-            }else{
-                 $originAirportObject = $this->airportArray[ $airSegmentObject->origin];
+            } else {
+                $originAirportObject = $this->airportArray[$airSegmentObject->origin];
             }
-             $airSegmentObject->destination = (string) $flightSegmentXML->ARRIVALCODE;
+
             $destinationAirportObject = null;
-            if(!isset($this->airportArray[$airSegmentObject->destination])){
+            if (!isset($this->airportArray[$airSegmentObject->destination])) {
                 $airportService = AirportService::getInstance();
-                $destinationAirportObject = $airportService->getAirportDetail( $airSegmentObject->destination);
+                $destinationAirportObject = $airportService->getAirportDetail($airSegmentObject->destination);
                 $this->airportArray[$airSegmentObject->destination] = $destinationAirportObject;
-            }else{
+            } else {
                 $destinationAirportObject = $this->airportArray[$airSegmentObject->destination];
             }
-        
-            $airSegmentObject->booking_code = (string) $bookingClass;
-            $airSegmentObject->avaible_booking_count = (string) $flightSegmentXML->AVAILSEATS;
-            $airSegmentObject->booking_counts = (string) $bookingClass . $airSegmentObject->avaible_booking_count;
-            $airSegmentObject->booking_cabin_class = 'Economy';
 
             $departureDate = (string) $flightSegmentXML->DEPARTUREDATE;
             $departureTime = (string) $flightSegmentXML->DEPARTURETIME;
@@ -269,171 +351,101 @@ EOM;
             $arrivalTime = (string) $flightSegmentXML->ARRIVALTIME;
 
             $departureDateTime = DateTime::createFromFormat("Ymd Hi", $departureDate . ' ' . $departureTime);
-            $depatureDateTimezoneName = timezone_name_from_abbr("", intval($originAirportObject->utcOffset)*3600,null);
-           // 
-            $airSegmentObject->departure_time = $departureDateTime->format(DateTime::ISO8601);
-            $airSegmentObject->departure_date = $departureDateTime->format("d.m.Y");
-            $airSegmentObject->departure_hours = $departureDateTime->format('H:i');
+            $depatureDateTimezoneName = timezone_name_from_abbr("", intval($originAirportObject->utcOffset) * 3600, null);
+            // 
+            $airSegmentObject->departureTime = $departureDateTime->format(DateTime::ISO8601);
+            $airSegmentObject->departureDate = $departureDateTime->format("d.m.Y");
+            $airSegmentObject->departureHours = $departureDateTime->format('H:i');
             $departureDateTime->setTimezone(new DateTimeZone($depatureDateTimezoneName));
-            $arrivalDateTime = DateTime::createFromFormat("Ymd Hi", $arrivalDate .' '.$arrivalTime);
-            $arrivalDateTimezoneName  = timezone_name_from_abbr("", intval($destinationAirportObject->utcOffset)*3600,null);
+            $arrivalDateTime = DateTime::createFromFormat("Ymd Hi", $arrivalDate . ' ' . $arrivalTime);
+            $arrivalDateTimezoneName = timezone_name_from_abbr("", intval($destinationAirportObject->utcOffset) * 3600, null);
             //
-            $airSegmentObject->arrival_time = $arrivalDateTime->format(DateTime::ISO8601);
-            $airSegmentObject->arrival_date = $arrivalDateTime->format("d.m.Y");
-            $airSegmentObject->arrival_hours = $arrivalDateTime->format("H:i");
-           $arrivalDateTime->setTimezone(new DateTimeZone($arrivalDateTimezoneName));
-                $diffTimestamp =  $arrivalDateTime->getTimestamp()-$departureDateTime->getTimestamp();
-            $airSegmentObject->flight_time = $diffTimestamp/60;
-            array_push($journeyObject->air_segment_keys, $airSegmentObject->key);
-            array_push($journeyObject->air_segment_items, $airSegmentObject);
-            //@TODO tarih ile ilgili kısmı yapmayı unutma.
+            $airSegmentObject->arrivalTime = $arrivalDateTime->format(DateTime::ISO8601);
+            $airSegmentObject->arrivalDate = $arrivalDateTime->format("d.m.Y");
+            $airSegmentObject->arrivalHours = $arrivalDateTime->format("H:i");
+            $arrivalDateTime->setTimezone(new DateTimeZone($arrivalDateTimezoneName));
+            $diffTimestamp = $arrivalDateTime->getTimestamp() - $departureDateTime->getTimestamp();
+            $airSegmentObject->flightTime = $diffTimestamp / 60;
+            $this->airSegmentArray[$airSegmentObject->key] = $airSegmentObject;
+            $journeyObject->addAirSegment($airSegmentObject, TRUE);
+
+            $fareBase = (string) $flightSegmentXML->FAREBASE;
+
+
+            //fareInfo create ;
+            $fareInfoObject = new FareInfo();
+            $fareInfoObject->key = substr(md5(microtime()), 0, 10);
+            $fareInfoObject->origin = $airSegmentObject->origin;
+            $fareInfoObject->destination = $airSegmentObject->destination;
+            $fareInfoObject->fareRuleKey = $journeyObject->identifier;
+            $fareInfoObject->maxWeightOfAllowedBaggage = 20; // Burası değişecek;
+            $fareInfoObject->weightUnit = "Kg";
+            $fareInfoObject->departureDate = $airSegmentObject->departureTime;
+            $fareInfoObject->fareBasis = $fareBase;
+            $this->fareInfoArray[$fareInfoObject->key] = $fareInfoObject;
+
+            $bookingInfoObject = new BookingInfo($bookingClass, $cabinClass, $fareInfoObject->key, $airSegmentObject->key);
+            foreach ($airPriceSolution->airPricingInfoArray as $airPriceInfoObject) {
+                $journeyObject->addBookingInfo($bookingInfoObject, $airPriceInfoObject->passengerType);
+            }
         }
         return $journeyObject;
     }
 
-    private function combineAirPriceSolutions($airPriceSolutions) {
-        $combinedAirPriceSolutionsArray = array();
-        $airPriceSolutionMapArray = array();
-
-        foreach ($airPriceSolutions as $airPriceSolution) {
-            if (isset($airPriceSolutionMapArray[$airPriceSolution->apprixomate_total_price])) {
-                $samePricedArray = $airPriceSolutionMapArray[$airPriceSolution->apprixomate_total_price];
-                array_push($samePricedArray, $airPriceSolution);
-                $airPriceSolutionMapArray[$airPriceSolution->apprixomate_total_price] = $samePricedArray;
+    private function combineAirPriceSolutions(LowFareSearchResult $lowFareSearchResult) {
+        if ($lowFareSearchResult->errorCode != TravelPortErrorCodes::SUCCESS) {
+            return $lowFareSearchResult;
+        }
+        $samePricedSolutionArray = array(); // aynı fiyata sahip solutionları tutar;
+        $airPriceSolutionArray = $lowFareSearchResult->airPriceSolutionArray;
+        foreach ($airPriceSolutionArray as $airPriceSolution) {
+            if (isset($samePricedSolutionArray[$airPriceSolution->apprixomate_total_price])) {
+                array_push($samePricedSolutionArray[$airPriceSolution->apprixomate_total_price], $airPriceSolution);
             } else {
-                $samePricedArray = array();
-                array_push($samePricedArray, $airPriceSolution);
-                $airPriceSolutionMapArray[$airPriceSolution->apprixomate_total_price] = $samePricedArray;
+                $samePricedSolutionArray[$airPriceSolution->apprixomate_total_price] = array();
+                array_push($samePricedSolutionArray[$airPriceSolution->apprixomate_total_price], $airPriceSolution);
             }
         }
 
-        foreach ($airPriceSolutionMapArray as $samePricedSolutions) {
+        loadClass(APPPATH . '/models/fly_search/combined_air_price_solution.php');
+        $lowFareSearchResult->combinedAirPriceSolutionArray = array();
+        foreach ($samePricedSolutionArray as $samedPricedSolutions) {
             $combinedAirPriceSolutionObject = new CombinedAirPriceSolution();
-            $combinedAirPriceSolutionObject->apprixomate_total_price = $samePricedSolutions[0]->apprixomate_total_price;
-            $combinedAirPriceSolutionObject->apprixomate_total_price_amount = $samePricedSolutions[0]->apprixomate_total_price_amount;
-            $combinedAirPriceSolutionObject->approximate_base_price = $samePricedSolutions[0]->approximate_base_price;
-            $combinedAirPriceSolutionObject->taxes_amount = $samePricedSolutions[0]->taxes_amount;
-            $combinedAirPriceSolutionObject->taxes = $samePricedSolutions[0]->taxes;
-            $combinedAirPriceSolutionObject->air_price_info_items = $samePricedSolutions[0]->air_pricing_info;
-            $combinedAirPriceSolutionObject->combined_key = Fly_seach_helper::create_unique_solution_key();
-            $combinedAirPriceSolutionObject->api_code = Fly_Constant::CORENDON_API_CODE;
-            $departureJourneys = array();
-            $returnJourneys = array();
-            $departureJourneysUniqueKeys = array();
-            $returnJourneysUniqueKeys = array();
-            $goJourneyRelatedIdKey = array();
-            $returnJourneyRelatedIdKey = array();
-
-            foreach ($samePricedSolutions as $airPriceSolution) {
-                $departureJourney = null;
-                $returnJourney = null;
-                $isExistDepartureJourney = FALSE;
-                $isExistReturnJourney = FALSE;
-                $uniqueDepartureJourneyKey = "";
-                $uniqueReturnJourneyKey = "";
-                $departureJourneyAirCompany = Fly_Constant::COMBINATION_AIR_COMPANY;
-                $returnJourneyAirCompany = Fly_Constant::COMBINATION_AIR_COMPANY;
-
-                foreach ($airPriceSolution->journeys as $journey) {
-                    if ($journey->type == Fly_Constant::DEPARTURE_JOURNEY_TYPE) {
-                        $departureJourney = $journey;
-                    } else if ($journey->type == Fly_Constant::RETURN_JOURNEY_TYPE) {
-                        $returnJourney = $journey;
+            $isFirstSamePricedSolution = TRUE;
+            foreach ($samedPricedSolutions as $airPriceSolution) {
+                if ($isFirstSamePricedSolution) {
+                    $combinedAirPriceSolutionObject->apprixomateTotalPrice = $airPriceSolution->apprixomate_total_price;
+                    $combinedAirPriceSolutionObject->apprixomateTotalPriceAmount = $airPriceSolution->apprixomate_total_price_amount;
+                    $combinedAirPriceSolutionObject->approximateBasePrice = $airPriceSolution->approximate_base_price;
+                    //$combinedAirPriceSolutionObject->approximateBasePriceAmount = $airPriceSolution->approximate_base_price_amount;
+                    $combinedAirPriceSolutionObject->taxesAmount = $airPriceSolution->taxes_amount;
+                    $combinedAirPriceSolutionObject->taxes = $airPriceSolution->taxes;
+                    $combinedAirPriceSolutionObject->combinedKey = Fly_seach_helper::create_unique_solution_key();
+                    $combinedAirPriceSolutionObject->apiCode = Fly_Constant::CORENDON_API_CODE;
+                    foreach ($airPriceSolution->legs as $legObject) {
+                        $combinedAirPricingSolutionLegObject = clone $legObject;
+                        unset($combinedAirPricingSolutionLegObject->avaibleJourneyOptions);
+                        $combinedAirPriceSolutionObject->addLeg($legObject);
                     }
                 }
 
-                if ($departureJourney != null) {
-                    
-                    $uniqueDepartureJourneyKey = md5($departureJourney->identifier);
-                    if (isset($departureJourneysUniqueKeys[$uniqueDepartureJourneyKey])) {
-                        $isExistDepartureJourney = TRUE;
-                    } else {
-                        $isExistDepartureJourney = FALSE;
-                    }
-                    $departureJourneyAirCompany = $this->getJourneyAirCompany($departureJourney);
+                foreach ($airPriceSolution->airPricingInfoArray as $airPricingInfo) {
+                    $combinedAirPriceSolutionObject->addAirPricingInfo($airPricingInfo, $airPriceSolution->key);
                 }
-
-                if ($returnJourney != null) {
-                    $uniqueReturnJourneyKey = md5($returnJourney->identifier);
-                    if (isset($returnJourneysUniqueKeys[$uniqueReturnJourneyKey])) {
-                        $isExistReturnJourney = TRUE;
-                    } else {
-                        $isExistReturnJourney = FALSE;
-                    }
-                    $returnJourneyAirCompany = $this->getJourneyAirCompany($returnJourney);
-                }
-                
-                
-                if (!$isExistDepartureJourney && !$isExistReturnJourney) {
-                    if ($returnJourney != null) {
-                        $returnJourney->related_journey_id = $uniqueReturnJourneyKey;
-                        $departureJourney->related_journey_id = $uniqueReturnJourneyKey;
-                        $goJourneyRelatedIdKey[$uniqueDepartureJourneyKey] = $uniqueReturnJourneyKey;
-                        $returnJourneyRelatedIdKey[$uniqueReturnJourneyKey] = $uniqueReturnJourneyKey;
-                    }
-                } else if (!$isExistDepartureJourney && $isExistReturnJourney) {
-                    if (isset($returnJourneyRelatedIdKey[$uniqueReturnJourneyKey])) {
-                        $departureJourney->related_journey_id = $returnJourneyRelatedIdKey[$uniqueReturnJourneyKey];
-                    }
-                } else if ($isExistDepartureJourney && !$isExistReturnJourney) {
-                    if ($returnJourney != null) {
-                        if (isset($goJourneyRelatedIdKey[$uniqueReturnJourneyKey])) {
-                            $returnJourney->related_journey_id = $goJourneyRelatedIdKey[$uniqueDepartureJourneyKey];
-                        }
+                foreach ($airPriceSolution->legs as $legObject) {
+                    $combinedAirPricingSolutionLegObject = $combinedAirPriceSolutionObject->legs[$legObject->key];
+                    foreach ($legObject->avaibleJourneyOptions as $journeyObject) {
+                        $combinedAirPricingSolutionLegObject->addAvaibleJourney($journeyObject);
                     }
                 }
-
-                if (!$isExistDepartureJourney && $departureJourney != null) {
-                    $departureJourney->key = $uniqueReturnJourneyKey;
-                    if ($returnJourney != null) {
-                        if ($departureJourneyAirCompany == $returnJourneyAirCompany) {
-                            $departureJourney->air_company = $departureJourneyAirCompany;
-                        } else {
-                            $departureJourney->air_company = Fly_Constant::COMBINATION_AIR_COMPANY;
-                        }
-                    } else {
-                        $departureJourney->air_company = $departureJourneyAirCompany;
-                    }
-                    array_push($departureJourneys, $departureJourney);
-                    $departureJourneysUniqueKeys[$uniqueDepartureJourneyKey] = $uniqueDepartureJourneyKey;
-                }
-
-                if (!$isExistReturnJourney && $returnJourney != null) {
-
-                    $returnJourney->key = $uniqueReturnJourneyKey;
-                    if ($departureJourneyAirCompany == $returnJourneyAirCompany) {
-                        $returnJourney->air_company = $returnJourneyAirCompany;
-                    } else {
-                        $returnJourney->air_company = Fly_Constant::COMBINATION_AIR_COMPANY;
-                    }
-
-                    array_push($returnJourneys, $returnJourney);
-                    $returnJourneysUniqueKeys[$uniqueReturnJourneyKey] = $uniqueReturnJourneyKey;  
-                }
+                $isFirstSamePricedSolution = FALSE;
             }
-           
-            $combinedAirPriceSolutionObject->departure_journeys = $departureJourneys;
-            $combinedAirPriceSolutionObject->return_journeys = $returnJourneys;
-            $combinedAirPriceSolutionsArray[$combinedAirPriceSolutionObject->combined_key] = $combinedAirPriceSolutionObject;
-          
-            }
-            
-            return $combinedAirPriceSolutionsArray;
+            $lowFareSearchResult->combinedAirPriceSolutionArray[$combinedAirPriceSolutionObject->combinedKey] = $combinedAirPriceSolutionObject;
         }
-        
-        
-        private function getJourneyAirCompany($journey){
-              $previousCarrier = null;
-              foreach ($journey->air_segment_items as $airSegment){
-                  if($previousCarrier == null){
-                      $previousCarrier  = $airSegment->carrier;
-                  }else if($previousCarrier != $airSegment->carrier){
-                      return Fly_Constant::COMBINATION_AIR_COMPANY;
-                  }
-              }
-              return $previousCarrier;
-        }
-    
+        //unset($lowSearchResult->airPriceSolutionArray);
+        return $lowFareSearchResult;
+    }
+
 }
 ?>
 

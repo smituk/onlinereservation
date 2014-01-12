@@ -27,6 +27,32 @@ class AirPricingSolution  {
        }
        return null;
    }
+   
+   public function addLeg(AirLeg $legObject){
+       if(!isset($this->legs)){
+           $this->legs = array();
+       }
+       $this->legs[$legObject->key] = $legObject;
+   }
+   
+   public function getLeg($legKey){
+       if(isset($this->legs[$legKey])){
+           return $this->legs[$legKey];
+       }
+       return NULL;
+   }
+   
+   public function getLegByIndex($indexCount){
+       if(!isset($this->legs)){
+           return NULL;
+       }
+       
+       $legObjects = array_values($this->legs);
+       if(isset($legObjects[$indexCount])){
+           return $legObjects[$indexCount];
+       }
+       return NULL;
+   }
 }
 
 /*

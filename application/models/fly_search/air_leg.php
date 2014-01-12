@@ -7,6 +7,11 @@
         public $direction; //Gidis;G , Donüs:R;
          
         
+       public function getJourneys(){
+           return $this->avaibleJourneyOptions;
+       }
+       
+       
         
        public function  addAvaibleJourney(Journey $journey){
            if(!isset($this->avaibleJourneyOptions)){
@@ -31,6 +36,18 @@
            }else{
                array_push($this->avaibleJourneyOptions,$journey);
                 $journey->addAirPriceSolutionKeyRef($journey->airPriceSolutionKeyRef);
+           }
+           return TRUE;
+       }
+       
+       public function removeJourney(Journey $journey){
+           $offset = 0;
+           foreach ($this->avaibleJourneyOptions  as $journeyOption){
+               if($journeyOption->key == $journey->key){
+                  array_splice($this->avaibleJourneyOptions, $offset,1);
+                   break;
+               }
+              $offset++; 
            }
            return TRUE;
        }

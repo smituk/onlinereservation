@@ -61,8 +61,6 @@ EOM;
     
     public function convertObject($responseXml ,  $isConverted = FALSE){
         
-       
-        $this->rawResponseXML = $responseXml; 
         $airPriceXML= new SimpleXMLElement($responseXml);
         $airPriceXML->formatOutput = true;
         $airPriceXML->registerXPathNamespace('air', 'http://www.travelport.com/schema/air_v23_0');
@@ -82,13 +80,14 @@ EOM;
             
             preg_match('/([^a-zA-Z]+)/', $combinedAirPriceSolution->taxes, $tax_price_match);
             $combinedAirPriceSolution->taxesAmount = $tax_price_match[0];
+            $combinedAirPriceSolution->approximateBasePriceAmount = $combinedAirPriceSolution->apprixomateTotalPriceAmount-$combinedAirPriceSolution->taxesAmount;
             $combinedAirPriceSolution->airPricingInfoArray = array();
             $adultAirPriceInfo = null;
             foreach($airPriceXML->xpath('//air:AirPricingInfo') as $airPriceInfoXML){
                 $currentAirPriceInfo = TravelportCommon::airPriceInfoXMLToObject($airPriceInfoXML);
-                $combinedAirPriceSolution->airPriceInfoArray[$combinedAirPriceSolution->combinedKey][$currentAirPriceInfo->passengerType]=$currentAirPriceInfo;
+                $combinedAirPriceSolution->airPricingInfoArray[$combinedAirPriceSolution->combinedKey][$currentAirPriceInfo->passengerType]=$currentAirPriceInfo;
                 if($currentAirPriceInfo->passengerType == "ADT"){
-                    $adultAirPriceInfo =  $combinedAirPriceSolution->airPriceInfoArray[$combinedAirPriceSolution->combinedKey][$currentAirPriceInfo->passengerType];
+                    $adultAirPriceInfo =  $combinedAirPriceSolution->airPricingInfoArray[$combinedAirPriceSolution->combinedKey][$currentAirPriceInfo->passengerType];
                 }
                 
             }
@@ -99,61 +98,29 @@ EOM;
              $airSegmentObject  = TravelportCommon::airSegmentXMLToObject($airSegmentXml);
              $bookingShortInfo  = $bookingShortInfoArray[$airSegmentObject->key];
              $airSegmentObject->bookingCabinClass= $bookingShortInfo->cabinClass;
-             $airSegmentObjectArray[$airSegmentObject->key] = $airSegmentObject;
+             array_push($airSegmentObjectArray,$airSegmentObject);
              
             }
             $legIndexCount = 0;
+            $currentAirSegmentObjectArrayIndex = 0;
             foreach ($this->combinedAirPriceSolution->legs as $legObject){
                 $bookPriceVerifyLegObject  = clone  $legObject;
                 $bookPriceVerifyLegObject->resetJourneys();
                 $bookPriceVerifyJourneyObject = clone $this->selectedJourneys[$legIndexCount];
-                //$airSegmentCount = count($bookPriceVerifyJourneyObject->
+                $airSegmentCount = count($bookPriceVerifyJourneyObject->airSegmentKeys);
                 $bookPriceVerifyJourneyObject->clearAirSegments();
+                $bookPriceVerifyJourneyObject->clearBookingInfoArray();
+                for($i= 0; $i < $airSegmentCount; $i++){
+                   $airSegmentObject = $airSegmentObjectArray[$currentAirSegmentObjectArrayIndex];
+                   $bookPriceVerifyJourneyObject->addAirSegment($airSegmentObject);
+                   $currentAirSegmentObjectArrayIndex++;
+                }
+                $bookPriceVerifyLegObject->addAvaibleJourney($bookPriceVerifyJourneyObject);
                 
-                
-                $legIndexCount = 0;
+                $combinedAirPriceSolution->addLeg($bookPriceVerifyLegObject);
+                $legIndexCount++;
             }
-            
-            // for Journeys
-            $allJourneys = array();
-            if(count($this->journeyKeys) == 1){
-                $journey =  new Journey();
-                $journey->air_segment_items = $airSegmentObjectArray;
-                $journey->type = Fly_Constant::DEPARTURE_JOURNEY_TYPE;
-                array_push($allJourneys, $journey);
-            }else if(count($this->journeyKeys) == 2){
-                 $journeyCount = 0;
-                 $currentAirSegmentCount = 0;
-                 foreach(array_values($this->journeyKeys) as $journeyKey){
-                     $journey = new Journey();
-                     $journeyType  = Fly_Constant::DEPARTURE_JOURNEY_TYPE;
-                     if($journeyCount > 0){
-                         $journeyType = Fly_Constant::RETURN_JOURNEY_TYPE;
-                     }
-                     $airSegmentCount =  count(explode(":",trim($journeyKey,":")));
-                     $journey->air_segment_items = array_slice(array_values($airSegmentObjectArray), $currentAirSegmentCount,$airSegmentCount);
-                     $journeyCount++;
-                     $journey->type = $journeyType;
-                     $currentAirSegmentCount = $currentAirSegmentCount + $airSegmentCount;
-                     array_push($allJourneys,$journey);
-                 } 
-            }else if(count($this->journeyKeys) > 2){ // coklu ucuslar için 
-                   $currentAirSegmentCount = 0;
-                     
-                   foreach($this->journeyKeys as $journeyKey){
-                     $journey = new Journey();
-                     $journeyType  = Fly_Constant::DEPARTURE_JOURNEY_TYPE;
-                     $airSegmentCount =  count(explode(":",trim($journeyKey,":")));
-                     $journey->air_segment_items = array_slice($airSegmentObjectArray, $currentAirSegmentCount,$airSegmentCount);
-                     $journeyCount++;
-                     $journey->type = $journeyType;
-                     $currentAirSegmentCount = $airSegmentCount;
-                     array_push($allJourneys,$journey);
-                   }
-            }
-            $air_price_solution_object->allJourneys = $allJourneys;
-            
-            return $air_price_solution_object;
+            return $combinedAirPriceSolution;
          }
          
     }

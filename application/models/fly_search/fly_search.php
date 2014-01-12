@@ -36,17 +36,18 @@ class Fly_search extends CI_Model {
             $service = ServiceLocator::getInstance()->getAirServiceProvider($apiCode);
             $responseXMLData = $service->searchFlight($search_criteria);
             $lowFareSearchResult = $service->convertXMLToCombinedAirPriceSolutions($responseXMLData, $search_criteria);
+            //file_put_contents("ccccc.json", json_encode($lowFareSearchResult));
             if ($lowFareSearchResult->errorCode == ErrorCodes::SUCCESS) {
-                $totalLowFareSearchResult->airSegmentArray +=  $lowFareSearchResult->airSegmentArray;
+                $totalLowFareSearchResult->airSegmentArray += $lowFareSearchResult->airSegmentArray;
                 $totalLowFareSearchResult->fareInfoArray += $lowFareSearchResult->fareInfoArray;
-                $totalLowFareSearchResult->combinedAirPriceSolutionArray +=  $lowFareSearchResult->combinedAirPriceSolutionArray;
+                $totalLowFareSearchResult->combinedAirPriceSolutionArray += $lowFareSearchResult->combinedAirPriceSolutionArray;
                 $totalLowFareSearchResult->airportArray += $lowFareSearchResult->airportArray;
                 $totalLowFareSearchResult->airlineArray += $lowFareSearchResult->airlineArray;
             }
             unset($lowFareSearchResult);
         }
 
-        //uasort($combined_air_solutions_array, "combinedAirPriceSolutionSorter");
+        uasort($totalLowFareSearchResult->combinedAirPriceSolutionArray, "combinedAirPriceSolutionSorter");
         $session = new Session(300);
         $session->set(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER, $totalLowFareSearchResult);
         return $totalLowFareSearchResult;
@@ -105,199 +106,404 @@ class Fly_search extends CI_Model {
             return null;
         }
 
-        $all_combined_air_price_solutions = $this->getFlightSearchResult();
-        $filtered_combined_air_price_solutions = array();
-        foreach ($all_combined_air_price_solutions as $combined_air_price_solution) {
-            $filtered = true;
-            $filtered_departure_journey_keys = array();
-            $filtered_return_journey_keys = array();
-            $is_all_departure_journeys_filtered = false;
-            $is_all_return_journeys_filtered = false;
 
+        $lowFareSearchResult = $this->getFlightSearchResult();
+
+        $filteredCombinedAirPriceSolutionArray = array();
+
+        foreach ($lowFareSearchResult->combinedAirPriceSolutionArray as $combinedAirPriceSolution) {
+            $filtered = true;
+            $clonedCombinedAirPriceSolution = clone $combinedAirPriceSolution;
             //fiyat filtresi için 
             if (isset($filterCriteriaObject->{Fly_Constant::FILTER_MIN_PRICE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_MAX_PRICE_PARAMETER})) {
-                if ($filtered && !((int) $combined_air_price_solution->apprixomate_total_price_amount >= (int) $filterCriteriaObject->{Fly_Constant::FILTER_MIN_PRICE_PARAMETER} && (int) $combined_air_price_solution->apprixomate_total_price_amount <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_MAX_PRICE_PARAMETER})) {
+                if ($filtered && !((int) $clonedCombinedAirPriceSolution->apprixomateTotalPriceAmount >= (int) $filterCriteriaObject->{Fly_Constant::FILTER_MIN_PRICE_PARAMETER} && (int) $clonedCombinedAirPriceSolution->apprixomateTotalPriceAmount <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_MAX_PRICE_PARAMETER})) {
                     $filtered = false;
+                    continue;
                 }
             }
-            // stopCount için 
-            if ($filtered) {
 
-                if (isset($filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER}) || isset($filterCriteriaObject->{Fly_Constant::FILTER_IS_NO_STOP_PARAMETER})) {
-                    $departure_journeys = $combined_air_price_solution->departure_journeys;
-                    $return_journeys = $combined_air_price_solution->return_journeys;
-                    $stop_count_filter_departure_journey_keys = array();
-                    $stop_count_filter_return_journey_keys = array();
+            $oneByOneAirPriceSolutions = $this->convertCombinedToOneAirSolutionRecursively(array_values($clonedCombinedAirPriceSolution->legs), NULL, 0);
 
-                    foreach ($departure_journeys as $departure_journey) {
-                        $stopCount = $departure_journey->getStopCount();
-                        $found_return_journey = null;
-                        if ($return_journeys != null) {
-                            foreach ($return_journeys as $return_journey) {
-                                if ($return_journey->related_journey_id == $departure_journey->related_journey_id) {
-                                    $found_return_journey = $return_journey;
-                                    if ($stopCount < $return_journey->getStopCount()) {
-                                        $stopCount = $return_journey->getStopCount();
-                                        break;
-                                    }
-                                }
-                            }
+            if (isset($filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER}) || isset($filterCriteriaObject->{Fly_Constant::FILTER_IS_NO_STOP_PARAMETER}) || isset($filterCriteriaObject->{Fly_Constant::FILTER_SELECTED_AIRLINE_COMPANIES_PARAMETER})) {
+                $legToJourneysMappingArray = array();
+                $stopCountArray = array();
+                $carrierCountArray = array();
+                foreach ($oneByOneAirPriceSolutions as $oneAirPriceSolution) {
+                    $stopCount = 0;
+                    $carrrier = null;
+                    foreach ($oneAirPriceSolution["journeys"] as $journey) {
+                        if ($stopCount < $journey->getStopCount()) {
+                            $stopCount = $journey->getStopCount();
                         }
-                        if (isset($filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER})) {
-                            if (((int) $filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER} == $stopCount)) {
-                                array_push($stop_count_filter_departure_journey_keys, $departure_journey);
-                                if ($found_return_journey != null) {
-                                    array_push($stop_count_filter_return_journey_keys, $found_return_journey);
-                                }
+                        $carriers = $journey->getCarriers($lowFareSearchResult->airSegmentArray);
+                        $currentCarrier = $carriers[0];
+                        if ($carrrier == NULL) {
+                            $carrrier = $carriers[0];
+                            if (count($carriers) > 1) {
+                                $currentCarrier = Fly_Constant::COMBINATION_AIR_COMPANY;
                             }
                         } else {
-                            if (isset($filterCriteriaObject->{Fly_Constant::FILTER_IS_NO_STOP_PARAMETER}) && (int) $filterCriteriaObject->{Fly_Constant::FILTER_IS_NO_STOP_PARAMETER} == 1) {
-                                if ($stopCount == 0) {
-                                    array_push($stop_count_filter_departure_journey_keys, $departure_journey);
-                                    if ($found_return_journey != null) {
-                                        array_push($stop_count_filter_return_journey_keys, $found_return_journey);
-                                    }
-                                }
-                            } if (isset($filterCriteriaObject->{Fly_Constant::FILTER_ONE_STOP_PARAMETER}) && (int) $filterCriteriaObject->{Fly_Constant::FILTER_ONE_STOP_PARAMETER} == 1) {
-                                if ($stopCount == 1) {
-                                    array_push($stop_count_filter_departure_journey_keys, $departure_journey);
-                                    if ($found_return_journey != null) {
-                                        array_push($stop_count_filter_return_journey_keys, $found_return_journey);
-                                    }
-                                }
-                            } if (isset($filterCriteriaObject->{Fly_Constant::FILTER_TWO_MORE_STOP_PARAMETER}) && (int) $filterCriteriaObject->{Fly_Constant::FILTER_TWO_MORE_STOP_PARAMETER} == 1) {
-                                if ($stopCount > 1) {
-                                    array_push($stop_count_filter_departure_journey_keys, $departure_journey);
-                                    if ($found_return_journey != null) {
-                                        array_push($stop_count_filter_return_journey_keys, $found_return_journey);
-                                    }
-                                }
+
+                            if (count($carriers) > 1) {
+                                $currentCarrier = Fly_Constant::COMBINATION_AIR_COMPANY;
+                            }
+                            if ($currentCarrier != $carrrier) {
+                                $currentCarrier = Fly_Constant::COMBINATION_AIR_COMPANY;
                             }
                         }
+                        $carrrier = $currentCarrier;
                     }
-                    if (count($stop_count_filter_departure_journey_keys) < 1) {
-                        $filtered = false;
+                    if ($stopCount > 2) {
+                        $stopCount = 2;
                     }
-                    if ($return_journeys != null && count($stop_count_filter_return_journey_keys) < 1) {
-                        $filtered = false;
-                    }
+                    $stopCountArray[$stopCount][(int) $oneAirPriceSolution["key"]] = $oneAirPriceSolution;
+                    $carrierCountArray[$carrrier][(int) $oneAirPriceSolution["key"]] = $oneAirPriceSolution;
                 }
-            }
-            if ($filtered) {
-                $departure_journeys = $combined_air_price_solution->departure_journeys;
-                $return_journeys = $combined_air_price_solution->return_journeys;
 
-                foreach ($departure_journeys as $departure_journey) {
-                    $is_departure_journey_added = true;
+                $noStopAirSolutions = isset($stopCountArray[0]) ? $stopCountArray[0] : null;
+                $oneStopAirSolutions = isset($stopCountArray[1]) ? $stopCountArray[1] : null;
+                $moreThanOneStopAirSolutions = isset($stopCountArray[2]) ? $stopCountArray[2] : null;
+
+                if (isset($filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER})) {
+
+                    if ($filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER} == "0") {
+                        if ($noStopAirSolutions == null) {
+                            $filtered = false;
+                            continue;
+                        }
+
+                        foreach ($noStopAirSolutions as $noStopAirSolution) {
+                            $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($noStopAirSolution, $legToJourneysMappingArray);
+                        }
+                        // diger stopları cıkar;
+                    } else if ($filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER} == "1") {
+                        if ($oneStopAirSolutions == null) {
+                            $filtered = false;
+                            continue;
+                        }
+                        foreach ($oneStopAirSolutions as $oneStopAirSolution) {
+                            $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($oneStopAirSolution, $legToJourneysMappingArray);
+                        }
+                        // diger stopları cıkar
+                    } else if ($filterCriteriaObject->{Fly_Constant::FILTER_STOP_COUNT_PARAMTER} == "2") {
+                        if ($moreThanOneStopAirSolutions == null) {
+                            $filtered = false;
+                            continue;
+                        }
+                        foreach ($moreThanOneStopAirSolutions as $moreThanOneStopAirSolution) {
+                            $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($moreThanOneStopAirSolution, $legToJourneysMappingArray);
+                        }
+                        // diger stopları cıkar journey
+                    }
+                    //One Airline Company için
                     if (isset($filterCriteriaObject->{Fly_Constant::FILTER_AIRLINE_COMPANY})) {
                         $airlineCompany = $filterCriteriaObject->{Fly_Constant::FILTER_AIRLINE_COMPANY};
-                        if (!($departure_journey->getAirlineCompany() == $airlineCompany)) {
-                            $is_departure_journey_added = false;
+                        if (!isset($carrierCountArray[$airlineCompany])) {
+                            $filtered = false;
+                            continue;
                         }
-                    } else if (isset($filterCriteriaObject->{Fly_Constant::FILTER_SELECTED_AIRLINE_COMPANIES_PARAMETER})) {
+                        $tempLegToJourneysMappingArray = array();
+                        foreach ($carrierCountArray[$airlineCompany] as $filteredCarrierAirSolution) {
+                            $tempLegToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($filteredCarrierAirSolution, $tempLegToJourneysMappingArray);
+                        }
+                      
+                        $legToJourneysMappingArray = Fly_seach_helper::intersectLegJourneysMappingArray($legToJourneysMappingArray, $tempLegToJourneysMappingArray);
+                         
+                        
+                        }
+                } else {
+                    $isStopCountFilterEntered = false;
+                    if (isset($filterCriteriaObject->{Fly_Constant::FILTER_IS_NO_STOP_PARAMETER}) && (int) $filterCriteriaObject->{Fly_Constant::FILTER_IS_NO_STOP_PARAMETER} == 1) {
+                        if (isset($noStopAirSolutions)) {
+                            foreach ($noStopAirSolutions as $noStopAirSolution) {
+                                $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($noStopAirSolution, $legToJourneysMappingArray);
+                            }
+                        }
+                        $isStopCountFilterEntered = true;
+                    }
+                    if (isset($filterCriteriaObject->{Fly_Constant::FILTER_ONE_STOP_PARAMETER}) && (int) $filterCriteriaObject->{Fly_Constant::FILTER_ONE_STOP_PARAMETER} == 1) {
+                        if (isset($oneStopAirSolutions)) {
+                            foreach ($oneStopAirSolutions as $oneStopAirSolution) {
+                                $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($oneStopAirSolution, $legToJourneysMappingArray);
+                            }
+                        }
+                        $isStopCountFilterEntered = true;
+                    }
+                    if (isset($filterCriteriaObject->{Fly_Constant::FILTER_TWO_MORE_STOP_PARAMETER}) && (int) $filterCriteriaObject->{Fly_Constant::FILTER_TWO_MORE_STOP_PARAMETER} == 1) {
+                        if (isset($moreThanOneStopAirSolutions)) {
+                            foreach ($moreThanOneStopAirSolutions as $moreThanOneStopAirSolution) {
+                                $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($moreThanOneStopAirSolution, $legToJourneysMappingArray);
+                            }
+                        }
+                        $isStopCountFilterEntered = true;
+                    }
+
+
+                    if (isset($filterCriteriaObject->{Fly_Constant::FILTER_SELECTED_AIRLINE_COMPANIES_PARAMETER})) {
                         $selectedAirlineCompanies = $filterCriteriaObject->{Fly_Constant::FILTER_SELECTED_AIRLINE_COMPANIES_PARAMETER};
-                        $airlineCompany = $departure_journey->getAirlineCompany();
-                        if (!isset($selectedAirlineCompanies->{$airlineCompany})) {
-                            $is_departure_journey_added = false;
+                        $tempLegToJourneysMappingArray = array();
+                        foreach ($carrierCountArray as $carrier => $carrierAirPriceSolutions) {
+                            if (isset($selectedAirlineCompanies->{$carrier})) {
+                                foreach ($carrierAirPriceSolutions as $carrierAirPriceSolution) {
+                                    $tempLegToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($carrierAirPriceSolution, $tempLegToJourneysMappingArray);
+                                }
+                            }
                         }
-                    }
-
-
-                    if (isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MINVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MAXVALUE_PARAMETER})) {
-                        $journey_departure_time = $departure_journey->getDepartureTime();
-                        $total_minute = Fly_seach_helper::getDepartureTimeAsTotalMinute($journey_departure_time);
-                        if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MINVALUE_PARAMETER} <= $total_minute && $total_minute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MAXVALUE_PARAMETER})) {
-                            $is_departure_journey_added = false;
+                        if ($isStopCountFilterEntered) {
+                            $legToJourneysMappingArray = array_intersect($legToJourneysMappingArray, $tempLegToJourneysMappingArray);
+                        } else {
+                            $legToJourneysMappingArray = $tempLegToJourneysMappingArray;
                         }
-                    }
-                    if (isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MAXVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MINVALUE_PARAMETER})) {
-                        $journey_arrival_time = $departure_journey->getArrivalTime();
-                        $total_minute = Fly_seach_helper::getDepartureTimeAsTotalMinute($journey_arrival_time);
-                        if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MINVALUE_PARAMETER} <= $total_minute && $total_minute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MAXVALUE_PARAMETER})) {
-                            $is_departure_journey_added = false;
-                        }
-                    }
-
-
-                    if ($is_departure_journey_added) {
-                        array_push($filtered_departure_journey_keys, $departure_journey->key);
                     }
                 }
-                if (!count($filtered_departure_journey_keys) > 0) {
+
+                if (count($legToJourneysMappingArray) == 0) {
                     $filtered = false;
+                    continue;
                 }
-
-                if ($return_journeys != null) {
-                    foreach ($return_journeys as $return_journey) {
-                        $is_return_journey_added = true;
-                        if (isset($filterCriteriaObject->{Fly_Constant::FILTER_AIRLINE_COMPANY})) {
-                            $airlineCompany = $filterCriteriaObject->{Fly_Constant::FILTER_AIRLINE_COMPANY};
-                            if (!($return_journey->getAirlineCompany() == $airlineCompany)) {
-                                $is_return_journey_added = false;
-                            }
-                        } else if (isset($filterCriteriaObject->{Fly_Constant::FILTER_SELECTED_AIRLINE_COMPANIES_PARAMETER})) {
-                            $selectedAirlineCompanies = $filterCriteriaObject->{Fly_Constant::FILTER_SELECTED_AIRLINE_COMPANIES_PARAMETER};
-                            $airlineCompany = $return_journey->getAirlineCompany();
-                            if (!isset($selectedAirlineCompanies->{$airlineCompany})) {
-                                $is_return_journey_added = false;
-                            }
+                $clonedCombinedAirPriceSolution = Fly_seach_helper::removeNotAllowedJourneys($clonedCombinedAirPriceSolution, $legToJourneysMappingArray);
+            }
+            if (isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MINVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MAXVALUE_PARAMETER})) {
+                $legToJourneysMappingArray = array();
+                $legCount = count($clonedCombinedAirPriceSolution->legs);
+                foreach ($oneByOneAirPriceSolutions as $oneAirPriceSolution) {
+                    $legCountIndex = 0;
+                    $isJourneyAdded = true;
+                    foreach ($oneAirPriceSolution["journeys"] as $journey) {
+                        $journey_departure_time = $journey->getDepartureTime($lowFareSearchResult->airSegmentArray);
+                        $total_minute = Fly_seach_helper::getDepartureTimeAsTotalMinute($journey_departure_time);
+                        if ($legCount == 2 && $legCountIndex == 1) {
+                            $legCountIndex++;
+                            continue; // iki bacak varsa  ikinci bacak donuş olarak dusunuluyor.
+                        } else if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MINVALUE_PARAMETER} <= $total_minute && $total_minute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_DEPARTURE_TIME_MAXVALUE_PARAMETER})) {
+                            $isJourneyAdded = false;
                         }
-
-
-                        if (isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MINVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MAXVALUE_PARAMETER})) {
-                            $journey_departure_time = $return_journey->getDepartureTime();
-                            $total_minute = Fly_seach_helper::getDepartureTimeAsTotalMinute($journey_departure_time);
-                            if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MINVALUE_PARAMETER} <= $total_minute && $total_minute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MAXVALUE_PARAMETER} )) {
-                                $is_return_journey_added = false;
-                            }
-                        }
-
-                        if (isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MAXVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MINVALUE_PARAMETER})) {
-                            $journey_departure_time = $return_journey->getArrivalTime();
-                            $total_minute = Fly_seach_helper::getDepartureTimeAsTotalMinute($journey_departure_time);
-                            if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MINVALUE_PARAMETER} <= $total_minute && $total_minute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MAXVALUE_PARAMETER} )) {
-                                $is_return_journey_added = false;
-                            }
-                        }
-
-
-                        if ($is_return_journey_added) {
-                            array_push($filtered_return_journey_keys, $return_journey->key);
-                        }
+                        $legCountIndex++;
                     }
-                    if (!count($filtered_return_journey_keys) > 0) {
-                        $filtered = false;
+                    if ($isJourneyAdded) {
+                        $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($oneAirPriceSolution, $legToJourneysMappingArray);
                     }
+                }
+                $clonedCombinedAirPriceSolution = Fly_seach_helper::removeNotAllowedJourneys($clonedCombinedAirPriceSolution, $legToJourneysMappingArray);
+                if ($clonedCombinedAirPriceSolution == null) {
+                    $filtered = false;
+                    continue;
+                }
+            }
+
+            if (isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MAXVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MINVALUE_PARAMETER})) {
+                $legToJourneysMappingArray = array();
+                $legCount = count($clonedCombinedAirPriceSolution->legs);
+                foreach ($oneByOneAirPriceSolutions as $oneAirPriceSolution) {
+                    $legCountIndex = 0;
+                    $isJourneyAdded = true;
+                    foreach ($oneAirPriceSolution["journeys"] as $journey) {
+                        $arrivalTime = $journey->getArrivalTime($lowFareSearchResult->airSegmentArray);
+                        $totalMinute = Fly_seach_helper::getDepartureTimeAsTotalMinute($arrivalTime);
+                        if ($legCount == 2 && $legCountIndex == 1) {
+                            $legCountIndex++;
+                            continue; // iki bacak varsa  ikinci bacak donuş olarak dusunuluyor.
+                        } else if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MINVALUE_PARAMETER} <= $totalMinute && $totalMinute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_GO_ARRIVAL_TIME_MAXVALUE_PARAMETER})) {
+
+                            $isJourneyAdded = false;
+                        }
+                        $legCountIndex++;
+                    }
+                    if ($isJourneyAdded) {
+                        $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($oneAirPriceSolution, $legToJourneysMappingArray);
+                    }
+                }
+                $clonedCombinedAirPriceSolution = Fly_seach_helper::removeNotAllowedJourneys($clonedCombinedAirPriceSolution, $legToJourneysMappingArray);
+                if ($clonedCombinedAirPriceSolution == null) {
+                    $filtered = false;
+                    continue;
+                }
+            }
+
+            if (isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MINVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MAXVALUE_PARAMETER})) {
+                $legToJourneysMappingArray = array();
+                $legCount = count($clonedCombinedAirPriceSolution->legs);
+                foreach ($oneByOneAirPriceSolutions as $oneAirPriceSolution) {
+                    $legCountIndex = 0;
+                    $isJourneyAdded = true;
+                    foreach ($oneAirPriceSolution["journeys"] as $journey) {
+                        if ($legCount == 2 && $legCountIndex == 1) {
+                            $departureTime = $journey->getDepartureTime($lowFareSearchResult->airSegmentArray);
+                            $totalMinute = Fly_seach_helper::getDepartureTimeAsTotalMinute($departureTime);
+                            if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MINVALUE_PARAMETER} <= $totalMinute && $totalMinute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_DEPARTURE_TIME_MAXVALUE_PARAMETER} )) {
+                                $isJourneyAdded = FALSE;
+                            }
+                        } else {
+                            $legCountIndex++;
+                            continue;
+                        }
+                        $legCountIndex++;
+                    }
+                    if ($isJourneyAdded) {
+                        $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($oneAirPriceSolution, $legToJourneysMappingArray);
+                    }
+                }
+                $clonedCombinedAirPriceSolution = Fly_seach_helper::removeNotAllowedJourneys($clonedCombinedAirPriceSolution, $legToJourneysMappingArray);
+                if ($clonedCombinedAirPriceSolution == null) {
+                    $filtered = false;
+                    continue;
+                }
+            }
+
+            if (isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MAXVALUE_PARAMETER}) && isset($filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MINVALUE_PARAMETER})) {
+                $legToJourneysMappingArray = array();
+                $legCount = count($clonedCombinedAirPriceSolution->legs);
+                foreach ($oneByOneAirPriceSolutions as $oneAirPriceSolution) {
+                    $legCountIndex = 0;
+                    $isJourneyAdded = true;
+                    foreach ($oneAirPriceSolution["journeys"] as $journey) {
+                        if ($legCount == 2 && $legCountIndex == 1) {
+                            $arrivalTime = $journey->getArrivalTime($lowFareSearchResult->airSegmentArray);
+                            $totalMinute = Fly_seach_helper::getDepartureTimeAsTotalMinute($arrivalTime);
+                            if (!((int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MINVALUE_PARAMETER} <= $totalMinute && $totalMinute <= (int) $filterCriteriaObject->{Fly_Constant::FILTER_RETURN_ARRIVAL_TIME_MAXVALUE_PARAMETER} )) {
+                                $isJourneyAdded = FALSE;
+                            }
+                        } else {
+                            $legCountIndex++;
+                            continue;
+                        }
+                        $legCountIndex++;
+                    }
+                    if ($isJourneyAdded) {
+                        $legToJourneysMappingArray = Fly_seach_helper::addAirSolutionToLegJourneysMappingArray($oneAirPriceSolution, $legToJourneysMappingArray);
+                    }
+                }
+                $clonedCombinedAirPriceSolution = Fly_seach_helper::removeNotAllowedJourneys($clonedCombinedAirPriceSolution, $legToJourneysMappingArray);
+                if ($clonedCombinedAirPriceSolution == null) {
+                    $filtered = false;
+                    continue;
                 }
             }
 
 
+
+
+
+
+
+
+
+
+
+            // Kalan Journeyler arasındaki bağlantı kontrol edilir.
+            if ($filtered) {
+                $legObjects = array_values($clonedCombinedAirPriceSolution->legs);
+                $firstLegObjects = $legObjects[0];
+                if (count($legObjects) != 1) {
+                    foreach ($firstLegObjects->getJourneys() as $firstLegJourney) {
+                        $isHaveAllAirPriceSolutionRef = false;
+                        for ($i = 1; $i < count($legObjects); $i++) {
+                            foreach ($legObjects[$i]->getJourneys() as $otherLegJourney) {
+                                if (Fly_seach_helper::isJourneysHaveSameAirPriceSolution($firstLegJourney, $otherLegJourney)) {
+                                    $isHaveAllAirPriceSolutionRef = true;
+                                    break;
+                                }
+                            }
+                            unset($otherLegJourney);
+                            if (!$isHaveAllAirPriceSolutionRef) {
+                                break;
+                            }
+                        }
+
+                        if (!$isHaveAllAirPriceSolutionRef) {
+                            for ($i = 1; $i < count($legObjects); $i++) {
+                                foreach ($legObjects[$i]->getJourneys() as $otherLegJourney) {
+                                    foreach ($firstLegJourney->getAirSolutionKeyRefArray() as $airPriceSolutionKey) {
+                                        $otherLegJourney->removeAirPriceSolutionKeyRef($airPriceSolutionKey);
+                                    }
+
+                                    if (count($otherLegJourney->getAirSolutionKeyRefArray()) == 0) {
+                                        $legObjects[$i]->removeJourney($otherLegJourney);
+                                    }
+                                }
+                            }
+                            $firstLegObjects->removeJourney($firstLegJourney);
+                        }
+                    }
+                }
+
+                foreach ($legObjects as $finalLegObject) {
+                    if (count($finalLegObject->getJourneys()) == 0) {
+                        $filtered = false;
+                        break;
+                    }
+                }
+            }
+            
+            
             if ($filtered == true) {
 
-                $filtered_combined_air_price_object = new FilteredCombinedAirPriceSolution();
-                $filtered_combined_air_price_object->combined_key = $combined_air_price_solution->combined_key;
-                $filtered_combined_air_price_object->is_all_departures_journeys_filtered = $is_all_departure_journeys_filtered;
-                $filtered_combined_air_price_object->is_all_return_journeys_filtered = $is_all_return_journeys_filtered;
-                if (count($combined_air_price_solution->departure_journeys) == count($filtered_departure_journey_keys)) {
-                    $filtered_combined_air_price_object->is_all_departures_journeys_filtered = TRUE;
+                $filteredCombinedAirPriceSolution = new FilteredCombinedAirPriceSolution();
+                $filteredCombinedAirPriceSolution->combinedKey = $clonedCombinedAirPriceSolution->combinedKey;
+                $filteredCombinedAirPriceSolution->isAllLegsFiltereed = true;
+                $filteredCombinedAirPriceSolution->filteredLegs = array();
+                unset($filteredLegObject);
+                foreach ($clonedCombinedAirPriceSolution->legs as $filteredLegObject) {
+                    $filteredJourneyKeyArray = array();
+                    foreach ($filteredLegObject->getJourneys() as $filteredJourney) {
+                        array_push($filteredJourneyKeyArray, $filteredJourney->key);
+                    }
+                    $filteredCombinedAirPriceSolution->filteredLegs[$filteredLegObject->key] = $filteredJourneyKeyArray;
                 }
-                if (count($combined_air_price_solution->return_journeys) == count($filtered_return_journey_keys)) {
-                    $filtered_combined_air_price_object->is_all_return_journeys_filtered = TRUE;
-                }
-                $filtered_combined_air_price_object->filtered_departure_journeys_keys = $filtered_departure_journey_keys;
-                $filtered_combined_air_price_object->filtered_return_journeys_keys = $filtered_return_journey_keys;
-                array_push($filtered_combined_air_price_solutions, $filtered_combined_air_price_object);
+                array_push($filteredCombinedAirPriceSolutionArray, $filteredCombinedAirPriceSolution);
             }
         }
-        return $filtered_combined_air_price_solutions;
+        return $filteredCombinedAirPriceSolutionArray;
     }
+
+    private function convertCombinedToOneAirSolutionRecursively($legObjectArray, $airPriceSolutionArray, $legLevel) {
+        if ($legLevel == count($legObjectArray)) {
+            return $airPriceSolutionArray;
+        }
+
+        if ($legLevel == 0) {
+            $airPriceSolutionArray = array();
+            foreach ($legObjectArray[$legLevel]->getJourneys() as $journey) {
+                $newSolution = array("key" => (count($airPriceSolutionArray) + 1), "journeys" => array());
+                array_push($newSolution["journeys"], $journey);
+                array_push($airPriceSolutionArray, $newSolution);
+            }
+        } else {
+            $count = 0;
+            $prevAirPriceSolutionArray = $airPriceSolutionArray;
+            foreach ($legObjectArray[$legLevel]->getJourneys() as $journey) {
+                $solutionIndex = 0;
+                foreach ($prevAirPriceSolutionArray as $airPriceSolution) {
+                    if ($count == 0) {
+                        array_push($airPriceSolution["journeys"], $journey);
+                        $airPriceSolutionArray[$solutionIndex] = $airPriceSolution;
+                    } else {
+                        $oldSolution = $prevAirPriceSolutionArray[$solutionIndex];
+                        $prevJourneys = $oldSolution["journeys"];
+                        $newSolution = array("key" => (count($airPriceSolutionArray) + 1), "journeys" => array());
+                        foreach ($prevJourneys as $prevJourney) {
+                            array_push($newSolution["journeys"], $prevJourney);
+                        }
+                        array_push($newSolution["journeys"], $journey);
+                        array_push($airPriceSolutionArray, $newSolution);
+                    }
+                    $solutionIndex++;
+                }
+                $airPriceSolutionArray = $airPriceSolutionArray;
+                $count++;
+            }
+        }
+
+        return $this->convertCombinedToOneAirSolutionRecursively($legObjectArray, $airPriceSolutionArray, $legLevel + 1);
+    }
+
 }
 
 function combinedAirPriceSolutionSorter(CombinedAirPriceSolution $combinedAirPriceSolution, CombinedAirPriceSolution $ohterCombinedAirPriceSolution) {
-    if ($combinedAirPriceSolution->apprixomate_total_price_amount == $ohterCombinedAirPriceSolution->apprixomate_total_price_amount) {
+    if ($combinedAirPriceSolution->apprixomateTotalPriceAmount == $ohterCombinedAirPriceSolution->apprixomateTotalPriceAmount) {
         return 0;
     }
-    return $combinedAirPriceSolution->apprixomate_total_price_amount < $ohterCombinedAirPriceSolution->apprixomate_total_price_amount ? -1 : 1;
+    return $combinedAirPriceSolution->apprixomateTotalPriceAmount < $ohterCombinedAirPriceSolution->apprixomateTotalPriceAmount ? -1 : 1;
 }
 
 /*

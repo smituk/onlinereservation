@@ -4,7 +4,7 @@
 <?php
 include_once APPPATH . '/helpers/fly_search_helper.php';
 
-function build_flight_summary_table_template($price_data_table, LowFareSearchResult $lowFareSearchResult) {
+function build_flight_summary_table_template($price_data_table, LowFareSearchResult $lowFareSearchResult,$searchCriteria) {
 
     $airline_company_array_data = $price_data_table["airline_company_array"];
     $no_stop_flight_array_data = $price_data_table["no_stop_flight_array"];
@@ -25,7 +25,7 @@ function build_flight_summary_table_template($price_data_table, LowFareSearchRes
     $template = "<tr>" . $template . "</tr><tr><td class='rowhead'>Direk</td>";
     for ($k = 0; $k < count($airline_company_array_data); $k++) {
         if (isset($no_stop_flight_array_data[$k])) {
-            $template.="<td align='center' valign='middle'  class='header2 non-stop' airlinecompany='$airline_company_array_data[$k]'>" . $no_stop_flight_array_data[$k] . "</td>";
+            $template.="<td align='center' valign='middle'  class='header2 non-stop' airlinecompany='$airline_company_array_data[$k]'>" . $no_stop_flight_array_data[$k] .$searchCriteria->currency."</td>";
         } else {
             $template.="<td align='center' valign='middle'  class='header'></td>";
         }
@@ -33,7 +33,7 @@ function build_flight_summary_table_template($price_data_table, LowFareSearchRes
     $template = "<tr>" . $template . "</tr><tr><td class='rowhead'> 1 Aktarma</td>";
     for ($k = 0; $k < count($airline_company_array_data); $k++) {
         if (isset($stop_flight_array_data[$k])) {
-            $template.="<td align='center' valign='middle'  class='header2 one-stop' airlinecompany='$airline_company_array_data[$k]'>" . $stop_flight_array_data[$k] . "</td>";
+            $template.="<td align='center' valign='middle'  class='header2 one-stop' airlinecompany='$airline_company_array_data[$k]'>" . $stop_flight_array_data[$k] .$searchCriteria->currency."</td>";
         } else {
             $template.="<td align='center' valign='middle'  class='header'></td>";
         }
@@ -41,7 +41,7 @@ function build_flight_summary_table_template($price_data_table, LowFareSearchRes
     $template = "<tr>" . $template . "</tr><tr><td class='rowhead'> 2+ Aktarma</td>";
     for ($k = 0; $k < count($airline_company_array_data); $k++) {
         if (isset($moreone_stop_flight_array_data[$k])) {
-            $template.="<td align='center' valign='middle'  class='header2 more-stop' airlinecompany='$airline_company_array_data[$k]'>" . $moreone_stop_flight_array_data[$k] . "</td>";
+            $template.="<td align='center' valign='middle'  class='header2 more-stop' airlinecompany='$airline_company_array_data[$k]'>" . $moreone_stop_flight_array_data[$k] .$searchCriteria->currency."</td>";
         } else {
             $template.="<td align='center' valign='middle' class='header' ></td>";
         }
@@ -85,7 +85,7 @@ EOM;
 
         foreach ($airPriceInfoArray as $airPriceInfoItem) {
             $passenger_count = $airPriceInfoItem->passengerCount;
-            $one_base_price = floatval($airPriceInfoItem->approximateTotalPriceAmout);
+            $one_base_price = floatval($airPriceInfoItem->approximateBasePriceAmount);
             $one_tax_price = floatval($airPriceInfoItem->taxesAmount);
             $total_price = (float) ($passenger_count * ( $one_base_price + $one_tax_price));
             $all_total_price += $total_price;
@@ -209,7 +209,7 @@ function build_all_flight_detail_template(CombinedAirPriceSolution $combinedAirP
           $journeyCount  = count($legObject->avaibleJourneyOptions)-1;
           if($journeyCount > 0){ 
             $template =  $template."<div class='row other-journey-count-info'><div class='span8'>";
-            $template =  $template."<span class='icon-circle-arrow-down' clicked=''>Diğer $journeyCount  Seçenek </span>";
+            $template =  $template."<span class='icon-circle-arrow-down' clicked=''>Diğer <span class='count-value'>$journeyCount</span>  Seçenek </span>";
             $template = $template."</div></div>";
           }
          $template = $template."</div></div>";
@@ -583,7 +583,7 @@ foreach ($carrierFlightTypePricesArray as $key =>$carrierFlightTypePrice) {
                 <div class="span8">
                     <table class="table" cellspacing ="0"  cellpadding="0" style="margin:0 auto;">
 <?php
-echo build_flight_summary_table_template($price_data_table, $lowFareSearchResult);
+echo build_flight_summary_table_template($price_data_table, $lowFareSearchResult,$searchCriteria);
 ?>
                     </table>
                 </div>
@@ -626,27 +626,27 @@ foreach ($lowFareSearchResult->combinedAirPriceSolutionArray as $combinedAirPric
 
     <script type="tex/tempate" id="bookingVerifySummaryInfoTemplate">
 
-        <h3 id="bookPrice">Fiyat : <%= apprixomate_total_price %></h3>
+        <h3 id="bookPrice">Fiyat : <%= apprixomateTotalPriceAmount %> <%= currency %></h3>
         <span class="price-detail-trigger icon-chevron-down">Ayrıntılar</span>  
     </script>
     <script type="text/template" id="bookPriceDetailTempalte">
         <div class="bookPriceDetail">
-        <span><%= passenger_type_desc %> x <%= passenger_count %> </span>
-        <span><%= approximate_base_price_amount %></span>
-        <span><%= taxes_amount %></span>
-        <span><%= all_total_price %></span>
+        <span><%= passengerTypeDesc %> x <%= passengerCount %> </span>
+        <span><%= approximateBasePriceAmount %> <%= currency %></span>
+        <span><%= taxesAmount %>  <%= currency %></span>
+        <span><%= allTotalPrice %> <%= currency %></span>
         </div>
     </script>
     <script type="text/template" id="airSegmentTemplate">
         <div class="air-segment">
 
-        <span class="header-column"><%=departure_date%></span>
+        <span class="header-column"><%=departureDate%></span>
         <span class="header-column"><img src="<?php echo base_url("onlinefly/public_html/img/hava_sirket_icon_logo/hava_sirket_icon_logo/"); ?><%=carrier %>.png" width="25" height="25"/></span>
-        <span class="header-column"><%=carrier%> <%=flight_number%></span>
-        <span class="header-column"><%=origin%> <%=departure_hours%></span>
-        <span class="header-column"><%=destination%> <%=arrival_hours%></span>
-        <span class="header-column"><%=flight_time%></span>
-        <span class="header-column"><strong><%=booking_code%></strong> <%=booking_cabin_class%></span>
+        <span class="header-column"><%=carrier%> <%=flightNumber%></span>
+        <span class="header-column"><%=origin%> <%=departureHours%></span>
+        <span class="header-column"><%=destination%> <%=arrivalHours%></span>
+        <span class="header-column"><%=flightTime%></span>
+        <span class="header-column"><strong><%=bookingCode%></strong> <%=bookingCabinClass%></span>
         </div>
     </script>
 

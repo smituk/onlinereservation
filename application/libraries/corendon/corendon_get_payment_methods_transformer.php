@@ -27,12 +27,18 @@ class CorendonGetPaymentMethodsTransformer implements XmlTransformer {
         $getPaymetMethodsRequestXML = new SimpleXMLElement("<myxml></myxml>");
         $getPaymetMethodsRequestXML = $getPaymetMethodsRequestXML->addChild("GetPaymentMethods", NULL, CorendonAccount::getDefaultNameSpace());
         $requestXML = $getPaymetMethodsRequestXML->addChild("request");
-        $goJourney = $this->verifiedAirPriceSolution->allJourneys[0];
-        //$requestXML->addChild("CURRENCY",  $this->searchCriteria->currency);
+        $flightIdentifier = null;
+        foreach($this->verifiedAirPriceSolution->legs as $legObject){
+            $journeys = $legObject->getJourneys();
+            $firstJourney = $journeys[0];
+            $flightIdentifier = $firstJourney->identifier;
+            break;
+        }
+       
       
        
         $requestXML->addChild("CURRENCY",  "EUR");
-        $requestXML->addChild("FLIGHTIDENTIFIER",  $goJourney->identifier);
+        $requestXML->addChild("FLIGHTIDENTIFIER",  $flightIdentifier);
         CorendonCommon::buildAgentXML($requestXML);
         $getPaymetMethodsRequestXML = $getPaymetMethodsRequestXML->asXML();
        $message = <<<EOM

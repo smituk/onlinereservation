@@ -141,10 +141,11 @@ class Travelport implements AirServiceProvider {
             $legObject->origin = (string) $legXMLAttributes["Origin"][0];
             $legObject->destination = (string) $legXMLAttributes["Destination"][0];
             $legObject->direction = "G"; //Gidis;
-            if ($search_criteria->flydirection == "2" && $legCount == 2) {
+            if ($search_criteria->flydirection == "2" && $legCount == 1) {
                 $legObject->direction = "R"; //Dönüs;
             }
             $legArray[$legObject->key] = $legObject;
+            $legCount++;
         }
 
         foreach ($xml->xpath('//air:AirPricePoint') as $air_price_solution_item) {
@@ -249,7 +250,7 @@ class Travelport implements AirServiceProvider {
                 }
 
                 if ($isFirstAirPricinInfo) {
-                    $airPricingSolution->legs[$legObject->key] = $legObject;
+                    $airPricingSolution->addLeg($legObject);
                 }
             }
             unset($airPricingInfoXMLChildren);
@@ -376,10 +377,10 @@ class Travelport implements AirServiceProvider {
 
     private function sendRequestWebService($transformer, $endpoint = null) {
         $requestXml = $transformer->prepareXML();
-        file_put_contents($transformer->name . "Request.xml", $requestXml);
+        //file_put_contents($transformer->name . "Request.xml", $requestXml);
         $responseXml = $this->sendMessageTravelportApi($requestXml, $endpoint);
         //$responseXml = file_get_contents($transformer->name."Response.xml");
-        file_put_contents($transformer->name . "Response.xml", $responseXml);
+        //file_put_contents($transformer->name . "Response.xml", $responseXml);
         return $transformer->convertObject($responseXml);
     }
 
@@ -391,10 +392,16 @@ class Travelport implements AirServiceProvider {
         $travelportBookingPriceVerifyTransformer->airSegmentArray = $airSegmentArray;
         $responseBookPriceVerifyData = new ResponseBookPriceVerifyData();
         $responseBookPriceVerifyData->combinedAirPriceSolution = $combinedAirPriceSolution;
-        $responseBookPriceVerifyData->journeyKeys = $selectedJourneyArray;
         $responseBookPriceVerifyData->verifiedAirPriceSolution = $this->sendRequestWebService($travelportBookingPriceVerifyTransformer);
-
+        $responseBookPriceVerifyData->searchCriteria = $searchCriteria;
+        $legKeyArray = array();
+        foreach($combinedAirPriceSolution->legs as $leg){
+            array_push($legKeyArray, $leg->key);
+        }
+        $responseBookPriceVerifyData->legKeyArray = $legKeyArray;
+       // file_put_contents("xxx.json", json_encode($responseBookPriceVerifyData));
         return $responseBookPriceVerifyData;
+        
     }
 
     public function searchFlight($searchCriteria) {

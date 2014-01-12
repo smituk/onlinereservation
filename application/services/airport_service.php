@@ -26,6 +26,7 @@ include_once APPPATH . '/models/fly_search/airport.php';
             $airportObject->name = $airportRow->name;
             $airportObject->utcOffset = $airportRow->timezone;
             $airportObject->dstRegion = $airportRow->dst;
+            $airportObject->cityCode = $airportRow->citycode;
             return $airportObject;
                      
         }

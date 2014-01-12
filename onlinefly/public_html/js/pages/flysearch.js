@@ -35,7 +35,7 @@ function initialize() {
 	defaultGoDate.setDate(defaultGoDate.getDate() + 1);
 	goDateInput.datepicker({
 	    showOn: "button",
-	    buttonImage: "../beyhan_fly/onlinefly/public_html/css/ico/calendar_small.jpg",
+	    buttonImage: "../onlinefly/public_html/css/ico/calendar_small.jpg",
 	    buttonImageOnly: true,
 	    numberOfMonths: 2,
 	    minDate: currentDate,
@@ -51,7 +51,7 @@ function initialize() {
 	defaultReturnDate.setDate(defaultReturnDate.getDate() + 7);
 	returnDateInput.datepicker({
 	    showOn: "button",
-	    buttonImage: "../beyhan_fly/onlinefly/public_html/css/ico/calendar_small.jpg",
+	    buttonImage: "../onlinefly/public_html/css/ico/calendar_small.jpg",
 	    buttonImageOnly: true,
 	    numberOfMonths: 2,
 	    minDate: currentDate,

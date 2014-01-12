@@ -29,13 +29,20 @@ class CorendonApplyBookTransformer implements XmlTransformer {
 
         $flightInIdentifier = null;
         $flightOutIdentifier = null;
-        foreach ($verifiedCombinedAirPriceSolution->allJourneys as $journey) {
-            if ($journey->type == Fly_Constant::DEPARTURE_JOURNEY_TYPE) {
-                $flightOutIdentifier = $journey->identifier;
-            } else if ($journey->type == Fly_Constant::RETURN_JOURNEY_TYPE) {
-                $flightInIdentifier = $journey->identifier;
-            }
+        
+        $legIndexCount = 0;
+        foreach ($verifiedCombinedAirPriceSolution->legs  as $legObject){
+            $journeys = $legObject->getJourneys();
+            $firstJourney = $journeys[0];
+            if($legIndexCount == 0){
+              $flightOutIdentifier = $firstJourney->identifier; 
+           }else if($legIndexCount == 1){
+               $flightInIdentifier = $firstJourney->identifier;
+           }
+           $legIndexCount++;
         }
+            
+       
         $fareIdentifier = $flightOutIdentifier;
         if ($flightInIdentifier != null) {
             $fareIdentifier = $fareIdentifier . "-" . $flightInIdentifier;

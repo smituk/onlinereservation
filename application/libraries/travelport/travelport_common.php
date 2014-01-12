@@ -220,6 +220,7 @@ class TravelportCommon {
         $airSegmentObject = new AirSegment();
         $airSegmentObject->key = (string) $air_segment_item_attributes["Key"][0];
         $airSegmentObject->carrier = (string) $air_segment_item_attributes["Carrier"][0];
+        /*
         $airCompanyObject = AirlineService::getAirlineByIATACode($airSegmentObject->carrier);
 
         if (isset($airCompanyObject)) {
@@ -227,6 +228,8 @@ class TravelportCommon {
         } else {
             $airSegmentObject->carrierName = $airSegmentObject->carrier;
         }
+         * 
+         */
         $airSegmentObject->flightNumber = (string) $air_segment_item_attributes["FlightNumber"][0];
         $airSegmentObject->origin = (string) $air_segment_item_attributes["Origin"][0];
         $airSegmentObject->destination = (string) $air_segment_item_attributes["Destination"][0];
@@ -289,7 +292,7 @@ class TravelportCommon {
         $airPricingInfoObject->refundable = (string) $air_price_info_item_attributes["Refundable"][0];
         preg_match('/([^a-zA-Z]+)/', $airPricingInfoObject->approximateBasePrice, $base_price_match);
         $airPricingInfoObject->approximateBasePriceAmount = $base_price_match[0];
-        preg_match('/([^a-zA-Z]+)/', $airPricingInfoObject->approximateBasePrice, $total_price_match);
+        preg_match('/([^a-zA-Z]+)/', $airPricingInfoObject->approximateTotalPrice, $total_price_match);
         $airPricingInfoObject->approximateTotalPriceAmout = $total_price_match[0];
         preg_match('/([^a-zA-Z]+)/', $airPricingInfoObject->taxes, $tax_price_match);
         $airPricingInfoObject->taxesAmount = $tax_price_match[0];
@@ -386,12 +389,12 @@ class TravelportCommon {
           public $fare_info_ref;
           public $air_segment_ref;
          */
-        foreach ($airPriceInfoObject->booking_short_info_array as $bookInfoObject) {
+        foreach ($airPriceInfoObject->bookingShortInfoArray as $bookInfoObject) {
             $bookingInfoXML = $airPriceInfoSimpleXML->addChild("BookingInfo");
-            $bookingInfoXML->addAttribute("BookingCode", $bookInfoObject->booking_code);
-            $bookingInfoXML->addAttribute("CabinClass", $bookInfoObject->cabin_class);
-            $bookingInfoXML->addAttribute("FareInfoRef", $bookInfoObject->fare_info_ref);
-            $bookingInfoXML->addAttribute("SegmentRef", $bookInfoObject->air_segment_ref);
+            $bookingInfoXML->addAttribute("BookingCode", $bookInfoObject->bookingCode);
+            $bookingInfoXML->addAttribute("CabinClass", $bookInfoObject->cabinClass);
+            $bookingInfoXML->addAttribute("FareInfoRef", $bookInfoObject->fareInfoRef);
+            $bookingInfoXML->addAttribute("SegmentRef", $bookInfoObject->airSegmentRef);
         }
         if ($isRaw == FALSE) {
             return $airPriceInfoSimpleXML;
@@ -416,12 +419,13 @@ class TravelportCommon {
         $fareInfoObject->notValidBefore = (string) $fareInfoXMLAttributes["NotValidBefore"][0];
     
         
-        $fareInfoXMLChildren   = $fareInfoXML->children("air");
+        $fareInfoXMLChildren   = $fareInfoXML->children("air",TRUE);
         
-       // echo print_r($fareInfoXML);
-        if(isset($fareInfoXML->FareRuleKey)){
+       
+        if(isset($fareInfoXMLChildren->FareRuleKey)){
             
-             $fareInfoObject->fareRuleKey = (string)$fareInfoXML->FareRuleKey;
+            
+             $fareInfoObject->fareRuleKey = (string)$fareInfoXMLChildren->FareRuleKey;
              $fareInfoObject->providerCode = "1G";
         }
       // echo $fareInfoXML->asXml();

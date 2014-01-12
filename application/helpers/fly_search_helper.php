@@ -7,9 +7,9 @@ class Fly_seach_helper {
         $no_stops_flight_array = array();
         $stop_flight_array = array();
         $moreone_stop_flight = array();
-        foreach ($carrierFlightTypePriceArray as $carrier => $carrierFlightTypePrice){
-             if(isset($carrierFlightTypePrice->nonStopPrice)){
-                 for ($k = 0; $k < 10; $k++) {
+        foreach ($carrierFlightTypePriceArray as $carrier => $carrierFlightTypePrice) {
+            if (isset($carrierFlightTypePrice->nonStopPrice)) {
+                for ($k = 0; $k < 10; $k++) {
                     if (!isset($airline_company_array[$k]) || $airline_company_array[$k] === $carrier) {
                         if (!isset($no_stops_flight_array[$k])) {
                             $airline_company_array[$k] = $carrier;
@@ -20,10 +20,10 @@ class Fly_seach_helper {
                         }
                     }
                 }
-             }
-            
-             if(isset($carrierFlightTypePrice->oneStopPrice)){
-                 for ($k = 0; $k < 10; $k++) {
+            }
+
+            if (isset($carrierFlightTypePrice->oneStopPrice)) {
+                for ($k = 0; $k < 10; $k++) {
                     if (!isset($airline_company_array[$k]) || $airline_company_array[$k] === $carrier) {
                         if (!isset($stop_flight_array[$k])) {
                             $airline_company_array[$k] = $carrier;
@@ -34,10 +34,10 @@ class Fly_seach_helper {
                         }
                     }
                 }
-             }
-             
-             if(isset($carrierFlightTypePrice->oneMoreStopPrice)){
-                 for ($k = 0; $k < 10; $k++) {
+            }
+
+            if (isset($carrierFlightTypePrice->oneMoreStopPrice)) {
+                for ($k = 0; $k < 10; $k++) {
                     if (!isset($airline_company_array[$k]) || $airline_company_array[$k] === $carrier) {
                         if (!isset($moreone_stop_flight[$k])) {
                             $airline_company_array[$k] = $carrier;
@@ -48,16 +48,16 @@ class Fly_seach_helper {
                         }
                     }
                 }
-             }
-         } 
-        
-         
+            }
+        }
+
+
         $data = array("airline_company_array" => $airline_company_array, "no_stop_flight_array" => $no_stops_flight_array, "stop_flight_array" => $stop_flight_array, "moreone_stop_flight" => $moreone_stop_flight);
-        return $data;    
+        return $data;
     }
 
     public static function getCarrierFlightTypePrices(LowFareSearchResult $lowFareSearchResult) {
-        
+
         loadClass(APPPATH . '/models/fly_search/carrier_flight_type_price.php');
         $carrierFlightTypePriceArray = array();
 
@@ -65,7 +65,7 @@ class Fly_seach_helper {
             //$go_journeys = $combinedAirPriceSolutionItem->departure_journeys;
             //$return_journeys = $combinedAirPriceSolutionItem->return_journeys;
             $stopCount = 0;
- 
+
             if (count($combinedAirPriceSolutionItem->legs) == 1) {
                 foreach ($combinedAirPriceSolutionItem->legs as $legObject) {
                     foreach ($legObject->avaibleJourneyOptions as $journey) {
@@ -75,7 +75,7 @@ class Fly_seach_helper {
                         if (count($carriers) > 1) {
                             $carrier = Fly_Constant::COMBINATION_AIR_COMPANY;
                         }
-                      $carrierFlightTypePriceArray = self::setCarrierFlightTypePrice($carrier, $carrierFlightTypePriceArray, $stopCount, $combinedAirPriceSolutionItem);
+                        $carrierFlightTypePriceArray = self::setCarrierFlightTypePrice($carrier, $carrierFlightTypePriceArray, $stopCount, $combinedAirPriceSolutionItem);
                     }
                 }
             } else {
@@ -100,7 +100,7 @@ class Fly_seach_helper {
                 }
             }
         }
-       return $carrierFlightTypePriceArray;    
+        return $carrierFlightTypePriceArray;
     }
 
     public static function isJourneysHaveSameAirPriceSolution(Journey $firstJourney, Journey $secondJourney) {
@@ -134,33 +134,48 @@ class Fly_seach_helper {
         return $carrierFlightTypePriceArray;
     }
 
-    /**
-     *
-     * @param type $air_price_solution_item
-     * @return D non-stop flight | A one-stop flight | AA more-than-onestop flight
-     */
-    public static function get_airsegment_by_key($airsegment_key, $results) {
-        $airsegment_objects = $results->air_segments;
-        foreach ($airsegment_objects as $airsegment_object) {
-            if ($airsegment_key === $airsegment_object->key) {
-                return $airsegment_object;
-            }
+    public static function addAirSolutionToLegJourneysMappingArray($airSolution, $legToJourneysMappingArray = null) {
+        $legIndex = 0;
+        if ($legToJourneysMappingArray == null) {
+            $legToJourneysMappingArray = array();
         }
-        return null;
+        foreach ($airSolution["journeys"] as $journey) {
+            if (!isset($legToJourneysMappingArray[$legIndex])) {
+                $legToJourneysMappingArray[$legIndex] = array();
+            }
+            $journeyArray = $legToJourneysMappingArray[$legIndex];
+            array_push($journeyArray, $journey->key);
+            $legToJourneysMappingArray[$legIndex] = array_unique($journeyArray);
+            $legIndex++;
+        }
+        return $legToJourneysMappingArray;
+    }
+    
+    public static function intersectLegJourneysMappingArray($legJourneysMappingArray,$otherLegJourneysMappingArray){
+        for($i = 0; $i<count($legJourneysMappingArray); $i++){
+            if(!isset($otherLegJourneysMappingArray[$i])){
+                return null;
+            }
+            $legJourneysMappingArray[$i] = array_intersect($legJourneysMappingArray[$i],$otherLegJourneysMappingArray[$i]);
+        }
+        return $legJourneysMappingArray;
     }
 
-    public static function gets_airsegment_by_keys($airsegment_keys, $results) {
-        $airsegment_objects = $results->air_segments;
-        $found_airsegment_objects = array();
-        foreach ($airsegment_objects as $airsegment_object) {
-            foreach ($airsegment_keys as $airsegment_key) {
-                if ($airsegment_key === $airsegment_object->key) {
-                    array_push($found_airsegment_objects, $airsegment_object);
+    public static function removeNotAllowedJourneys($combinedAirPriceSolution, $legToJourneysMappingArray) {
+        if(count($legToJourneysMappingArray) < 1){
+            return;
+        }
+        $legIndex = 0;
+        foreach ($combinedAirPriceSolution->legs as $legObject) {
+            $allowedJourneyKeys = $legToJourneysMappingArray[$legIndex];
+            foreach ($legObject->getJourneys() as $journey) {
+                if (!(in_array($journey->key, $allowedJourneyKeys))) {
+                    $legObject->removeJourney($journey);
                 }
             }
+            $legIndex++;
         }
-        usort($found_airsegment_objects, 'self::air_segment_compare');
-        return $found_airsegment_objects;
+        return $combinedAirPriceSolution;
     }
 
     public static function air_segment_compare($air_segment1, $air_segemnt2) {

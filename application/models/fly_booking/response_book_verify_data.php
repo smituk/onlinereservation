@@ -11,10 +11,12 @@
  * @author pasa
  */
 class ResponseBookPriceVerifyData {
-    public $combinedAirPriceSolution; // low fare shoppingdeki gelen ve seçilen data sessionda içerilir.
-    public $selectedJourneyArray;
+    public $combinedAirPriceSolution; // low fare shoppingdeki gelen ve seçilen data sessionda içerilir
     public $verifiedAirPriceSolution; // bu obje  book verifydan gelen responsu  tutar tutar;
-    public $rawResponseXml;
+    public $searchCriteria;
+    public $legKeyArray;
+    
+    
     
 }
 

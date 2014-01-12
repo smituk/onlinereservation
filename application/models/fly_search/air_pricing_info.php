@@ -22,6 +22,13 @@ class AirPricingInfo {
     public $pricingMethod;
     
     
+    public function addBookingInfo(BookingInfo $bookingInfoOject){
+        if(!isset($this->bookingShortInfoArray)){
+            $this->bookingShortInfoArray = array();
+        }
+        $this->bookingShortInfoArray[$bookingInfoOject->airSegmentRef] = $bookingInfoOject;
+    }
+    
    
 
 }

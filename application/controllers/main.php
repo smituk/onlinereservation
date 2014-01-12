@@ -175,7 +175,7 @@ class Main extends CI_Controller {
         $data['price_data_table'] = Fly_seach_helper::createFlightSummayTableData($carrierFlightTypePriceArray);
         $data[Fly_Constant::FLY_SEARCH_RESULT_FILTER_VALUES_PARAMAMETER] = $this->fly_search_result_filter_values;
         $data["lowFareSearchResult"] = $lowFareSearchResult;
-        file_put_contents("parse2.json", json_encode($data));
+        //file_put_contents("parse2.json", json_encode($data));
         
         $data['js'] = $jsfiles;
         $data['css'] = $cssfiles;
@@ -327,7 +327,7 @@ class Main extends CI_Controller {
         $flyApplyBookInfo->passangers = $passangers;
         $flyApplyBookInfo->userContact = $userContactInformation;
         $flyApplyBookInfo->verifiedCombinedAirPriceSolution = $bookingPriceVerifiedSolution->verifiedAirPriceSolution;
-        $flyApplyBookInfo->rawVerifyBookPriceXML = $bookingPriceVerifiedSolution->rawResponseXml;
+        
         $this->load->model('fly_booking/fly_book');
         $fly_apply_book_result = $this->fly_book->applyBook($flyApplyBookInfo);
       

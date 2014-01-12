@@ -8,8 +8,6 @@ class Journey {
     public $travelTime;
     public $totalTravelTime;
     public $type; //  bu alan yoculugun gişemi yoksa donuşemi ait oldugunu gosterir. Gidiş için D / dönüş için R kullan
-    public $air_company; // burda eger journey 
-    public $related_journey_id; // bu id , dönüs tipinde olan journeylerin  hangi gidis journeye ait olduklarını bilmek için kullanılır. 
     public $airPriceSolutionRefArray;// bu journeyin sahip airPriceSolutionları tutar.
     public $airPriceSolutionKeyRef;
     public $route; // aramadaki hangi route ait oldugu bilgisi tasır.
@@ -21,6 +19,22 @@ class Journey {
             $this->airPriceSolutionRefArray = array();
         }
          array_push($this->airPriceSolutionRefArray, $airPriceSolutionKey);       
+    }
+    
+    public function removeAirPriceSolutionKeyRef($airPriceSolutionKey){
+        if(isset($this->airPriceSolutionRefArray)){
+            $offset = 0;
+            foreach($this->airPriceSolutionRefArray as $airPriceSolutionRefKey){
+                if($airPriceSolutionRefKey == $airPriceSolutionKey){
+                    array_slice($this->airPriceSolutionRefArray, $offset, 1);
+                    break;
+                }
+            }
+        }
+    }
+    
+    public function getAirSolutionKeyRefArray(){
+        return $this->airPriceSolutionRefArray;
     }
     
     public function getCarriers($airSegmentArray){
@@ -48,6 +62,13 @@ class Journey {
         }
         return TRUE;
     }
+    
+    public function setAirSegments($airSegments , $isOnlyKey = FALSE){
+        $this->clearAirSegments();
+        foreach($airSegments as $airSegment){
+            $this->addAirSegment($airSegment , $isOnlyKey);
+        }
+    }
 
     public function  getAirSegments($airSegmentArray = NULL){
        if($airSegmentArray == NULL){
@@ -73,6 +94,18 @@ class Journey {
             unset($this->airSegmentKeys);
             $this->airSegmentKeys = NULL;
         }
+    }
+    
+    public function clearBookingInfoArray(){
+        $this->bookingInfoArray = null;
+    }
+    
+    public function addBookingInfo(BookingInfo $bookingInfoObject, $passengerType){
+        if(!isset($this->bookingInfoArray)){
+            $this->bookingInfoArray = array();
+        }
+        $this->bookingInfoArray[$passengerType][$bookingInfoObject->airSegmentRef] = $bookingInfoObject;
+        return true;
     }
 
 

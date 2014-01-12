@@ -19,6 +19,7 @@ class Fly_search_criteria extends CI_Model {
     public $permitedCarriers;
     public $exludedCarriers;
     public $prohibitedCarriers;
+    public $affiliteId;
 
     public function getInstance() {
         return $this;
