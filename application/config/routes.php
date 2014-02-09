@@ -51,6 +51,7 @@ $route['bookPriceVerify'] = "main/bookPriceVerify";
 $route['bookingInfo'] = "main/bookInformationEnterView";
 $route['applyBook'] = "main/applyBook";
 $route['test'] = "main/test";
+$route["getAirPortsWithPrefix"] = "airport_controller/getAirPortsWithPrefix";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

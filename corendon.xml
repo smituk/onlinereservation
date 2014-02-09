@@ -1,0 +1,25 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <soap:Body>
+      <BookFlightResponse xmlns="http://tempuri.org/">
+         <BookFlightResult>
+            <CONFIRMATIONKEY>1234567</CONFIRMATIONKEY>
+            <NOTESANDINFORMATIONS/>
+            <TOTALPRICE>319</TOTALPRICE>
+            <CURRENCY>EUR</CURRENCY>
+            <PAYMENTSURCHAGE/>
+            <EQUIVPAYMENTSURCHAGE/>
+            <PASSENGER>
+               <PASSENGERRESPONSE>
+                  <LASTNAME>testi</LASTNAME>
+                  <FIRSTNAME>testi</FIRSTNAME>
+                  <PASSTYPE>ADT</PASSTYPE>
+                  <FARE>223</FARE>
+                  <TAX>90</TAX>
+                  <CURRENCY>EUR</CURRENCY>
+               </PASSENGERRESPONSE>
+            </PASSENGER>
+            <ERRDETAILCODE>0</ERRDETAILCODE>
+         </BookFlightResult>
+      </BookFlightResponse>
+   </soap:Body>
+</soap:Envelope>

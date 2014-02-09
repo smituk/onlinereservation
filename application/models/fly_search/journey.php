@@ -13,12 +13,13 @@ class Journey {
     public $route; // aramadaki hangi route ait oldugu bilgisi tasır.
     public $identifier;//Corendon da bir flight/journey için belirtilen idenfifier;
     public $bookingInfoArray;// ilgili Journeyde  hangi segment için  hangi cabin class ve booking code ki bilgiyi verir
-     
+    public $viaAirport; // corendendoki vai infoya karsılık gelir. 
     public  function addAirPriceSolutionKeyRef($airPriceSolutionKey){
         if(!isset($this->airPriceSolutionRefArray) || count($this->airPriceSolutionRefArray) < 1){
             $this->airPriceSolutionRefArray = array();
         }
-         array_push($this->airPriceSolutionRefArray, $airPriceSolutionKey);       
+         array_push($this->airPriceSolutionRefArray, $airPriceSolutionKey);
+         //$this->airPriceSolutionRefArray = array_unique($this->airPriceSolutionRefArray);
     }
     
     public function removeAirPriceSolutionKeyRef($airPriceSolutionKey){

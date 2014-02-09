@@ -11,9 +11,9 @@
  * @author pasa
  */
 class TravelportAccount {
-    public static $user = "Universal API/uAPI-213325711";
-    public static $password = "p73q3yhWMZrCET3ceTNGBgqBz";
-    public static $branch = "P105360";
+    public static $user = "Universal API/uAPI-429983022";
+    public static $password = "eQgEDJDC7cjNTRn2jt7dmAcdC";
+    public static $branch = "P105217";
     public static $airServiceEndPoint = "https://americas-uapi.copy-webservices.travelport.com/B2BGateway/connect/uAPI/AirService";
     public static $universalRecordEndPoint = "https://americas-uapi.copy-webservices.travelport.com/B2BGateway/connect/uAPI/UniversalRecordService";
     public static $air_scheme_version = "http://www.travelport.com/schema/air_v25_0";

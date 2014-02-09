@@ -7,6 +7,7 @@
         public $utcOffset;
         public $dstRegion;
         public $cityCode;
+        public $countryCode;
                 
         
     }

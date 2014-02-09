@@ -48,7 +48,7 @@ class Fly_search extends CI_Model {
         }
 
         uasort($totalLowFareSearchResult->combinedAirPriceSolutionArray, "combinedAirPriceSolutionSorter");
-        $session = new Session(300);
+        $session = new Session(60);
         $session->set(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER, $totalLowFareSearchResult);
         return $totalLowFareSearchResult;
     }
@@ -59,7 +59,7 @@ class Fly_search extends CI_Model {
     }
 
     public function getSearchCriteria() {
-        $session = new Session(300);
+        $session = new Session();
         return $session->get(Fly_Constant::SESSION_SEARCH_CRITERIA_PARAMETER);
     }
 
@@ -108,6 +108,9 @@ class Fly_search extends CI_Model {
 
 
         $lowFareSearchResult = $this->getFlightSearchResult();
+        if($lowFareSearchResult == FALSE){
+            return false;
+        }
 
         $filteredCombinedAirPriceSolutionArray = array();
 

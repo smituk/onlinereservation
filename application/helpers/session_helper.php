@@ -5,7 +5,7 @@ class Session {
     // To permit the same session var being accessed
     // more than once at same time on different places.
     var $prefix;
-
+    var $activityTime = 600;
     function Session($life_time = null) {
         if (!isset($_SESSION)) {
             session_start();
@@ -21,12 +21,23 @@ class Session {
             }
         }
         if (isset($life_time)) {
-            ini_set("session.gc_maxlifetime", $life_time);
-            ini_set("session.cookie_lifetime", $life_time);
+            $this->activityTime = $life_time;
+           // ini_set("session.gc_maxlifetime", $life_time);
+            //ini_set("session.cookie_lifetime", $life_time);
         }
     }
 
-    function get($session_var) {
+    function get($session_var , $activityTime = null) {
+        
+        if(!isset($activityTime)){
+            $activityTime = $this->activityTime;
+        }
+        if(!$this->isActivityValid($session_var, $activityTime)){
+            
+           // session_unset();     // unset $_SESSION variable for the run-time 
+            //session_destroy(); 
+            return FALSE;
+        }
         return ((isset($_SESSION[$this->prefix][$session_var])) ? unserialize($_SESSION[$this->prefix][$session_var]) : false);
     }
 
@@ -34,8 +45,10 @@ class Session {
         return ((isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : false);
     }
 
-    function set($session_var, $value) {
+    function set($session_var, $value , $activityTime = null) {
+        
         $_SESSION[$this->prefix][$session_var] = serialize($value);
+        $this->logActivity($session_var);
     }
 
     function set_cookie($cookie_name, $value) {
@@ -66,6 +79,22 @@ class Session {
 
     function get_flash($flash_var) {
         return ((isset($_SESSION[$this->prefix]['flash'][$flash_var]['val'])) ? $_SESSION[$this->prefix]['flash'][$flash_var]['val'] : false);
+    }
+    
+    function isActivityValid($key, $activityTime = 600){
+        
+      if (isset($_SESSION[$key."-lastActivity"])) {
+            if(($_SESSION[$key.'-lastActivity'] + $activityTime) < time()) {
+                return false;
+            }
+          return true;
+      }  
+      
+      return false;
+            
+    }
+    function logActivity($key){
+        $_SESSION[$key."-lastActivity"] = time();
     }
 
 }

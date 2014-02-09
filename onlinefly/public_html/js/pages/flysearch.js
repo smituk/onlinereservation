@@ -61,19 +61,75 @@ function initialize() {
 
 	});
 	returnDateInput.val(convertDateToString(defaultReturnDate));
-	boardingairportInput.select2({data: airports, minimumInputLength: 3, placeholder: "Gidiş", allowClear: true, matcher: function(term, text) {
+	boardingairportInput.select2({
+                
+               minimumInputLength: 1, 
+               placeholder: "Gidiş", 
+               allowClear: true, 
+               /*
+               matcher: function(term, text) {
 		return text.toUpperCase().indexOf(term.toUpperCase()) == 0;
-	    }});
-	landingairportInput.select2({data: airports, minimumInputLength: 3, placeholder: "Dönüş", allowClear: true, matcher: function(term, text) {
+	      },*/
+              ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: "index.php/getAirPortsWithPrefix",
+                dataType: 'json',
+                data: function (term, page) {
+                   return {'airportPrefix':term};
+                   //return "{'airportPrefix':\"' + term + '\"}";
+                },
+               results: function (data, page) { // parse the results into the format expected by Select2.
+                   var combodata =  new Array();
+                   if(data !== undefined && data.length  !== undefined && data.length > 0){
+                       for(var i = 0; i < data.length; i++){
+                           var obj = {id:data[i].iataCode, text:data[i].city+", "+data[i].name+"("+data[i].iataCode+"), "+data[i].countryCode};
+                           combodata.push(obj);
+                       }
+                   }
+                    
+                   return { results: combodata };
+             }
+           }
+        });
+	landingairportInput.select2({
+                
+               minimumInputLength: 1, 
+               placeholder: "Gidiş", 
+               allowClear: true, 
+               /*
+               matcher: function(term, text) {
 		return text.toUpperCase().indexOf(term.toUpperCase()) == 0;
-	    }});
+	      },*/
+              ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: "index.php/getAirPortsWithPrefix",
+                dataType: 'json',
+                data: function (term, page) {
+                   return {'airportPrefix':term};
+                   //return "{'airportPrefix':\"' + term + '\"}";
+                },
+               results: function (data, page) { // parse the results into the format expected by Select2.
+                   var combodata =  new Array();
+                   if(data !== undefined && data.length  !== undefined && data.length > 0){
+                       for(var i = 0; i < data.length; i++){
+                           var obj = {id:data[i].iataCode, text:data[i].city+", "+data[i].name+"("+data[i].iataCode+"), "+data[i].countryCode};
+                           combodata.push(obj);
+                       }
+                   }
+                    
+                   return { results: combodata };
+             }
+           }
+        });
 	flightClassInput.select2();
 	flightTypeInput.select2();
         
         var  previousSearchCriteria = getPreviousSearchCriteria();
         if(previousSearchCriteria != null){
-            boardingairportInput.select2("val", previousSearchCriteria["boardingairportCode"]);
-            landingairportInput.select2("val",  previousSearchCriteria["landingairportCode"]);
+            //boardingairportInput.select2("val", previousSearchCriteria["boardingairportCode"]);
+            //landingairportInput.select2("val",  previousSearchCriteria["landingairportCode"]);
         }
 	flyDirectionoptionInput.click(function() {
 	    onflyDirecitonOptionClick($(this).val());

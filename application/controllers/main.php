@@ -149,6 +149,15 @@ class Main extends CI_Controller {
     public function searchResults() {
         $jsfiles = array();
         $cssfiles = array();
+        
+        $this->load->model("fly_search/fly_search_criteria");
+        $session = new Session(300);
+
+        $lowFareSearchResult = $session->get(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER);
+        if($lowFareSearchResult == FALSE){
+            redirect();
+            
+        }
 
         array_push($cssfiles, "pages/fly_result.css");
         array_push($jsfiles, "libs/jquery-validate-1.10.0/jquery.validate.min.js");
@@ -159,11 +168,7 @@ class Main extends CI_Controller {
         array_push($jsfiles, "pages/flyresult.js");
         //array_push($jsfiles, "pages/flysearch.js");
         //more js file
-        $this->load->model("fly_search/fly_search_criteria");
-
-        $session = new Session(300);
-
-        $lowFareSearchResult = $session->get(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER);
+       
         //echo json_encode($lowFareSearchResult);
         $this->load->model("fly_search/fly_search_result_filter_values");
          $carrierFlightTypePriceArray = Fly_seach_helper::getCarrierFlightTypePrices($lowFareSearchResult);

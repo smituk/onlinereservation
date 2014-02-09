@@ -47,10 +47,10 @@ class Corendon implements AirServiceProvider {
 
     private function sendRequestWebService(XmlTransformer $transformer) {
         $requestXml = $transformer->prepareXML();
-        file_put_contents($transformer->name . "Request.xml", $requestXml);
+        //file_put_contents($transformer->name . "Request.xml", $requestXml);
         $responseXml = $this->sendMessageCorendonApi($requestXml);
         //$responseXml = file_get_contents($transformer->name."Response.xml");
-        file_put_contents($transformer->name . "Response.xml", $responseXml);
+        //file_put_contents($transformer->name . "Response.xml", $responseXml);
         return $transformer->convertObject($responseXml);
     }
 
@@ -59,13 +59,15 @@ class Corendon implements AirServiceProvider {
         $paymmentMethodIdentifier = $this->getPaymentMethod($verifiedCombinedAirPriceSolution, NULL);
         loadClass($this->getLibraryDirectory() . "/corendon_apply_book_transformer.php");
         $transformer = new CorendonApplyBookTransformer($applyBookInformation, $paymmentMethodIdentifier);
-        //file_put_contents("cdcd.xml", $transformer->prepareXml());
+        file_put_contents("cdcd.xml", $transformer->prepareXml());
+        return $transformer->convertObject(file_get_contents("corendon.xml"), TRUE);
         /*
         $this->actionMethod = "BookFlight";
-        $flyApplyBookResult = $this->sendRequestWebService($transformer);
+         $flyApplyBookResult = $this->sendRequestWebService($transformer);
+         return $flyApplyBookResult;
+        //return $paymmentMethodIdentifier;
          * 
          */
-        return $paymmentMethodIdentifier;
     }
 
     public function bookPriceVerify($combinedAirPriceSolution, $selectedJourneys, $airSegmentArray, $searchCriteria) {

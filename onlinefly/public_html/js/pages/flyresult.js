@@ -122,13 +122,56 @@ $(document).ready(function() {
     setSearchButtonEvent();
     setSearchNavDayEvent();
     setScrollEvents();
-
-    $(".air-solution .flight-summary").each(function() {
-        var airsolutionelement = $(this);
-        airsolutionelement.find(".journey").first().find("input:radio").attr("checked", true);
-        airsolutionelement.find(".journey").first().find("input:radio").attr("checked", true);
+    
+    $(".air-solution .flight-summary").each(function(index) {
+        var legElement = $(this);
+        var firstJourney = legElement.find(".journey").first();
+        
+        firstJourney.find("input:radio").attr("checked", true);
+        
+        if(index % 2 === 0){
+             legElement.find(".journey").click(function(){
+                 var journey = $(this);
+                 var journeyRefArray = journey.attr("ref").split(",");
+                 //alert(journey.attr("ref"));
+                var otherLegElementSiblings = journey.parents(".flight-summary").siblings(".flight-summary");
+                
+                 otherLegElementSiblings.find(".journey").each(function(){
+                     var otherLegJourneyElement = $(this);
+                     var otherLegJourneyElementRefArray = otherLegJourneyElement.attr("ref").split(",");
+                     var intersectionArray = _.intersection(journeyRefArray,otherLegJourneyElementRefArray);
+                     if(intersectionArray !== undefined && intersectionArray.length > 0){
+                         otherLegJourneyElement.find("input:radio").prop("checked", true);
+                          otherLegJourneyElement.find("input:radio").prop("disabled", false);
+                     }else{
+                          otherLegJourneyElement.find("input:radio").prop("checked", false);
+                          otherLegJourneyElement.find("input:radio").prop("disabled", true);
+                     }
+                 });
+                 
+             });
+       
+        
+        var otherLegElementSiblings = legElement.siblings(".flight-summary");
+        var firstJourneyRefArray = firstJourney.attr("ref").split(",");
+        otherLegElementSiblings.find(".journey").each(function(){
+             var otherLegJourneyElement = $(this);
+                     var otherLegJourneyElementRefArray = otherLegJourneyElement.attr("ref").split(",");
+                     var intersectionArray = _.intersection(firstJourneyRefArray,otherLegJourneyElementRefArray);
+                     if(intersectionArray !== undefined && intersectionArray.length > 0){
+                         otherLegJourneyElement.find("input:radio").prop("checked", true);
+                          otherLegJourneyElement.find("input:radio").prop("disabled", false);
+                     }else{
+                          otherLegJourneyElement.find("input:radio").prop("checked", false);
+                          otherLegJourneyElement.find("input:radio").prop("disabled", true);
+                     }
+           
+         });
+       }
     });
-
+    
+    
+    
     setBookingButtonEvent();
     $(document).ajaxStop($.unblockUI);
 

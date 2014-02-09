@@ -363,6 +363,9 @@ $config['proxy_ips'] = '';
 $config['uri_protocol'] = 'PATH_INFO';
 $config['enable_query_strings'] = TRUE;
 $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['memcache_server_adress'] = "149.210.156.8";
+$config['memcache_server_port'] = "11211";
+
 
 
 /* End of file config.php */

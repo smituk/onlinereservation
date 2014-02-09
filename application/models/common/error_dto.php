@@ -8,6 +8,9 @@ class ErrorCodes{
     const NOTFOUNDAIRPRICESOLUTION = "10004";
     
     const BOOKNOTCANCELED        ="30001";
+    const BOOKCALLINGUNSUCCESSFULL  ="30002";
+    const BOOKCREATEUNSUCCESSFULL  = "30003";
+   
 }
 class ErrorDTO {
     public $errorCode;

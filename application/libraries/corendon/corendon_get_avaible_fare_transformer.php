@@ -59,7 +59,7 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
             $this->oneInfTax = $getAvaibleFareXML->TAXINF;
             $this->currency = $currency = $getAvaibleFareXML->CURRENCY;
 
-            $totalBaseAmount = $this->searchCriteria->yetiskinnumber * (int) $this->oneAdultFare + $this->searchCriteria->cocuknumber * (int) $this->oneChildFare + $this->searchCriteria->bebeknumber * (int) $this->oneInfFare;
+            $totalBaseAmount = $this->searchCriteria->yetiskinnumber * (int) $this->oneAdultFare + $this->searchCriteria->cocuknumber * (int) $this->oneChildFare + $this->searchCriteria->bebeknumber * (int) $this->oneInfFare + count($this->searchCriteria->searchAirLegs)*3*0;
             $totalTaxAmount = $this->searchCriteria->yetiskinnumber * (int) $this->oneAdultTax + $this->searchCriteria->cocuknumber * (int) $this->oneChildTax + $this->searchCriteria->bebeknumber * (int) $this->oneInfTax;
             $airPriceSolutionObject = new AirPricingSolution();
             $airPriceSolutionObject->key = substr(md5(microtime()), 0, 10);
@@ -79,9 +79,10 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
         }
         $lowFareSearchResult->airPriceSolutionArray = $airPriceSolutionArray;
         $lowFareSearchResult->airSegmentArray = $this->airSegmentArray;
-        $lowFareSearchResult->airSegmentArray[Fly_Constant::COMBINATION_AIR_COMPANY] = AirlineService::getAirlineByIATACode(Fly_Constant::COMBINATION_AIR_COMPANY);
+        //$lowFareSearchResult->airSegmentArray[Fly_Constant::COMBINATION_AIR_COMPANY] = AirlineService::getAirlineByIATACode(Fly_Constant::COMBINATION_AIR_COMPANY);
         $lowFareSearchResult->fareInfoArray = $this->fareInfoArray;
         $lowFareSearchResult->airlineArray = $this->airlineArray;
+        $lowFareSearchResult->airlineArray[Fly_Constant::COMBINATION_AIR_COMPANY] = AirlineService::getAirlineByIATACode(Fly_Constant::COMBINATION_AIR_COMPANY);
         $lowFareSearchResult->airportArray = $this->airportArray;
         $lowFareSearchResult->apiCode = Fly_Constant::CORENDON_API_CODE;
         //file_put_contents("cdfefe.json", json_encode($lowFareSearchResult));
@@ -111,7 +112,7 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
         $requestXML->addChild("DEPARTUREDATEOUT", $departureTimeDateTime->format("Ymd")); // departure date 
         $requestXML->addChild("DEPARTURETIMEOUT");
 
-        $requestXML->addChild("CHECKAHEADOUT", 0);
+        $requestXML->addChild("CHECKAHEADOUT", 1);
         $requestXML->addChild("CHECKBACKOUT", 0);
         if ($this->searchCriteria->flydirection == 2) { // Tek yonler için 
             $secondSearchAirLeg = $this->searchCriteria->searchAirLegs[1];
@@ -124,7 +125,7 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
             $departureTimeDateTime = new DateTime($secondSearchAirLeg->searchDepartureTime);
             $requestXML->addChild("DEPARTUREDATEIN", $departureTimeDateTime->format("Ymd"));
             $requestXML->addChild("DEPARTURETIMEIN");
-            $requestXML->addChild("CHECKAHEADIN", 0);
+            $requestXML->addChild("CHECKAHEADIN", 1);
             $requestXML->addChild("CHECKBACKIN", 0);
         } else {
             $multiDepartureCodesInXML = $requestXML->addChild("MULTIDEPARTURECODESIN");
@@ -169,7 +170,7 @@ EOM;
         if ($this->searchCriteria->yetiskinnumber > 0) {
             $airPriceInfoObject = new AirPricingInfo();
             $airPriceInfoObject->key = substr(md5(microtime()), 0, 10);
-            $airPriceInfoObject->approximateBasePrice = $this->currency . $this->oneAdultFare;
+            $airPriceInfoObject->approximateBasePrice = $this->currency .$this->oneAdultFare;
             $airPriceInfoObject->approximateBasePriceAmount = (int) $this->oneAdultFare;
             $airPriceInfoObject->approximateTotalPrice = $this->currency . ((int) $this->oneAdultFare + (int) $this->oneAdultTax);
             $airPriceInfoObject->approximateTotalPriceAmout = (int) $this->oneAdultFare + (int) $this->oneAdultTax;
@@ -201,7 +202,7 @@ EOM;
             $airPriceInfoObject = new AirPricingInfo();
             $airPriceInfoObject->key = substr(md5(microtime()), 0, 10);
             $airPriceInfoObject->approximateBasePrice = $this->currency . $this->oneInfFare;
-            $airPriceInfoObject->approximateTotalPriceAmout = (int) $this->oneInfFare;
+            $airPriceInfoObject->approximateBasePriceAmount = (int) $this->oneInfFare;
             $airPriceInfoObject->approximateTotalPrice = $this->currency . ((int) $this->oneInfFare + (int) $this->oneInfTax);
             $airPriceInfoObject->approximateTotalPriceAmout = (int) $this->oneInfFare + (int) $this->oneInfTax;
             $airPriceInfoObject->taxes = $this->currency . $this->oneInfTax;
@@ -311,7 +312,7 @@ EOM;
         $journeyObject->key = substr(md5(microtime()), 0, 10);
         $journeyObject->identifier = (string) $flightXML->FLIGHTIDENTIFIER;
         $journeyObject->airPriceSolutionKeyRef = $airPriceSolution->key;
-
+        $journeyObject->viaAirport = (string)$flightXML->VIAINFO;
         loadClass(APPPATH . "/models/fly_search/air_segment.php");
         loadClass(APPPATH . "/models/fly_search/book_info.php");
         foreach ($flightXML->SEGMENTS->FSEGMENT_STRC as $flightSegmentXML) {

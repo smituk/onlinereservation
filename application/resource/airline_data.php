@@ -8,10 +8,11 @@ class AirlineData {
     public static $instance = NULL;
 
     private function __construct() {
-         $ci=& get_instance();
-        $query  = $ci->db->query("SELECT * FROM airlines");
-        $this->airlineDataArray = array();
-        foreach ($query->result() as $airlineJsonObject) {
+         $queryExecutor = new QueryExecutor();
+         $query = "SELECT * FROM airlines";
+         $result = $queryExecutor->query($query, true, 200);
+         $this->airlineDataArray = array();
+        foreach ($result as $airlineJsonObject) {
             if ($airlineJsonObject->iata != null && $airlineJsonObject->iata != "") {
                 $airlineData = new AirlineCompany();
                 $airlineData->name = $airlineJsonObject->name;

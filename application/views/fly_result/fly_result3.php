@@ -119,7 +119,12 @@ EOM;
 
 
 function buildJourneyTemplate(AirLeg $legObject, Journey $journey, CombinedAirPriceSolution $combinedAirPriceSolution, LowFareSearchResult $lowFareSearchResult) {
-     $template =  "<div id='$journey->key' class='row journey'><div class='span8'>";
+    $airPriceSolutionRefKeys = "";
+    foreach ($journey->airPriceSolutionRefArray as $airPriceSolutionRef){
+        $airPriceSolutionRefKeys= $airPriceSolutionRefKeys.$airPriceSolutionRef.",";
+    }
+    $airPriceSolutionRefKeys = rtrim($airPriceSolutionRefKeys,',');
+    $template =  "<div id='$journey->key' class='row journey' ref='$airPriceSolutionRefKeys'><div class='span8'>";
       $withRadio = TRUE;
       foreach($journey->airSegmentKeys as $airSegmentKey){
        $radioHtml = "";
@@ -142,6 +147,10 @@ function buildJourneyTemplate(AirLeg $legObject, Journey $journey, CombinedAirPr
        if($avaibleBookingCount < 9 ){
            $remainBookCountWarningMessage = "(" .$avaibleBookingCount. ")";
        }
+       $viaInfo = "";
+       if(isset($journey->viaAirport) && $journey->viaAirport != ""){
+           $viaInfo = "(via ".$journey->viaAirport.")";
+       }
         $airlineCompanyLogoUrl = base_url("onlinefly/public_html/img/hava_sirket_icon_logo/hava_sirket_icon_logo/" . $airSegmentObject->carrier . ".png");
         $flightTime = sprintf("%02dh %02dm", floor($airSegmentObject->flightTime / 60), $airSegmentObject->flightTime % 60);
         $airlineCompany = $lowFareSearchResult->airlineArray[$airSegmentObject->carrier];
@@ -154,7 +163,7 @@ function buildJourneyTemplate(AirLeg $legObject, Journey $journey, CombinedAirPr
          <div class="span1 airline-company-column header-column-value"><span><a href="#" class="carrier_count_tooltip"  data-placement="top" data-toggle="tooltip" title="$airlineCompany->name"><img width="25" height="25" src="$airlineCompanyLogoUrl" alt="$airSegmentObject->carrier"/></a></span></div>
          <div class="span1 flight-no-column header-column-value"><span>$airSegmentObject->carrier </span> <span>$airSegmentObject->flightNumber</span></div>
         <div class="span1 origin-column header-column-value"><span>$airSegmentObject->origin  </span><span>$airSegmentObject->departureHours</span></div>
-        <div class="span1 destination-column header-column-value"><span>$airSegmentObject->destination  </span> <span>$airSegmentObject->arrivalHours</span><span></span></div>
+        <div class="span1 destination-column header-column-value"><span>$viaInfo $airSegmentObject->destination  </span> <span>$airSegmentObject->arrivalHours</span><span></span></div>
         <div class="span1 flight-time-column header-column-value"><span>$flightTime</span></div>
         <div class="span1 class-column header-column-value"><span><a href="#" class="book_count_tooltip"  data-placement="top" data-toggle="tooltip" title="$airSegmentObject->bookingCounts">$adultBookingInfoObject->bookingCode</a></span><span class="remain-book-count"> $remainBookCountWarningMessage</span><span class="cabin-class">  $adultBookingInfoObject->cabinClass</span></div>
 
