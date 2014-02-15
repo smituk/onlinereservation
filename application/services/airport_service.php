@@ -65,7 +65,7 @@ include_once APPPATH . '/models/fly_search/airport.php';
     public function  getAirportsWithPrefix($prefix){
           
           $queryExecutor = new QueryExecutor();
-          $query = "SELECT * FROM airport_summary WHERE upper(name) like upper('$prefix%') OR upper(citycode) like upper('$prefix%') OR upper(airportcode) like upper('$prefix%') OR upper(summary) like upper('$prefix%') order by citycode , frequency desc LIMIT 0,10";
+          $query = "SELECT * FROM airport_summary WHERE upper(name) like upper('$prefix%') OR upper(citycode) like upper('$prefix%') OR upper(airportcode) like upper('$prefix%') OR upper(summary) like upper('$prefix%') order by frequency desc ,citycode  LIMIT 0,10";
           //$query = "SELECT * FROM airports WHERE iata IS NOT NULL  AND airporttype IN (1,2,3) AND countrycode IS NOT NULL AND ( NAME LIKE '$prefix%' OR city LIKE '$prefix%' OR iata LIKE '$prefix%' )  LIMIT 0,10 ";
           $result = $queryExecutor->query($query, true, 24*3600);
           $airportArray = array();
