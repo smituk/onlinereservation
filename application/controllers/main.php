@@ -50,7 +50,7 @@ class Main extends CI_Controller {
         // array_push($jsfiles, "libs/require.js-2.1.4/require.min.js");
         array_push($jsfiles, "libs/select2-3.2/select2.min.js");
         array_push($jsfiles, "libs/jquery.blockUI.js");
-        array_push($jsfiles, "airports.js");
+     
         array_push($jsfiles, "libs/cookie-util.js");
 
         array_push($jsfiles, "pages/flysearch.js");
@@ -67,8 +67,8 @@ class Main extends CI_Controller {
 
         try {
              
-             
-              ini_set('memory_limit', '-1');
+            
+            include_once APPPATH.'services/airport_service.php';  
             $this->load->model("fly_search/fly_search_criteria");
             $search_criteria = $this->fly_search_criteria->getInstance();
             $search_criteria->boardingCode = $this->input->post("boardingairpotCode");
@@ -85,15 +85,21 @@ class Main extends CI_Controller {
             
             $searchAirLegsParams = $this->input->post("airSearchLegs");
            
-            
+            $airportService = AirportService::getInstance();
             $searchAirLegs = array();
             foreach($searchAirLegsParams as $searchAirLegsParam){
                 $searchAirleg = new  SearchAirLeg();
                 $searchAirleg->searchDepartureTime = $searchAirLegsParam["departureTime"];
                 $originSearchLocation = new SearchLocation();
-                $originSearchLocation->airport = $searchAirLegsParam["origin"]["airport"];
+                $originAirportId = $searchAirLegsParam["origin"]["airport"];
+                $originAirport = $airportService->getAirportSummaryFromId(intval($originAirportId));
+                $originSearchLocation->buildSearchLocation($originAirport);
                 $destinationSearchLocation  = new SearchLocation();
-                $destinationSearchLocation->airport = $searchAirLegsParam["destination"]["airport"];
+                
+                $destinationAirportId = $searchAirLegsParam["destination"]["airport"];
+                $destinationAirport = $airportService->getAirportSummaryFromId(intval($destinationAirportId));
+                $destinationSearchLocation->buildSearchLocation($destinationAirport);
+              
                 $searchAirleg->originSearchLocation = $originSearchLocation;
                 $searchAirleg->destinationSearchLocation = $destinationSearchLocation;
                 array_push($searchAirLegs, $searchAirleg);
@@ -164,7 +170,6 @@ class Main extends CI_Controller {
         //array_push($jsfiles, "libs/require.js-2.1.4/require.min.js");
         array_push($jsfiles, "libs/select2-3.2/select2.min.js");
         array_push($jsfiles, "libs/jquery.blockUI.js");
-        array_push($jsfiles, "airports.js");
         array_push($jsfiles, "pages/flyresult.js");
         //array_push($jsfiles, "pages/flysearch.js");
         //more js file

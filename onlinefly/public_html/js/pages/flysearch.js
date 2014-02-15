@@ -26,133 +26,142 @@ var cokluDirection = 0;
 function initialize() {
     $(document).ready(function() {
 
-	$("#yetiskinNumber").selectBoxIt();
-	$("select[name = cocukNumber]").selectBoxIt();
-	$("select[name = bebekNumber]").selectBoxIt();
-	var currentDate = new Date();
+        $("#yetiskinNumber").selectBoxIt();
+        $("select[name = cocukNumber]").selectBoxIt();
+        $("select[name = bebekNumber]").selectBoxIt();
+        var currentDate = new Date();
 
-	var defaultGoDate = new Date();
-	defaultGoDate.setDate(defaultGoDate.getDate() + 1);
-	goDateInput.datepicker({
-	    showOn: "button",
-	    buttonImage: "../onlinefly/public_html/css/ico/calendar_small.jpg",
-	    buttonImageOnly: true,
-	    numberOfMonths: 2,
-	    minDate: currentDate,
-	    defaultDate: $.datepicker.formatDate("dd/mm/yy", currentDate),
-	    dateFormat: "dd/mm/yy",
-             onSelect: function(date) {
-                returnDateInput.datepicker("option",'minDate',date);
-         }
-	});
+        var defaultGoDate = new Date();
+        defaultGoDate.setDate(defaultGoDate.getDate() + 1);
+        goDateInput.datepicker({
+            showOn: "button",
+            buttonImage: "../onlinefly/public_html/css/ico/calendar_small.jpg",
+            buttonImageOnly: true,
+            numberOfMonths: 2,
+            minDate: currentDate,
+            defaultDate: $.datepicker.formatDate("dd/mm/yy", currentDate),
+            dateFormat: "dd/mm/yy",
+            onSelect: function(date) {
+                returnDateInput.datepicker("option", 'minDate', date);
+            }
+        });
 
-	goDateInput.val(convertDateToString(defaultGoDate));
-	var defaultReturnDate = defaultGoDate;
-	defaultReturnDate.setDate(defaultReturnDate.getDate() + 7);
-	returnDateInput.datepicker({
-	    showOn: "button",
-	    buttonImage: "../onlinefly/public_html/css/ico/calendar_small.jpg",
-	    buttonImageOnly: true,
-	    numberOfMonths: 2,
-	    minDate: currentDate,
-	    defaultDate: +14,
-	    dateFormat: "dd/mm/yy"
+        goDateInput.val(convertDateToString(defaultGoDate));
+        var defaultReturnDate = defaultGoDate;
+        defaultReturnDate.setDate(defaultReturnDate.getDate() + 7);
+        returnDateInput.datepicker({
+            showOn: "button",
+            buttonImage: "../onlinefly/public_html/css/ico/calendar_small.jpg",
+            buttonImageOnly: true,
+            numberOfMonths: 2,
+            minDate: currentDate,
+            defaultDate: +14,
+            dateFormat: "dd/mm/yy"
 
 
-	});
-	returnDateInput.val(convertDateToString(defaultReturnDate));
-	boardingairportInput.select2({
-                
-               minimumInputLength: 1, 
-               placeholder: "Gidiş", 
-               allowClear: true, 
-               /*
-               matcher: function(term, text) {
-		return text.toUpperCase().indexOf(term.toUpperCase()) == 0;
-	      },*/
-              ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        });
+        returnDateInput.val(convertDateToString(defaultReturnDate));
+        boardingairportInput.select2({
+            minimumInputLength: 1,
+            placeholder: "Gidiş",
+            ajax: {// instead of writing the function to execute the request we use Select2's convenient helper
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 url: "index.php/getAirPortsWithPrefix",
                 dataType: 'json',
-                data: function (term, page) {
-                   return {'airportPrefix':term};
-                   //return "{'airportPrefix':\"' + term + '\"}";
+                data: function(term, page) {
+                    return {'airportPrefix': term};
+                    //return "{'airportPrefix':\"' + term + '\"}";
                 },
-               results: function (data, page) { // parse the results into the format expected by Select2.
-                   var combodata =  new Array();
-                   if(data !== undefined && data.length  !== undefined && data.length > 0){
-                       for(var i = 0; i < data.length; i++){
-                           var obj = {id:data[i].iataCode, text:data[i].city+", "+data[i].name+"("+data[i].iataCode+"), "+data[i].countryCode};
-                           combodata.push(obj);
-                       }
-                   }
-                    
-                   return { results: combodata };
-             }
-           }
+                results: function(data, page) { // parse the results into the format expected by Select2.
+                    var combodata = new Array();
+                    if (data !== undefined && data.length !== undefined && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var obj = {id: data[i].id, text: data[i].summary};
+                            combodata.push(obj);
+                        }
+                    }
+
+                    return {results: combodata};
+                }
+            },
+            initSelection: function(element, callback) {
+                var id = $(element).val();
+                if (id !== "") {
+                    $.post("index.php/getAirportSummary", {'airportid': id}).done(function(data) {
+                        var summarydata = {};
+                        summarydata.id = data.id;
+                        summarydata.text = data.summary;
+                        callback(summarydata);
+                    });
+                }
+            }
+
         });
-	landingairportInput.select2({
-                
-               minimumInputLength: 1, 
-               placeholder: "Gidiş", 
-               allowClear: true, 
-               /*
-               matcher: function(term, text) {
-		return text.toUpperCase().indexOf(term.toUpperCase()) == 0;
-	      },*/
-              ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        landingairportInput.select2({
+            minimumInputLength: 1,
+            placeholder: "Gidiş",
+            ajax: {// instead of writing the function to execute the request we use Select2's convenient helper
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 url: "index.php/getAirPortsWithPrefix",
                 dataType: 'json',
-                data: function (term, page) {
-                   return {'airportPrefix':term};
-                   //return "{'airportPrefix':\"' + term + '\"}";
+                data: function(term, page) {
+                    return {'airportPrefix': term};
                 },
-               results: function (data, page) { // parse the results into the format expected by Select2.
-                   var combodata =  new Array();
-                   if(data !== undefined && data.length  !== undefined && data.length > 0){
-                       for(var i = 0; i < data.length; i++){
-                           var obj = {id:data[i].iataCode, text:data[i].city+", "+data[i].name+"("+data[i].iataCode+"), "+data[i].countryCode};
-                           combodata.push(obj);
-                       }
-                   }
-                    
-                   return { results: combodata };
-             }
-           }
+                results: function(data, page) { // parse the results into the format expected by Select2.
+                    var combodata = new Array();
+                    if (data !== undefined && data.length !== undefined && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var obj = {id: data[i].id, text: data[i].summary};
+                            combodata.push(obj);
+                        }
+                    }
+
+                    return {results: combodata};
+                }
+            },
+            initSelection: function(element, callback) {
+                var id = $(element).val();
+                if (id !== "") {
+                    $.post("index.php/getAirportSummary", {'airportid': id}).done(function(data) {
+                        var summarydata = {};
+                        summarydata.id = data.id;
+                        summarydata.text = data.summary;
+                        callback(summarydata);
+                    });
+                }
+            }
         });
-	flightClassInput.select2();
-	flightTypeInput.select2();
-        
-        var  previousSearchCriteria = getPreviousSearchCriteria();
-        if(previousSearchCriteria != null){
-            //boardingairportInput.select2("val", previousSearchCriteria["boardingairportCode"]);
-            //landingairportInput.select2("val",  previousSearchCriteria["landingairportCode"]);
+        flightClassInput.select2();
+        flightTypeInput.select2();
+
+        var previousSearchCriteria = getPreviousSearchCriteria();
+        if (previousSearchCriteria != null) {
+            boardingairportInput.select2("val", previousSearchCriteria["boardingairportCode"]);
+            landingairportInput.select2("val",  previousSearchCriteria["landingairportCode"]);
         }
-	flyDirectionoptionInput.click(function() {
-	    onflyDirecitonOptionClick($(this).val());
-	});
+        flyDirectionoptionInput.click(function() {
+            onflyDirecitonOptionClick($(this).val());
+        });
 
-	searchButton.click(function() {
-	    onflySearchButtonClick();
-	});
+        searchButton.click(function() {
+            onflySearchButtonClick();
+        });
 
     });
-    
-     $(document).ajaxStop($.unblockUI);
+    $(document).ajaxStop($.unblockUI);
 }
 
 function onflyDirecitonOptionClick(value) {
     if (value == oneDirectioValue) {
-	//returnDateInput.datepicker("option", "disabled", false);
+        //returnDateInput.datepicker("option", "disabled", false);
         $(".return-date-container").hide(100);
     } else if (value == doubleDirection) {
-	//returnDateInput.datepicker("option", "disabled", true);
+        //returnDateInput.datepicker("option", "disabled", true);
         $(".return-date-container").show(200);
     } else if (value == cokluDirection) {
-	openCokluUcusOption();
+        openCokluUcusOption();
     }
 }
 function openCokluUcusOption() {
@@ -164,9 +173,9 @@ function openCokluUcusOption() {
 function   onflySearchButtonClick() {
     var valid = validflySearchRequest();
     if (!valid) {
-	return;
+        return;
     }
-    
+
     $.blockUI({message: $('#domMessage'), backgroundColor: "transparent"});
     var succesResponse = doflySearch(responseFlySearch);
 }
@@ -176,31 +185,31 @@ function  validflySearchRequest() {
     var boardingportCode = boardingairportInput.select2("val");
 
     if (boardingportCode == null || boardingportCode.length < 1) {
-	valid = false;
-	$(".boardingairpot-alert").show();
+        valid = false;
+        $(".boardingairpot-alert").show();
     }
     var landingairportCode = landingairportInput.select2("val");
     if (landingairportCode == null || landingairportCode.length < 1) {
-	valid = false;
-	$(".landingairpot-alert").show();
+        valid = false;
+        $(".landingairpot-alert").show();
     }
 
 
     var goDate = goDateInput.datepicker("getDate");
     if ($("input:radio[name=flightdirection]:checked").val() == 2) {
-	if (goDate == null || goDate.length < 1) {
-	    valid = false;
-	    $(".godate-alert").show();
-	} else {
-	    goDate = $.datepicker.formatDate("yy-mm-dd", goDate);
-	}
+        if (goDate == null || goDate.length < 1) {
+            valid = false;
+            $(".godate-alert").show();
+        } else {
+            goDate = $.datepicker.formatDate("yy-mm-dd", goDate);
+        }
     }
     var returnDate = returnDateInput.datepicker("getDate");
     if (returnDate == null || returnDate.length < 1) {
-	valid = false;
-	$(".returndate-alert").show();
+        valid = false;
+        $(".returndate-alert").show();
     } else {
-	returnDate = $.datepicker.formatDate("yy-mm-dd", returnDate);
+        returnDate = $.datepicker.formatDate("yy-mm-dd", returnDate);
     }
 
 
@@ -229,9 +238,9 @@ function  buildflySearchRequest() {
     requestFlySearchJsonObject['directionOption'] = $("input:radio[name=flightdirection]:checked").val();
     requestFlySearchJsonObject['cabinClass'] = flightClassInput.select2("val");
     requestFlySearchJsonObject['flightType'] = flightTypeInput.select2("val");
-    
+
     var airSearchLegs = new Array();
-    var firstAirSearchLeg  = {};
+    var firstAirSearchLeg = {};
     firstAirSearchLeg.origin = {};
     firstAirSearchLeg.destination = {};
     firstAirSearchLeg.origin.airport = boardingairportInput.select2("val");
@@ -243,7 +252,7 @@ function  buildflySearchRequest() {
     secondAirSearchLeg.destination = {};
     secondAirSearchLeg.origin.airport = landingairportInput.select2("val");
     secondAirSearchLeg.destination.airport = boardingairportInput.select2("val");
-    secondAirSearchLeg.departureTime  = $.datepicker.formatDate("yy-mm-dd", returnDateInput.datepicker("getDate"));
+    secondAirSearchLeg.departureTime = $.datepicker.formatDate("yy-mm-dd", returnDateInput.datepicker("getDate"));
     airSearchLegs.push(secondAirSearchLeg);
     requestFlySearchJsonObject['airSearchLegs'] = airSearchLegs;
     return requestFlySearchJsonObject;
@@ -254,11 +263,11 @@ function  doflySearch(_callback) {
     setSearchCriteriaToCookie(requestFlySearchJsonObject);
     var url = "index.php/searchflyrequest";
     $.post(url, requestFlySearchJsonObject, function(data) {
-	if (_callback != null) {
-	    _callback(data);
-	}
-    },'json').fail( function(xhr, textStatus, errorThrown) {
-        alert(errorThrown+"-"+xhr.responseText+"-"+textStatus);
+        if (_callback != null) {
+            _callback(data);
+        }
+    }, 'json').fail(function(xhr, textStatus, errorThrown) {
+        alert(errorThrown + "-" + xhr.responseText + "-" + textStatus);
     });
 
 }
@@ -266,42 +275,42 @@ function  doflySearch(_callback) {
 function responseFlySearch(data) {
     if (data !== null && data.data > 0) {
 
-	document.location.href = "index.php/searchresults";
+        document.location.href = "index.php/searchresults";
 
-    }else{
+    } else {
         alert("Uçus Bulunamadı");
     }
 }
 
 function setLoaderModal() {
     $(function() {
-	$("#dialog").dialog({
-	    dialogClass: 'transparent',
-	    resizable: false,
-	    draggable: false,
-	    modal: true,
-	    height: 0,
-	    width: 0,
-	    autoOpen: false,
-	    overlay: {
-		opacity: 0
-	    }
+        $("#dialog").dialog({
+            dialogClass: 'transparent',
+            resizable: false,
+            draggable: false,
+            modal: true,
+            height: 0,
+            width: 0,
+            autoOpen: false,
+            overlay: {
+                opacity: 0
+            }
 
-	});
+        });
     });
 }
 
 
-function setSearchCriteriaToCookie(searchCriteria){
-   // createCookie foksiyonu cookie-util.js dosyasından gelmektedir createCookie("author", "aurelio", 30);
-  createCookie("boardingairpotCode",searchCriteria["boardingairpotCode"],100);  
-  createCookie("landingairpotCode",searchCriteria["landingairpotCode"],100);
+function setSearchCriteriaToCookie(searchCriteria) {
+    // createCookie foksiyonu cookie-util.js dosyasından gelmektedir createCookie("author", "aurelio", 30);
+    createCookie("boardingairpotCode", searchCriteria["boardingairpotCode"], 100);
+    createCookie("landingairpotCode", searchCriteria["landingairpotCode"], 100);
 }
 
-function getPreviousSearchCriteria(){
-   
+function getPreviousSearchCriteria() {
+
     var searchCriteria = {};
-    if( readCookie("boardingairpotCode") == null || readCookie("landingairpotCode") == null){
+    if (readCookie("boardingairpotCode") == null || readCookie("landingairpotCode") == null) {
         return  null;
     }
     searchCriteria["boardingairportCode"] = readCookie("boardingairpotCode");
@@ -310,16 +319,16 @@ function getPreviousSearchCriteria(){
 }
 
 
-function convertDateToString(date){
+function convertDateToString(date) {
     var day = date.getDate();
-    if(date.getDate() < 10){
-        day = "0"+ day;
+    if (date.getDate() < 10) {
+        day = "0" + day;
     }
-    var month = date.getMonth() +  1;
-    if(month  < 10){
-        month = "0" +  month;
+    var month = date.getMonth() + 1;
+    if (month < 10) {
+        month = "0" + month;
     }
-    return day+"/"+month + "/" + date.getFullYear();
+    return day + "/" + month + "/" + date.getFullYear();
 }
 
 initialize();

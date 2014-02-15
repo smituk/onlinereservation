@@ -51,11 +51,25 @@ EOM;
     private function buildSearchAirLegXML(SimpleXMLElement $lowFareSearchRequestXML, SearchAirLeg $searchAirLeg) {
         $searchAirLegXML = $lowFareSearchRequestXML->addChild("SearchAirLeg");
         $searchOriginXML = $searchAirLegXML->addChild("SearchOrigin");
-        $searchOriginLocationXML = $searchOriginXML->addChild("Airport", NULL, TravelportAccount::$common_scheme_version);
-        $searchOriginLocationXML->addAttribute("Code", $searchAirLeg->originSearchLocation->airport);
+        $originSearchLocation =  $searchAirLeg->originSearchLocation;
+        if($originSearchLocation->isAll){
+            $searchOriginLocationXML = $searchOriginXML->addChild("City", NULL, TravelportAccount::$common_scheme_version);
+            $searchOriginLocationXML->addAttribute("Code", $searchAirLeg->originSearchLocation->city);
+        }else{
+            $searchOriginLocationXML = $searchOriginXML->addChild("Airport", NULL, TravelportAccount::$common_scheme_version);
+            $searchOriginLocationXML->addAttribute("Code", $searchAirLeg->originSearchLocation->airport);
+        }
         $searchDestinationXML = $searchAirLegXML->addChild("SearchDestination");
-        $searchDestinationLocationXML = $searchDestinationXML->addChild("Airport", NULL, TravelportAccount::$common_scheme_version);
-        $searchDestinationLocationXML->addAttribute("Code", $searchAirLeg->destinationSearchLocation->airport);
+        $destinationSearchLocation = $searchAirLeg->destinationSearchLocation;
+        if($destinationSearchLocation->isAll){
+            $searchDestinationLocationXML = $searchDestinationXML->addChild("City", NULL, TravelportAccount::$common_scheme_version);
+            $searchDestinationLocationXML->addAttribute("Code", $searchAirLeg->destinationSearchLocation->city);
+        }else{
+            $searchDestinationLocationXML = $searchDestinationXML->addChild("Airport", NULL, TravelportAccount::$common_scheme_version);
+            $searchDestinationLocationXML->addAttribute("Code", $searchAirLeg->destinationSearchLocation->airport);
+        }
+       
+        
         $searchDepartureTimeXML = $searchAirLegXML->addChild("SearchDepTime");
         $searchDepartureTimeXML->addAttribute("PreferredTime", $searchAirLeg->searchDepartureTime . "T00:00:00");
         if (isset($searchAirLeg->searchArrvalTime)) {

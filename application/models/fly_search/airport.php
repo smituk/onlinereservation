@@ -1,5 +1,6 @@
 <?php
     class Airport {
+        public $id;
         public $iataCode;
         public $name;
         public $city;
@@ -8,8 +9,10 @@
         public $dstRegion;
         public $cityCode;
         public $countryCode;
+        public $isAll;
+        public $summary;
+        public $associatedAirports;
                 
-        
     }
 
 ?>

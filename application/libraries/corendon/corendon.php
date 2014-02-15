@@ -47,7 +47,7 @@ class Corendon implements AirServiceProvider {
 
     private function sendRequestWebService(XmlTransformer $transformer) {
         $requestXml = $transformer->prepareXML();
-        //file_put_contents($transformer->name . "Request.xml", $requestXml);
+       // file_put_contents($transformer->name . "Request.xml", $requestXml);
         $responseXml = $this->sendMessageCorendonApi($requestXml);
         //$responseXml = file_get_contents($transformer->name."Response.xml");
         //file_put_contents($transformer->name . "Response.xml", $responseXml);

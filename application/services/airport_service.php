@@ -33,22 +33,54 @@ include_once APPPATH . '/models/fly_search/airport.php';
         }
     }
     
+    public function getAirportSummaryFromId($id){
+        
+        if(!is_numeric($id)){
+            return false;
+        }
+        $id  = intval($id);
+        $queryExecutor  = new QueryExecutor();
+        $query = "SELECT * FROM airport_summary WHERE id = $id";
+        //echo $query;
+        $result = $queryExecutor->query($query, true, 24*3600);
+          foreach ($result as $airportRow) {
+              
+            $airportObject = new Airport();
+            $airportObject->iataCode = $airportRow->airportcode;
+            //$airportObject->city = $airportRow->city;
+            //$airportObject->country = $airportRow->country;
+            //$airportObject->name = $airportRow->name;
+            //$airportObject->utcOffset = $airportRow->timezone;
+            //$airportObject->dstRegion = $airportRow->dst;
+            $airportObject->cityCode = $airportRow->citycode;
+            //$airportObject->countryCode = $airportRow->countrycode;
+            $airportObject->summary = $airportRow->summary;
+            $airportObject->id  = $airportRow->id;
+            $airportObject->isAll = $airportRow->isAll;
+            $airportObject->associatedAirports = $airportRow->associatedairports;
+            return $airportObject;
+    
+        }
+    }   
     public function  getAirportsWithPrefix($prefix){
           
           $queryExecutor = new QueryExecutor();
-          $query = "SELECT * FROM airports WHERE iata IS NOT NULL  AND airporttype IN (1,2,3) AND countrycode IS NOT NULL AND ( NAME LIKE '$prefix%' OR city LIKE '$prefix%' OR iata LIKE '$prefix%' )  LIMIT 0,10 ";
-          $result = $queryExecutor->query($query, false, 24*3600);
+          $query = "SELECT * FROM airport_summary WHERE upper(name) like upper('$prefix%') OR upper(citycode) like upper('$prefix%') OR upper(airportcode) like upper('$prefix%') OR upper(summary) like upper('$prefix%') order by citycode , frequency desc LIMIT 0,10";
+          //$query = "SELECT * FROM airports WHERE iata IS NOT NULL  AND airporttype IN (1,2,3) AND countrycode IS NOT NULL AND ( NAME LIKE '$prefix%' OR city LIKE '$prefix%' OR iata LIKE '$prefix%' )  LIMIT 0,10 ";
+          $result = $queryExecutor->query($query, true, 24*3600);
           $airportArray = array();
            foreach ($result as $airportRow) {
             $airportObject = new Airport();
-            $airportObject->iataCode = $airportRow->iata;
-            $airportObject->city = $airportRow->city;
-            $airportObject->country = $airportRow->country;
-            $airportObject->name = $airportRow->name;
-            $airportObject->utcOffset = $airportRow->timezone;
-            $airportObject->dstRegion = $airportRow->dst;
+            $airportObject->iataCode = $airportRow->airportcode;
+            //$airportObject->city = $airportRow->city;
+            //$airportObject->country = $airportRow->country;
+            //$airportObject->name = $airportRow->name;
+            //$airportObject->utcOffset = $airportRow->timezone;
+            //$airportObject->dstRegion = $airportRow->dst;
             $airportObject->cityCode = $airportRow->citycode;
-            $airportObject->countryCode = $airportRow->countrycode;
+            //$airportObject->countryCode = $airportRow->countrycode;
+            $airportObject->summary = $airportRow->summary;
+            $airportObject->id  = $airportRow->id;
             array_push($airportArray, $airportObject);
                      
         }

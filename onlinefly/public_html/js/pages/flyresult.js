@@ -27,16 +27,87 @@ var verifiedBookPriceSolutionApp = {
 }
 $(document).ready(function() {
 
-    var boardingairportInput = $("#boardingairport");
-    boardingairportInput.select2({data: airports, minimumInputLength: 3, placeholder: "Gidiş", allowClear: true, matcher: function(term, text) {
-            return text.toUpperCase().indexOf(term.toUpperCase()) == 0;
-        }});
-    $("#boardingairport").select2("val", session_search_criteria["boardingairpotCode"]);
-    var landingairportInput = $("#landingairport");
-    landingairportInput.select2({data: airports, minimumInputLength: 3, placeholder: "Dönüş", allowClear: true, matcher: function(term, text) {
-            return text.toUpperCase().indexOf(term.toUpperCase()) == 0;
-        }});
-    landingairportInput.select2("val", session_search_criteria['landingairpotCode'])
+
+
+     var boardingairportInput = $("#boardingairport");
+     var landingairportInput = $("#landingairport");
+     boardingairportInput.select2({
+            minimumInputLength: 1,
+            placeholder: "Gidiş",
+            ajax: {// instead of writing the function to execute the request we use Select2's convenient helper
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: "getAirPortsWithPrefix",
+                dataType: 'json',
+                data: function(term, page) {
+                    return {'airportPrefix': term};
+                    //return "{'airportPrefix':\"' + term + '\"}";
+                },
+                results: function(data, page) { // parse the results into the format expected by Select2.
+                    var combodata = new Array();
+                    if (data !== undefined && data.length !== undefined && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var obj = {id: data[i].id, text: data[i].summary};
+                            combodata.push(obj);
+                        }
+                    }
+
+                    return {results: combodata};
+                }
+            },
+            initSelection: function(element, callback) {
+                var id = $(element).val();
+                if (id !== "") {
+                    $.post("getAirportSummary", {'airportid': id}).done(function(data) {
+                        var summarydata = {};
+                        summarydata.id = data.id;
+                        summarydata.text = data.summary;
+                        callback(summarydata);
+                    });
+                }
+            }
+
+        });
+        landingairportInput.select2({
+            minimumInputLength: 1,
+            placeholder: "Gidiş",
+            ajax: {// instead of writing the function to execute the request we use Select2's convenient helper
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: "getAirPortsWithPrefix",
+                dataType: 'json',
+                data: function(term, page) {
+                    return {'airportPrefix': term};
+                },
+                results: function(data, page) { // parse the results into the format expected by Select2.
+                    var combodata = new Array();
+                    if (data !== undefined && data.length !== undefined && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var obj = {id: data[i].id, text: data[i].summary};
+                            combodata.push(obj);
+                        }
+                    }
+
+                    return {results: combodata};
+                }
+            },
+            initSelection: function(element, callback) {
+                var id = $(element).val();
+                if (id !== "") {
+                    $.post("getAirportSummary", {'airportid': id}).done(function(data) {
+                        var summarydata = {};
+                        summarydata.id = data.id;
+                        summarydata.text = data.summary;
+                        callback(summarydata);
+                    });
+                }
+            }
+        });
+        
+        boardingairportInput.select2("val", session_search_criteria["boardingairpotCode"]);
+         landingairportInput.select2("val", session_search_criteria['landingairpotCode']);
+
+   
 
 
     var returnDateInput = $("#return_date");
