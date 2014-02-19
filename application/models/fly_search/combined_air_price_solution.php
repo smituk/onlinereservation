@@ -33,6 +33,10 @@ class CombinedAirPriceSolution {
     public function getLeg($legKey){
         return $this->legs[$legKey];
     }
+    
+   public function getLegs(){
+       return $this->legs;
+   }
 
 }
 

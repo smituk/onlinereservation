@@ -64,7 +64,7 @@ $autoload['libraries'] = array('session','database');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','load_class','query/query_executor');
+$autoload['helper'] = array('url','load_class','query/query_executor','load_core_exceptions');
 
 
 /*

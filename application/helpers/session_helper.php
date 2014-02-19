@@ -33,9 +33,7 @@ class Session {
             $activityTime = $this->activityTime;
         }
         if(!$this->isActivityValid($session_var, $activityTime)){
-            
-           // session_unset();     // unset $_SESSION variable for the run-time 
-            //session_destroy(); 
+            unset($_SESSION[$this->prefix][$session_var]);
             return FALSE;
         }
         return ((isset($_SESSION[$this->prefix][$session_var])) ? unserialize($_SESSION[$this->prefix][$session_var]) : false);

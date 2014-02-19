@@ -47,7 +47,7 @@ class Corendon implements AirServiceProvider {
 
     private function sendRequestWebService(XmlTransformer $transformer) {
         $requestXml = $transformer->prepareXML();
-       // file_put_contents($transformer->name . "Request.xml", $requestXml);
+        //file_put_contents($transformer->name . "Request.xml", $requestXml);
         $responseXml = $this->sendMessageCorendonApi($requestXml);
         //$responseXml = file_get_contents($transformer->name."Response.xml");
         //file_put_contents($transformer->name . "Response.xml", $responseXml);
@@ -64,31 +64,70 @@ class Corendon implements AirServiceProvider {
         /*
         $this->actionMethod = "BookFlight";
          $flyApplyBookResult = $this->sendRequestWebService($transformer);
-         return $flyApplyBookResult;
-        //return $paymmentMethodIdentifier;
-         * 
          */
     }
 
-    public function bookPriceVerify($combinedAirPriceSolution, $selectedJourneys, $airSegmentArray, $searchCriteria) {
-       //FareInfoList gelmediğinden airPriceInfoObjecteki  fareInfoList dolmaz. Daha sonra bu gelistirmenin yapılması gerekir.
+    public function bookPriceVerify($combinedAirPriceSolution, $selectedJourneys, $airSegmentArray,  $searchCriteria) {
+       //FareInfoList gelmediğinden airPriceInfoObjecteki  fareInfoList dolmaz. Daha sonra bu gelistirmenien yapılması gerekir.
+     
+       
+        $newSearchCriteria = clone $searchCriteria;
+        $newSearchCriteria->aheadDateInterval = 0; // +- gunleri getirmesin
+        $newSearchCriteria->backDateInterval = 0;
+         $i = 0;
+        foreach($selectedJourneys as $selectedJourney){
+              $searchAirLeg = $newSearchCriteria->searchAirLegs[$i];
+              $searchAirLeg->searchDepartureTime = $selectedJourney->getDepartureTime($airSegmentArray);
+              $i++;
+        }
         
+          $lowFareSearchResult = $this->convertXMLToCombinedAirPriceSolutions($this->searchFlight($newSearchCriteria),$newSearchCriteria);
+          $newCombinedAirPriceSolutions = $lowFareSearchResult->getCombinedAirPriceSolutions();
+          if($newCombinedAirPriceSolutions == FALSE || count ($newCombinedAirPriceSolutions) < 1){
+              throw new AvaibleSolutionNotFoundException();
+          }
+          
+          $selectedNewCombinedAirPriceSolution = null;
+          $selectedNewJourneys = array();
+          foreach($newCombinedAirPriceSolutions as $newCombinedAirPriceSolution){
+              $i = 0;
+              foreach($newCombinedAirPriceSolution->getLegs() as $legObject){
+                  foreach($legObject->getJourneys() as $journey){
+                    if($journey->identifier  == $selectedJourneys[$i]->identifier){
+                        array_push($selectedNewJourneys, $journey);
+                    }
+                  }
+                $i++;  
+              }
+              
+              if(count($selectedNewJourneys) == count($selectedJourneys)){
+                  $selectedNewCombinedAirPriceSolution = $newCombinedAirPriceSolution;
+                  break;
+              }
+             $selectedNewJourneys  = array();// herbir combined  solution için
+          }
+          
+          if(!isset($selectedNewCombinedAirPriceSolution) ){
+              throw new AvaibleSolutionNotFoundException();
+          }
+          
+
         $responseBookPriceVerifyData = new ResponseBookPriceVerifyData();
-        $responseBookPriceVerifyData->combinedAirPriceSolution = $combinedAirPriceSolution;
+        $responseBookPriceVerifyData->combinedAirPriceSolution = $selectedNewCombinedAirPriceSolution;
         $responseBookPriceVerifyData->searchCriteria = $searchCriteria;
         $verifiedAirPriceSoluton = new CombinedAirPriceSolution();
-        $verifiedAirPriceSoluton->combinedKey = $combinedAirPriceSolution->combinedKey;
+        $verifiedAirPriceSoluton->combinedKey = $selectedNewCombinedAirPriceSolution->combinedKey;
 
-        $verifiedAirPriceSoluton->apprixomateTotalPriceAmount = $combinedAirPriceSolution->apprixomateTotalPriceAmount;
+        $verifiedAirPriceSoluton->apprixomateTotalPriceAmount = $selectedNewCombinedAirPriceSolution->apprixomateTotalPriceAmount;
         $verifiedAirPriceSoluton->approximateBasePriceAmount =  $verifiedAirPriceSoluton->apprixomateTotalPriceAmount-$combinedAirPriceSolution->taxesAmount;
-        $verifiedAirPriceSoluton->taxesAmount = $combinedAirPriceSolution->taxesAmount;
-        $verifiedAirPriceSoluton->totalPrice = $combinedAirPriceSolution->totalPrice;
-        $verifiedAirPriceSoluton->basePrice = $combinedAirPriceSolution->basePrice;
-        $verifiedAirPriceSoluton->apprixomateTotalPrice = $combinedAirPriceSolution->apprixomateTotalPrice;
-        $verifiedAirPriceSoluton->approximateBasePrice = $combinedAirPriceSolution->approximateBasePrice;
-        $verifiedAirPriceSoluton->taxes = $combinedAirPriceSolution->taxes;
+        $verifiedAirPriceSoluton->taxesAmount = $selectedNewCombinedAirPriceSolution->taxesAmount;
+        $verifiedAirPriceSoluton->totalPrice = $selectedNewCombinedAirPriceSolution->totalPrice;
+        $verifiedAirPriceSoluton->basePrice = $selectedNewCombinedAirPriceSolution->basePrice;
+        $verifiedAirPriceSoluton->apprixomateTotalPrice = $selectedNewCombinedAirPriceSolution->apprixomateTotalPrice;
+        $verifiedAirPriceSoluton->approximateBasePrice = $selectedNewCombinedAirPriceSolution->approximateBasePrice;
+        $verifiedAirPriceSoluton->taxes = $selectedNewCombinedAirPriceSolution->taxes;
         $verifiedAirPriceSoluton->apiCode = Fly_Constant::CORENDON_API_CODE;
-        $verifiedAirPriceSoluton->airPricingInfoArray = $combinedAirPriceSolution->airPricingInfoArray;
+        $verifiedAirPriceSoluton->airPricingInfoArray = $selectedNewCombinedAirPriceSolution->airPricingInfoArray;
         $legIndexCount = 0;
         
         foreach($combinedAirPriceSolution->legs as $legObject){

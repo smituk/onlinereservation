@@ -9,5 +9,12 @@
        public $airportArray;
        public $airlineArray;
        
+       
+       public function getCombinedAirPriceSolutions(){
+            if(!isset($this->combinedAirPriceSolutionArray)){
+                return FALSE;
+            }
+            return $this->combinedAirPriceSolutionArray;
+       }
    }
 ?>

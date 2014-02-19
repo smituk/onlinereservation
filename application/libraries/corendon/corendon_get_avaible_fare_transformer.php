@@ -28,11 +28,17 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
     private $fareInfoArray;
     private $airlineArray;
     private $legArray;
+    public  $checkAheadOut = 0;
+    public  $checkBackOut = 0;
+    public  $checkAheadIn = 0;
+    public  $checkBackIn  = 0;
+    public  $isCombined = true;
 
     public function __construct($searchCriteria) {
         $this->searchCriteria = $searchCriteria;
         $this->airportArray = array();
-    }
+        
+      }
 
     public function convertObject($responseXml, $isConverted = FALSE) {
         if (!$isConverted) {
@@ -85,6 +91,9 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
         $lowFareSearchResult->airlineArray[Fly_Constant::COMBINATION_AIR_COMPANY] = AirlineService::getAirlineByIATACode(Fly_Constant::COMBINATION_AIR_COMPANY);
         $lowFareSearchResult->airportArray = $this->airportArray;
         $lowFareSearchResult->apiCode = Fly_Constant::CORENDON_API_CODE;
+        if(!$this->isCombined){
+            return $lowFareSearchResult;
+        }
         //file_put_contents("cdfefe.json", json_encode($lowFareSearchResult));
         return $this->combineAirPriceSolutions($lowFareSearchResult);
     }
@@ -108,49 +117,32 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
         //Gidişteki kalkabilecek airportlar ekleniyor
         $multipleDepartureCodesOutXML = $requestXML->addChild("MULTIDEPARTURECODESOUT");
         $this->buildAirPortXML($multipleDepartureCodesOutXML, $firstSearchAirLeg->originSearchLocation);
-        /*
-        $airPortCodeSrcXML = $multipleDepartureCodesOutXML->addChild("AIRPORTCODE_STRC");
-        $airPortCodeSrcXML->addChild("CODE", $firstSearchAirLeg->originSearchLocation->airport);
-        */
+      
         
         //Varış airportları ekleniyor
         $multipleArrivalCodeOutXML = $requestXML->addChild("MULTIARRIVALCODESOUT");
         $this->buildAirPortXML($multipleArrivalCodeOutXML, $firstSearchAirLeg->destinationSearchLocation);
         
-        /*
-        $airPortArrivalCodeXML = $multipleArrivalCodeOutXML->addChild("AIRPORTCODE_STRC");
-        $airPortArrivalCodeXML->addChild("CODE", $firstSearchAirLeg->destinationSearchLocation->airport);
-        */
-        
+      
         $departureTimeDateTime = new DateTime($firstSearchAirLeg->searchDepartureTime);
         $requestXML->addChild("DEPARTUREDATEOUT", $departureTimeDateTime->format("Ymd")); // departure date 
         $requestXML->addChild("DEPARTURETIMEOUT");
 
-        $requestXML->addChild("CHECKAHEADOUT", 1);
-        $requestXML->addChild("CHECKBACKOUT", 0);
+        $requestXML->addChild("CHECKAHEADOUT", $this->searchCriteria->aheadDateInterval);
+        $requestXML->addChild("CHECKBACKOUT", $this->searchCriteria->backDateInterval);
         if ($this->searchCriteria->flydirection == 2) { // Tek yonler için 
             $secondSearchAirLeg = $this->searchCriteria->searchAirLegs[1];
             $multiDepartureCodesInXML = $requestXML->addChild("MULTIDEPARTURECODESIN");
             $this->buildAirPortXML($multiDepartureCodesInXML, $secondSearchAirLeg->originSearchLocation);
-            
-             
-            /*
-            $airPortCodeSrcDepartureInXML = $multiDepartureCodesInXML->addChild("AIRPORTCODE_STRC");
-            $airPortCodeSrcDepartureInXML->addChild("CODE", $secondSearchAirLeg->originSearchLocation->airport);
            
-             * 
-             */
-            $multipleArrivalCodeInXML = $requestXML->addChild("MULTIARRIVALCODESIN");
+             $multipleArrivalCodeInXML = $requestXML->addChild("MULTIARRIVALCODESIN");
              $this->buildAirPortXML($multipleArrivalCodeInXML,  $secondSearchAirLeg->destinationSearchLocation);
-             /*
-            $airPortCodeSrcArrivalInXML = $multipleArrivalCodeInXML->addChild("AIRPORTCODE_STRC");
-              * $airPortCodeSrcArrivalInXML->addChild("CODE", $secondSearchAirLeg->destinationSearchLocation->airport);
-              */
+           
             $departureTimeDateTime = new DateTime($secondSearchAirLeg->searchDepartureTime);
             $requestXML->addChild("DEPARTUREDATEIN", $departureTimeDateTime->format("Ymd"));
             $requestXML->addChild("DEPARTURETIMEIN");
-            $requestXML->addChild("CHECKAHEADIN", 2);
-            $requestXML->addChild("CHECKBACKIN", 0);
+            $requestXML->addChild("CHECKAHEADIN", $this->searchCriteria->aheadDateInterval);
+            $requestXML->addChild("CHECKBACKIN", $this->searchCriteria->backDateInterval);
         } else {
             $multiDepartureCodesInXML = $requestXML->addChild("MULTIDEPARTURECODESIN");
             $airPortCodeSrcDepartureInXML = $multiDepartureCodesInXML->addChild("AIRPORTCODE_STRC");
@@ -160,8 +152,8 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
             $airPortCodeSrcArrivalInXML->addChild("CODE");
             $requestXML->addChild("DEPARTUREDATEIN");
             $requestXML->addChild("DEPARTURETIMEIN");
-            $requestXML->addChild("CHECKAHEADIN", 2);
-            $requestXML->addChild("CHECKBACKIN", 0);
+            $requestXML->addChild("CHECKAHEADIN",  $this->searchCriteria->aheadDateInterval);
+            $requestXML->addChild("CHECKBACKIN", $$this->searchCriteria->backDateInterval);
         }
 
         $requestXML->addChild("FAREIDENTIFIER");

@@ -50,7 +50,7 @@ class Main extends CI_Controller {
         // array_push($jsfiles, "libs/require.js-2.1.4/require.min.js");
         array_push($jsfiles, "libs/select2-3.2/select2.min.js");
         array_push($jsfiles, "libs/jquery.blockUI.js");
-     
+
         array_push($jsfiles, "libs/cookie-util.js");
 
         array_push($jsfiles, "pages/flysearch.js");
@@ -66,9 +66,9 @@ class Main extends CI_Controller {
     public function searchFlyRequest() {
 
         try {
-             
-            
-            include_once APPPATH.'services/airport_service.php';  
+
+
+            include_once APPPATH . 'services/airport_service.php';
             $this->load->model("fly_search/fly_search_criteria");
             $search_criteria = $this->fly_search_criteria->getInstance();
             $search_criteria->boardingCode = $this->input->post("boardingairpotCode");
@@ -82,24 +82,24 @@ class Main extends CI_Controller {
             $search_criteria->dateoption = $this->input->post("dateOption");
             $search_criteria->cabinclass = $this->input->post("cabinClass");
             $search_criteria->flighttype = $this->input->post("flightType");
-            
+
             $searchAirLegsParams = $this->input->post("airSearchLegs");
-           
+
             $airportService = AirportService::getInstance();
             $searchAirLegs = array();
-            foreach($searchAirLegsParams as $searchAirLegsParam){
-                $searchAirleg = new  SearchAirLeg();
+            foreach ($searchAirLegsParams as $searchAirLegsParam) {
+                $searchAirleg = new SearchAirLeg();
                 $searchAirleg->searchDepartureTime = $searchAirLegsParam["departureTime"];
                 $originSearchLocation = new SearchLocation();
                 $originAirportId = $searchAirLegsParam["origin"]["airport"];
                 $originAirport = $airportService->getAirportSummaryFromId(intval($originAirportId));
                 $originSearchLocation->buildSearchLocation($originAirport);
-                $destinationSearchLocation  = new SearchLocation();
-                
+                $destinationSearchLocation = new SearchLocation();
+
                 $destinationAirportId = $searchAirLegsParam["destination"]["airport"];
                 $destinationAirport = $airportService->getAirportSummaryFromId(intval($destinationAirportId));
                 $destinationSearchLocation->buildSearchLocation($destinationAirport);
-              
+
                 $searchAirleg->originSearchLocation = $originSearchLocation;
                 $searchAirleg->destinationSearchLocation = $destinationSearchLocation;
                 array_push($searchAirLegs, $searchAirleg);
@@ -107,62 +107,34 @@ class Main extends CI_Controller {
             $search_criteria->searchAirLegs = $searchAirLegs;
             $this->load->helper('url');
             $this->load->model("fly_search/fly_search");
-            $lowSearchResult =  $this->fly_search->search($search_criteria);
-          
-           $this->load->model("common/ajax_response");
-           $this->ajax_response->data = count($lowSearchResult->combinedAirPriceSolutionArray);
-           //$this->ajax_response->data = count($combinedAirPriceSolutionArray);
+            $lowSearchResult = $this->fly_search->search($search_criteria);
+
+            $this->load->model("common/ajax_response");
+            $this->ajax_response->data = count($lowSearchResult->combinedAirPriceSolutionArray);
+            //$this->ajax_response->data = count($combinedAirPriceSolutionArray);
             $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;
             $this->ajax_response->error_code = Fly_Constant::SUCCESS_ERROR_CODE;
             $ajaxResponseArray = $this->ajax_response->getResponseArray();
-          
+
             echo json_encode($ajaxResponseArray);
-           
         } catch (Exception $e) {
             error_log(get_class($e) . " thrown. Message: " . $e->getMessage() . "  in " . $e->getFile() . " on line " . $e->getLine());
             error_log('Exception trace stack: ' . print_r($e->getTrace(), 1));
             echo $e->getMessage() . "|" . $e->getFile() . "|" . $e->getLine();
         }
         return;
-
-        /*
-          public $boardingCode;
-          public  $landingCode;
-          public  $godate;
-          public  $returndate;
-          public $dateOption;
-          public $flyDirection;
-          public $yetiskinNumber;
-          public $bebekNumber;
-          public $cocukNumber;
-
-          boardingairpotCode:IST
-          landingairpotCode:ADA
-          goDate:Sat Mar 09 2013 00:00:00 GMT+0200 (GTB Standart Saati)
-          returnDate:Tue Apr 30 2013 00:00:00 GMT+0300 (GTB Yaz Saati)
-          yetiskinNumber:1
-          cocukNumber:0
-          bebekNumber:0
-          dateOption:1
-         * */
-        /*
-          echo json_encode($search_criteria);
-          return;
-         *
-         */
     }
 
     public function searchResults() {
         $jsfiles = array();
         $cssfiles = array();
-        
+
         $this->load->model("fly_search/fly_search_criteria");
-        $session = new Session(300);
+        $session = new Session(1800);// yarım saat için 
 
         $lowFareSearchResult = $session->get(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER);
-        if($lowFareSearchResult == FALSE){
+        if ($lowFareSearchResult == FALSE) {
             redirect();
-            
         }
 
         array_push($cssfiles, "pages/fly_result.css");
@@ -173,34 +145,31 @@ class Main extends CI_Controller {
         array_push($jsfiles, "pages/flyresult.js");
         //array_push($jsfiles, "pages/flysearch.js");
         //more js file
-       
         //echo json_encode($lowFareSearchResult);
         $this->load->model("fly_search/fly_search_result_filter_values");
-         $carrierFlightTypePriceArray = Fly_seach_helper::getCarrierFlightTypePrices($lowFareSearchResult);
+        $carrierFlightTypePriceArray = Fly_seach_helper::getCarrierFlightTypePrices($lowFareSearchResult);
         $this->fly_search_result_filter_values->setFilterResultValues($lowFareSearchResult, $carrierFlightTypePriceArray);
-        $search_criteria = $session->get(Fly_Constant::SESSION_SEARCH_CRITERIA_PARAMETER);
+        $search_criteria = $session->get(Fly_Constant::SESSION_SEARCH_CRITERIA_PARAMETER,1800);
         $data["searchCriteria"] = $search_criteria;
-       
+
         $data["carrierFlightTypePricesArray"] = $carrierFlightTypePriceArray;
         $data['price_data_table'] = Fly_seach_helper::createFlightSummayTableData($carrierFlightTypePriceArray);
         $data[Fly_Constant::FLY_SEARCH_RESULT_FILTER_VALUES_PARAMAMETER] = $this->fly_search_result_filter_values;
         $data["lowFareSearchResult"] = $lowFareSearchResult;
         //file_put_contents("parse2.json", json_encode($data));
-        
+
         $data['js'] = $jsfiles;
         $data['css'] = $cssfiles;
         $this->load->view("main_header", $data);
         $this->load->view("fly_result/fly_result3", $data);
         $this->load->view("main_footer", $data);
-         
-        
     }
 
     public function searchNavDay() {
 
         $action = $this->input->post("action");
         $this->load->model("fly_search/fly_search");
-        $combinedAirPriceSolutionArray =  $this->fly_search->searchNavDay($action);
+        $combinedAirPriceSolutionArray = $this->fly_search->searchNavDay($action);
         $this->load->model("common/ajax_response");
         $this->ajax_response->data = count($combinedAirPriceSolutionArray);
         $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;
@@ -239,36 +208,39 @@ class Main extends CI_Controller {
     public function bookPriceVerify() {
         $combinedAirSolutionKey = $this->input->post(Fly_Constant::AIR_SOLUTION_PRICE_KEY_PARAMETER);
         $journeys = array();
-        
-        $this->load->model("fly_search/fly_search_criteria");
-        $session = new Session(300);
-        $lowFareSearchResult = $session->get(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER);
-        $selectedCombinedAirPriceSolution  = $lowFareSearchResult->combinedAirPriceSolutionArray[$combinedAirSolutionKey];
-        $selectedJourneyKeys = $this->input->post(Fly_Constant::SELECTED_JOURNEY_PARAMETER);
-        
-        foreach($selectedJourneyKeys as $selectedJourneyKey){
-            $legObjectKey = $selectedJourneyKey["key"]; // baglı olan leg key;
-            $legObject  =  $selectedCombinedAirPriceSolution->getLeg($legObjectKey);
-            $selectedJourney = $legObject->getJourney($selectedJourneyKey["selectedJourneyKey"]);
-            array_push($journeys , $selectedJourney);
-        }
 
-        $this->load->model('fly_booking/fly_book');
-        $search_criteria = $session->get(Fly_Constant::SESSION_SEARCH_CRITERIA_PARAMETER);
-        $bookPriceVerifyResponse = $this->fly_book->bookPriceVerify($selectedCombinedAirPriceSolution, $journeys, $lowFareSearchResult->airSegmentArray,$search_criteria);
-        $session_data = array();
-        $session_data["xxxx"] = "dsdsd";
-        $session->set(Fly_Constant::SESSION_BOOK_PRICE_VERIFIED_SOLUTION_PARAMETER, $bookPriceVerifyResponse);
-        // $session_data[Fly_Constant::SESSION_BOOK_PRICE_VERIFIED_SOLUTION_PARAMETER] = $bookPriceVerifyResponse;
-        $this->session->set_userdata($session_data);
-        $this->load->model("common/ajax_response");
-        $this->ajax_response->data = $bookPriceVerifyResponse;
-        $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;
-        $this->ajax_response->error_code = Fly_Constant::SUCCESS_ERROR_CODE;
-        $ajaxResponseArray = $this->ajax_response->getResponseArray();
-        header('Content-type: application/json');
-        echo json_encode($ajaxResponseArray);
-        return;
+        $this->load->model("fly_search/fly_search_criteria");
+        $session = new Session(1800);
+        $lowFareSearchResult = $session->get(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER);
+        $selectedCombinedAirPriceSolution = $lowFareSearchResult->combinedAirPriceSolutionArray[$combinedAirSolutionKey];
+        $selectedJourneyKeys = $this->input->post(Fly_Constant::SELECTED_JOURNEY_PARAMETER);
+
+        foreach ($selectedJourneyKeys as $selectedJourneyKey) {
+            $legObjectKey = $selectedJourneyKey["key"]; // baglı olan leg key;
+            $legObject = $selectedCombinedAirPriceSolution->getLeg($legObjectKey);
+            $selectedJourney = $legObject->getJourney($selectedJourneyKey["selectedJourneyKey"]);
+            array_push($journeys, $selectedJourney);
+        }
+           $this->load->model("common/ajax_response");
+             header('Content-type: application/json');
+        try {
+            $this->load->model('fly_booking/fly_book');
+            $search_criteria = $session->get(Fly_Constant::SESSION_SEARCH_CRITERIA_PARAMETER);
+            $bookPriceVerifyResponse = $this->fly_book->bookPriceVerify($selectedCombinedAirPriceSolution, $journeys, $lowFareSearchResult->airSegmentArray, $search_criteria);
+            $session_data = array();
+            $session_data["xxxx"] = "dsdsd";
+            $session->set(Fly_Constant::SESSION_BOOK_PRICE_VERIFIED_SOLUTION_PARAMETER, $bookPriceVerifyResponse);
+            $this->ajax_response->data = $bookPriceVerifyResponse;
+            $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;
+            $this->ajax_response->error_code = Fly_Constant::SUCCESS_ERROR_CODE;
+          
+        } catch (AvaibleSolutionNotFoundException $exception) {
+            $this->ajax_response->error_type = Fly_Constant::ERROR_TYPE;
+            $this->ajax_response->error_code = $exception->getCode();
+        }
+          $ajaxResponseArray = $this->ajax_response->getResponseArray();
+          echo json_encode($ajaxResponseArray);
+        
     }
 
     function bookInformationEnterView() {
@@ -325,7 +297,7 @@ class Main extends CI_Controller {
             $passanger->lastName = $passangerJSONObject->{Fly_Constant::BOOK_APPLY_REQUEST_PASSANGER_LASTNAME_PARAMETER};
             $passanger->name = $passangerJSONObject->{Fly_Constant::BOOK_APPLY_REQUEST_PASSANGER_NAME_PARAMETER};
             $passanger->gender = $passangerJSONObject->{Fly_Constant::BOOK_APPLY_REQUEST_PASSANGER_GENDER_PARAMETER};
-            $passanger->DOB = Fly_seach_helper::getDOBFormat($passanger->birthyear,$passanger->birthmonth, $passanger->birthday);
+            $passanger->DOB = Fly_seach_helper::getDOBFormat($passanger->birthyear, $passanger->birthmonth, $passanger->birthday);
             //$passanger->frequentFlyCardNumber= ?
             $passanger->key = $passangerCount;
             $passangerCount++;
@@ -337,10 +309,10 @@ class Main extends CI_Controller {
         $flyApplyBookInfo->passangers = $passangers;
         $flyApplyBookInfo->userContact = $userContactInformation;
         $flyApplyBookInfo->verifiedCombinedAirPriceSolution = $bookingPriceVerifiedSolution->verifiedAirPriceSolution;
-        
+
         $this->load->model('fly_booking/fly_book');
         $fly_apply_book_result = $this->fly_book->applyBook($flyApplyBookInfo);
-      
+
         $this->load->model("common/ajax_response");
         $this->ajax_response->data = $fly_apply_book_result;
         $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;

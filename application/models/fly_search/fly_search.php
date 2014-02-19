@@ -11,16 +11,19 @@ include_once APPPATH . '/services/param_service.php';
 
 class Fly_search extends CI_Model {
 
-    public function search($search_criteria = null) {
+    public function search(Fly_search_criteria $search_criteria = null) {
         if ($search_criteria == null) {
             return null;
         }
-        $session = new Session(300);
+        $search_criteria->aheadDateInterval = 2;
+        $search_criteria->backDateInterval = 2;
+        $session = new Session();
         $session->set(Fly_Constant::SESSION_SEARCH_CRITERIA_PARAMETER, $search_criteria);
         return $this->sendMessageAPIs($search_criteria);
     }
 
     private function sendMessageAPIs($search_criteria) {
+        
         $activeApiArray = ParamService::getActiveApi();
         loadClass(APPPATH . '/models/fly_search/low_fare_search_result.php');
         $totalLowFareSearchResult = new LowFareSearchResult();
@@ -53,13 +56,13 @@ class Fly_search extends CI_Model {
         return $totalLowFareSearchResult;
     }
 
-    public function getFlightSearchResult() {
-        $session = new Session(300);
+    public function getFlightSearchResult($timeout = 1800) {
+        $session = new Session($timeout);
         return $session->get(Fly_Constant::SESSION_COMBINED_AIR_PRICE_SOLUTIONS_PARAMETER);
     }
 
-    public function getSearchCriteria() {
-        $session = new Session();
+    public function getSearchCriteria($timeout = 1800) {
+        $session = new Session($timeout);
         return $session->get(Fly_Constant::SESSION_SEARCH_CRITERIA_PARAMETER);
     }
 

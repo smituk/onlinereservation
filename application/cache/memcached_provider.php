@@ -42,7 +42,8 @@ class MemcachedProvider implements CacheInterface{
     }
 
     public function getServerStatu() {
-        
+        $memcacheObject = self::getInstance();
+        return $memcacheObject->getServerStatus(); 
     }
 
 }

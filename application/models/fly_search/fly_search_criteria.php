@@ -20,6 +20,8 @@ class Fly_search_criteria extends CI_Model {
     public $exludedCarriers;
     public $prohibitedCarriers;
     public $affiliteId;
+    public $aheadDateInterval  = 0;
+    public $backDateInterval  = 0;
 
     public function getInstance() {
         return $this;
