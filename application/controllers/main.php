@@ -232,7 +232,7 @@ class Main extends CI_Controller {
             $session->set(Fly_Constant::SESSION_BOOK_PRICE_VERIFIED_SOLUTION_PARAMETER, $bookPriceVerifyResponse);
             $this->ajax_response->data = $bookPriceVerifyResponse;
             $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;
-            $this->ajax_response->error_code = Fly_Constant::SUCCESS_ERROR_CODE;
+            $this->ajax_response->error_code = ErrorCodes::SUCCESS;
           
         } catch (AvaibleSolutionNotFoundException $exception) {
             $this->ajax_response->error_type = Fly_Constant::ERROR_TYPE;
@@ -303,22 +303,39 @@ class Main extends CI_Controller {
             $passangerCount++;
             array_push($passangers, $passanger);
         }
-        $session = new Session(300);
+        
+        
+        $session = new Session(600);
+        try{
         $bookingPriceVerifiedSolution = $session->get(Fly_Constant::SESSION_BOOK_PRICE_VERIFIED_SOLUTION_PARAMETER);
         $flyApplyBookInfo = new FlyApplyBookInformation();
         $flyApplyBookInfo->passangers = $passangers;
         $flyApplyBookInfo->userContact = $userContactInformation;
         $flyApplyBookInfo->verifiedCombinedAirPriceSolution = $bookingPriceVerifiedSolution->verifiedAirPriceSolution;
-
+         
         $this->load->model('fly_booking/fly_book');
-        $fly_apply_book_result = $this->fly_book->applyBook($flyApplyBookInfo);
-
         $this->load->model("common/ajax_response");
+        $fly_apply_book_result = $this->fly_book->applyBook($flyApplyBookInfo);
         $this->ajax_response->data = $fly_apply_book_result;
-        $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;
-        $this->ajax_response->error_code = Fly_Constant::SUCCESS_ERROR_CODE;
+           $this->ajax_response->error_type = Fly_Constant::INFO_TYPE;
+           $this->ajax_response->error_code = $fly_apply_book_result->errorCode;
+        }  catch (PnrNotCreatedException $ex){ 
+           $this->ajax_response->error_type = Fly_Constant::ERROR_TYPE;
+           $this->ajax_response->error_code = $ex->getCode();
+        }  catch (AirSegmentSellFailureException $ex){
+           $this->ajax_response->error_type = Fly_Constant::ERROR_TYPE;
+           $this->ajax_response->error_code = $ex->getCode();
+        }  catch (PriceChangedException  $ex){
+           $this->ajax_response->error_type = Fly_Constant::ERROR_TYPE;
+           $this->ajax_response->error_code = $ex->getCode();
+        } catch (AirSegmentNotHKStatuException $ex){
+           $this->ajax_response->error_type = Fly_Constant::ERROR_TYPE;
+           $this->ajax_response->error_code = $ex->getCode(); 
+        }
+      
+       
         $ajaxResponseArray = $this->ajax_response->getResponseArray();
-
+          
         echo json_encode($ajaxResponseArray);
     }
 

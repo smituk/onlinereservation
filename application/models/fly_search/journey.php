@@ -122,7 +122,7 @@ class Journey {
     }
     
    
-    public function getDepartureTime($airSegmentArray){
+    public function getDepartureTime($airSegmentArray = NULL){
         $airSegmentItems = $this->getAirSegments($airSegmentArray);
         return $airSegmentItems[0]->departureTime;
     }
@@ -132,6 +132,16 @@ class Journey {
         return $airSegmentItems[count($airSegmentItems)-1]->arrivalTime;
     }
     
+    
+    public function getOrigin(){
+        $airSegmentItems = $this->getAirSegments();
+        return $airSegmentItems[0]->origin;
+    }
+    
+   public function getDestination(){
+      $airSegmentItems = $this->getAirSegments();
+      return $airSegmentItems[count($airSegmentItems)-1]->destination;
+   }
     
     
 }

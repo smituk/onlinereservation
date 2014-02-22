@@ -380,7 +380,7 @@ class Travelport implements AirServiceProvider {
       // file_put_contents($transformer->name . "Request.xml", $requestXml);
         $responseXml = $this->sendMessageTravelportApi($requestXml, $endpoint);
         //$responseXml = file_get_contents($transformer->name."Response.xml");
-        file_put_contents($transformer->name . "Response.xml", $responseXml);
+        //file_put_contents($transformer->name . "Response.xml", $responseXml);
         return $transformer->convertObject($responseXml);
     }
 
@@ -426,11 +426,19 @@ class Travelport implements AirServiceProvider {
         $travelportApplyBookTransformer->applyBookInformation = $applyBookInformation;
         $flyApplyBookResult = $this->sendRequestWebService($travelportApplyBookTransformer);
         if ($flyApplyBookResult->errorCode != ErrorCodes::SUCCESS) {
-            if ($flyApplyBookResult->pnrStatusCode != null) {
+            if (isset($flyApplyBookResult->universalRecord)) {
                 $cancelErrorDto = $this->cancelUniversalRecord($flyApplyBookResult->universalRecord);
-                /*
-                 * @todo Burda daha sonra geliştirme yapılacak
-                 */
+                
+            }
+            if($flyApplyBookResult->errorCode == ErrorCodes::PRICEORSCHEDULECHANGED){
+                
+                throw  new PriceChangedException($flyApplyBookResult->errorDesc);
+            }else if($flyApplyBookResult->errorCode == ErrorCodes::AIRSEGMENTSELLFAILURE){
+                throw  new AirSegmentSellFailureException($flyApplyBookResult->errorDesc);
+            }else if($flyApplyBookResult->erroCode == ErrorCodes::AIRSEGMENTNOTHK){
+                throw new AirSegmentNotHKStatuException($flyApplyBookResult->errorDesc);
+            }else {
+                throw new PnrNotCreatedException($flyApplyBookResult->errorDesc);
             }
             return $flyApplyBookResult;
         }

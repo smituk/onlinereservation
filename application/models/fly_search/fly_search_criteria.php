@@ -8,9 +8,9 @@ class Fly_search_criteria extends CI_Model {
     public $returndate;
     public $dateoption;
     public $flydirection;
-    public $yetiskinnumber;
-    public $bebeknumber;
-    public $cocuknumber;
+    public $yetiskinnumber = 0;
+    public $bebeknumber = 0;
+    public $cocuknumber = 0;
     public $currency = "EUR";
     public $cabinclass;
     public $flighttype;

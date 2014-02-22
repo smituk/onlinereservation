@@ -17,11 +17,11 @@
          $queryExecutor = new QueryExecutor();
          $query = "";
          if(strlen($iataCode) == 2){
-             $query = "SELECT * FROM airlines where iata='$iataCode'";
+             $query = "SELECT * FROM airlines where iata='$iataCode' and active = 'Y'";
          }else if(strlen ($iataCode) == 3){
-               $query = "SELECT * FROM airlines where icao='$iataCode'";
+               $query = "SELECT * FROM airlines where icao='$iataCode' and active = 'Y'";
          }
-         $result = $queryExecutor->query($query, true, 3600);
+         $result = $queryExecutor->query($query, FALSE, 3600);
         foreach ($result as $airlineJsonObject) {
                 $airlineData = new AirlineCompany();
                 $airlineData->name = $airlineJsonObject->name;

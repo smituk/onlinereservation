@@ -153,7 +153,7 @@ class CorendonGetAvaibleFareTransformer implements XmlTransformer {
             $requestXML->addChild("DEPARTUREDATEIN");
             $requestXML->addChild("DEPARTURETIMEIN");
             $requestXML->addChild("CHECKAHEADIN",  $this->searchCriteria->aheadDateInterval);
-            $requestXML->addChild("CHECKBACKIN", $$this->searchCriteria->backDateInterval);
+            $requestXML->addChild("CHECKBACKIN", $this->searchCriteria->backDateInterval);
         }
 
         $requestXML->addChild("FAREIDENTIFIER");
@@ -334,7 +334,7 @@ EOM;
         foreach ($flightXML->SEGMENTS->FSEGMENT_STRC as $flightSegmentXML) {
             $airSegmentObject = new AirSegment();
             $airSegmentObject->key = substr(md5($journeyObject->identifier), 0, 10);
-            $airSegmentObject->carrier = (string) $flightSegmentXML->CARRIERCODE;
+            $airSegmentObject->carrier = trim((string) $flightSegmentXML->CARRIERCODE);
             if (!isset($this->airlineArray[$airSegmentObject->carrier])) {
                 $airCompanyObject = AirlineService::getAirlineByIATACode($airSegmentObject->carrier);
                 $this->airlineArray[$airSegmentObject->carrier] = $airCompanyObject;

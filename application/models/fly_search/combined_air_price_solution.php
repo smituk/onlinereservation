@@ -37,6 +37,14 @@ class CombinedAirPriceSolution {
    public function getLegs(){
        return $this->legs;
    }
+   
+   public function getTotalJourneyCount(){
+       $count = 0;
+       foreach($this->getLegs() as $legObject){
+           $count = $count + count($legObject->getJourneys());
+       }
+       return $count;
+   }
 
 }
 
