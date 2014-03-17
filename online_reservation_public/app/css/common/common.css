@@ -1,0 +1,248 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02.Mar.2014, 14:19:03
+    Author     : pasa
+*/
+
+body{
+
+}
+
+.seperator{
+    height: 2px;
+    width: 100%;
+    background: #C9D2DA;
+    margin-top: 0px;
+    
+}
+
+.select2-container{
+    width: 100%;
+    border: 1px solid #ccdce6;
+    background: #f9fbfd;
+    font-size: 11px;
+}
+
+.select2-container .select2-choice .select2-arrow{
+    display: none;
+}
+
+.select2-drop{
+    border-bottom: 1px solid #ccdce6;
+    border-left: 1px solid #ccdce6;
+    border-right: 1px solid #ccdce6;
+    background: #f9fbfd;
+}
+
+.select2-drop-active
+{
+    border-bottom: 1px solid #ccdce6;
+    border-left: 1px solid #ccdce6;
+    border-right: 1px solid #ccdce6;
+    background: #f9fbfd;
+}
+
+
+.select2-container .select2-choice{
+    background: #fff;
+    border:none;
+}
+
+.select2-container .select2-chosen{
+    font-weight: bold;
+    color:#5e5f5f;
+    font-size: 10px;
+}
+
+.select2-drop ,.select2-display-none ,.select2-with-searchbox ,.select2-drop-active{
+    font-size: 11px;
+    background: #f9fbfd;
+    color:#424242;
+}
+
+.select2-result-selectable .select2-match, .select2-result-unselectable .select2-match{
+    text-decoration:none;
+    font-weight: bold;
+}
+
+.company-logo-container{
+    background: #178acc;
+    margin: 10px 0;
+}
+
+.select2-results .select2-highlighted{
+    background: #515D72;
+    color:#ffffff;
+}
+
+.gray-bg{
+    border-bottom:  3px solid #e5e3e3;
+    border-right:   3px solid #e5e3e3;
+    border-left:  3px solid #e5e3e3;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #f2f2f2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f2f2f2));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    background: linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2',GradientType=0 );
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.login-icon{
+
+    padding: 10px 2px;
+    color: #ffffff;
+    position: relative;
+
+
+
+}
+
+.login-icon .main-sprite{
+
+    margin-right: 10px;
+
+
+}
+
+.login-icon .login-icon-text{
+    position: relative;
+    color: #178acc;
+    font-weight: bold;
+    font-size: 11px;
+    top:-3px;
+    cursor: pointer;
+}
+
+
+
+.icon-phone,  .icon-phone-text{
+    display: inline-block;
+    position: relative;
+}
+
+.icon-phone-text{
+    color: #178acc;
+    font-weight: bold;
+    font-size: 17px;
+    margin-left: 5px;
+    top:-5px;
+
+
+}
+
+.navbar .dropdown:hover .dropdown-menu{
+    display: block;
+}
+
+.navbar .dropdown-menu{
+    background-color: #178acc;
+    color: #ffffff;
+}
+
+.navbar .dropdown-menu>li>a{
+    color: #fafcff;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.box-header{
+
+}
+
+.box-container{
+
+}
+
+
+.search-location-autocomplete{
+    margin: 8px 0;
+}
+
+.search-location-autocomplete-label span{
+    color: #178acc;
+    font-weight: bold;
+    font-size: 12px;
+    display: inline-block;
+
+}
+
+
+.spin-input{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor:inherit;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 0px 0px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    background-image: -webkit-linear-gradient(#fff, #fff 60%, #f5f5f5);
+    background-image: linear-gradient(#fff, #fff 60%, #f5f5f5);
+    background-repeat: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff5f5f5', GradientType=0);
+    filter: none;
+    border-bottom: 1px solid #e6e6e6;
+    background-image: -webkit-linear-gradient(#fff, #fff 60%, #f5f5f5);
+    background-image: linear-gradient(#fff, #fff 60%, #f5f5f5);
+    background-repeat: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff5f5f5', GradientType=0);
+    filter: none;
+    border-bottom: 1px solid #e6e6e6;
+    border-color: rgba(0,0,0,0.1);
+
+}
+
+.search-passenger-info-container .input-group{
+    max-width: 70px;
+    
+}
+
+.spin-input-text {
+    padding: 8px 6px;
+}
+.spin-button{
+    display:block;
+    height: 12px;
+    margin: 0;
+    min-width: 25px;
+    min-height: 14px;
+    cursor: pointer;
+    
+}
+
+.spin-button:hover{
+    
+    color: #178acc;
+}
+
+
+
+.input-group-btn:last-child>.spin-input, .input-group-btn:last-child>.spin-input{
+    margin-left: -1px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    position: relative;
+}

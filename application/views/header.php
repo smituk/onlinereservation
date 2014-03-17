@@ -1,59 +1,104 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"[]>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
-    <head>    
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
-        <title>Ankafly</title>    
-        <link rel="stylesheet" href="<?php echo base_url("static/css/style.css"); ?>" type="text/css" />
-        <link rel="stylesheet" href="<?php echo base_url("static/css/slide_style.css"); ?>" type="text/css" />         
-        <link rel="stylesheet" href="<?php echo base_url("static/js/jquery-ui/development-bundle/themes/base/jquery.ui.all.css"); ?>" />         
-        <link rel="stylesheet" href="<?php echo base_url("static/css/jquery_demos.css"); ?>" />    
-        <!--============================--> 
-        <script src="<?php echo base_url("static/js/jquery-ui/development-bundle/jquery-1.9.0.js"); ?>"></script> 	
-        <script src="<?php echo base_url("static/js/jquery-ui/development-bundle/ui/jquery.ui.core.js"); ?>"></script>     
-        <script src="<?php echo base_url("static/js/jquery-ui/development-bundle/ui/jquery-ui.js"); ?>"></script> 	
-        <script src="<?php echo base_url("static/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js"); ?>"></script> 	
-        <script src="<?php echo base_url("static/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js"); ?>"></script> 	
-        <script src="<?php echo base_url("static/js/jquery-ui/development-bundle/ui/jquery.ui.datepicker.js"); ?>"></script>     
-        <script src="<?php echo base_url("static/js/jquery.atooltip.js"); ?>"></script>     
-        <script src="<?php echo base_url("static/js/jquery.atooltip.min.js"); ?>"></script>
-        <!--============================--> 
-        <script type="text/javascript">var _siteRoot='index.html',_root='index.html';</script>
-        <script type="text/javascript" src="<?php echo base_url("static/js/slide/slide_jquery.js"); ?>"></script>
-        <script type="text/javascript" src="<?php echo base_url("static/js/slide/slide_scripts.js"); ?>"></script>
-
-
+<?php $appName = "flySearhPageApp"; ?>
+<?php define("PAGE_NAME","fly_search" )?> 
+<html lang="en" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="<?php echo $appName; ?>">
+    <head>
+        
+       <!--[if lt IE 8]>
         <script>
-            $(function() {
-                $( "#from" ).datepicker({
-                    defaultDate: "+2w",
-                    changeMonth: true,
-                    showWeek: true,
-                    numberOfMonths: 2,
-                    onClose: function( selectedDate ) {
-                        $( "#to" ).datepicker( "option", "minDate", selectedDate  );
-                    }
-                });
-                $( "#to" ).datepicker({
-                    defaultDate: "+2w",
-                    changeMonth: true,
-                    showWeek: true,
-                    numberOfMonths: 2,
-                    onClose: function( selectedDate ) {
-                        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
-                    }
-                });
-            });
+          document.createElement('ng-include');
+          document.createElement('ng-pluralize');
+          document.createElement('ng-view');
+ 
+          // Optionally these for CSS
+          document.createElement('ng:include');
+          document.createElement('ng:pluralize');
+          document.createElement('ng:view');
         </script>
-        <script>
-            $(function() {
-                $( "#tabs" ).tabs({
-                    collapsible: true
-                });
-            });
-        </script>
+       <![endif]-->
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <title>My AngularJS App</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cerulean/bootstrap.min.css"/>
+ 
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2-bootstrap.css" rel="stylesheet"/>
+    <link href="<?php echo base_url();?>online_reservation_public/app/css/common/common.css" rel="stylesheet"/>
+    <link href="<?php echo base_url();?>online_reservation_public/app/css/common/logo.css" rel="stylesheet"/>
+    <link href="<?php echo base_url();?>online_reservation_public/app/css/<?php echo PAGE_NAME;?>/<?php echo PAGE_NAME;?>.css" rel="stylesheet"/>
+</head>
+<body>
+<script>
+    var APP_NAME = "<?php echo $appName; ?>";
+</script>  
 
-        <!--[if IE 6]><link rel="stylesheet" href="<?php echo base_url("static/style.ie6.css"); ?>" type="text/css" media="screen" /><![endif]-->    
-        <!--[if IE 7]><link rel="stylesheet" href="<?php echo base_url("static/css/style.ie7.css"); ?>" type="text/css" media="screen" /><![endif]-->
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    </head>
-    <body>
+<div class="container top-container" ng-controller="topHeaderController">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6" style=""> <div class="ucuzuc-sprite ucuzuc_eu company-logo-container"></div> </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 " >
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="login-icon"> 
+                        <span  class="ucuzuc-sprite header-yeni-uyelik"></span ><span class='login-icon-text' style="display: inline-block;">Yeni Üyelik</span> 
+                    </div>
+                </div>
+                <div class="col-xs-3  col-sm-3 col-md-3">
+                   <div class="login-icon">
+                       <span  class="ucuzuc-sprite header-uye-girisi"></span><span class='login-icon-text' style="display: inline-block;">Üye girişi</span>
+                   </div>
+                 </div>
+                <div class="col-xs-3  col-sm-4 col-md-4">
+                     <div class='login-icon'>
+                        <span class='icon-phone ucuzuc-sprite header-tel'></span><span class='icon-phone-text'>0900 - 11 11</span>
+                    </div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-md-4'></div>
+                <div class='col-md-8'>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<nav class="navbar navbar-default " role="navigation" ng-controller="navBarController">
+    <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav">
+        <li><a href="#">Anasayfa</a></li>
+        <li><a href="#" ng-click="focusReservation();">Rezervasyon</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kurumsal <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+         <li><a href="#">Bize Ulaşın</a></li>
+      </ul>
+     
+        
+    </div>
+    
+    </div> 
+
+</nav>

@@ -380,7 +380,7 @@ class Travelport implements AirServiceProvider {
       // file_put_contents($transformer->name . "Request.xml", $requestXml);
         $responseXml = $this->sendMessageTravelportApi($requestXml, $endpoint);
         //$responseXml = file_get_contents($transformer->name."Response.xml");
-        //file_put_contents($transformer->name . "Response.xml", $responseXml);
+        file_put_contents($transformer->name . "Response.xml", $responseXml);
         return $transformer->convertObject($responseXml);
     }
 

@@ -1,0 +1,206 @@
+<div class="container">
+    <div class="row"> 
+        <div class=" col-xs-12 col-sm-7 col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row search-form-container" ng-controller="searchFormController">
+                        <div class="col-md-12">
+                            <div class="row search-form-container-header">
+                                <div class="col-md-12">    
+                                    <span class="ucuzuc-sprite modul-ucak-bileti"></span><span  class="header-text">Uçak Bileti</span>
+                                </div>
+                            </div>
+                            <div class="row search-form-container-content">
+                                <div class="col-md-12">    
+                                    <div class="row journey-type-radio-container">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="journeyType" ng-change='onJourneyTypeChange()' checked='checked' ng-checked="checked" ng-model="journeyType"  id="optionsRadios1"  value="2"  />
+                                                    <span class="radio-icon"></span>
+                                                    <span class="input-text"> Gidiş Dönüş</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="journeyType" ng-model="journeyType" ng-change='onJourneyTypeChange()' id="optionsRadios2" value="1" />
+                                                    <span class="radio-icon"></span>
+                                                    <span class="input-text">Tek Yön</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row search-locations-container'>
+                                        <div class="col-md-6">
+                                            <div class="search-location-autocomplete-label">
+                                                <span>Nereden</span>
+                                            </div> 
+                                            <div class="search-location-autocomplete"> 
+                                                <input  uiselect2  ng-model="firstSearchLocationOrigin" data-placeholder="Şehir/Hava alanı Giriniz"/>
+                                            </div>
+                                            <div class="search-location-autocomplete"> 
+                                                <input  id="secondSearchLocationOrigin" uiselect2  ng-model="secondSearchLocationOrigin" ng-show="isSecondSearchLocationOrigin" data-placeholder="Şehir/Hava alanı Giriniz"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="search-location-autocomplete-label">
+                                                <span>Nereye</span>
+                                            </div>   
+                                            <div class="search-location-autocomplete">   
+                                                <input uiselect2 ng-model="firstSearchLocationDestination"  data-placeholder="Şehir/Hava alanı Giriniz" />
+                                            </div>
+                                            <div class="search-location-autocomplete">   
+                                                <input id ="secondSearchLocationDestination" uiselect2 ng-model="secondSearchLocationDestination" ng-show="isSecondSearchLocationDestination" data-placeholder="Şehir/Hava alanı Giriniz" /> 
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="row search-date-container">
+                                        <div class=" col-sm-6 col-md-6">
+                                            <div class="search-date-label">
+                                                <span>Gidiş Tarihi</span>
+                                            </div>
+                                            <p class="input-group">
+                                            <input type="text" show-weeks="true" class="form-control" datepicker-popup="dd MMMM yyyy" ng-model="goDate" is-open="goDateOpened" min="goDateMin" max="goDateMax" datepicker-options="goDateOptions"  ng-required="true" close-text="Kapat"  show-button-bar="false"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" ng-click="goDateOpen($event)"><i class=" fa fa-calendar"></i></button>
+                                            </span>
+                                            </p>
+                                        </div>
+                                        <div class=" col-sm-6 col-md-6">
+                                            <div class="search-date-label">
+                                                <span>Dönüş Tarihi</span>
+                                            </div>
+                                            <p class="input-group">
+                                            <input type="text" show-weeks="true" class="form-control" ng-disabled="returnDateDisabled" datepicker-popup="dd MMMM yyyy" ng-model="returnDate" is-open="returnDateOpened" min="returnDateMin" max="returnDateMax" datepicker-options="returnDateOptions"  ng-required="true" close-text="Kapat"  show-button-bar="false"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" ng-disabled="returnDateDisabled" ng-click="returnDateOpen($event)"><i class=" fa fa-calendar"></i></button>
+                                            </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row search-passenger-info-container">
+                                        <div class="col-xs-3 col-sm-3 col-md-3"><span class="search-passenger-info-first-label search-passenger-info-label"  >Yolcular</span></div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3">
+                                            <div><span class="ucuzuc-sprite ucus-yetiskin"></span><span class="search-passenger-info-label">Yetişkin</span></div>
+                                            <div class="input-group">
+                                                <input class="form-control spin-input-text" type="text" maxlength="1"  numeric  ng-model="searchAdultCount" ng-focus="passengerInfoCountFocus('searchAdultCount')" ng-blur="passengerInfoCountBlur('searchAdultCount')"    />
+                                                <div class="input-group-btn">
+                                                    <div class=" btn-default spin-input">
+                                                        <div class=" fa fa-caret-up spin-button" ng-click="increasePassengerCount('searchAdultCount')"></div>
+                                                        <div class="seperator"></div>
+                                                        <div class=" fa fa-caret-down spin-button" ng-click="decrasePassengerCount('searchAdultCount')"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-passenger-info-note"><span>(12+ yaş)</span></div>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3">
+                                            <div><span class="ucuzuc-sprite ucus-cocuk"></span><span class="search-passenger-info-label">Çocuk</span></div>
+                                            <div class="input-group">
+                                                <input class="form-control spin-input-text" numeric maxlength="1"  ng-model="searchChildCount" ng-focus="passengerInfoCountFocus('searchChildCount')" ng-blur="passengerInfoCountBlur('searchChildCount')"  />
+                                                <div class="input-group-btn">
+                                                    <div class=" btn-default spin-input">
+                                                        <div class=" fa fa-caret-up spin-button" ng-click="increasePassengerCount('searchChildCount')"></div>
+                                                        <div class="seperator"></div>
+                                                        <div class=" fa fa-caret-down spin-button" ng-click="decrasePassengerCount('searchChildCount')"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-passenger-info-note"><span>(2-12 yaş)</span></div>
+                                        </div>  
+                                        <div class="col-xs-3 col-sm-3 col-md-3">
+                                            <div><span class="ucuzuc-sprite ucus-bebek"></span><span class="search-passenger-info-label">Bebek</span></div>
+                                            <div class="input-group">
+                                                <input class="form-control spin-input-text" numeric maxlength="1"  ng-model="searchInfantCount"  ng-focus="passengerInfoCountFocus('searchInfantCount')" ng-blur="passengerInfoCountBlur('searchInfantCount')"  />
+                                                <div class="input-group-btn">
+                                                    <div class=" btn-default spin-input">
+                                                        <div class=" fa fa-caret-up spin-button" ng-click="increasePassengerCount('searchInfantCount')"></div>
+                                                        <div class="seperator"></div>
+                                                        <div class=" fa fa-caret-down spin-button" ng-click="decrasePassengerCount('searchInfantCount')"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-passenger-info-note"><span>(0-23 ay)</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="row search-form-container-options">
+                                        <div class=" col-xs-3 col-sm-3 col-md-3">
+                                          <div class="flight-class-input"> 
+                                            <span class="input-text">Sınıf</span>
+                                            <select class=" form-control" ng-model="searchClass" >
+                                                 <option value="all" selected="selected">Hepsi</option>
+                                                <option value="Economy">Economy</option>
+                                                <option value="Premium Economy">Premium Economy</option>
+                                                <option value="Business">Business</option>
+                                                <option value="First">FirstClass</option>
+                                               
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class=" col-xs-3 col-sm-3 col-md-3">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox">
+                                                        <span class="checkbox-icon"></span>
+                                                        <span class="input-text">Direk Uçuşlar</span> 
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class=" col-xs-3 col-sm-3 col-md-3">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox">
+                                                        <span class="checkbox-icon"></span>
+                                                        <span class="input-text">-/+ 3 Gün</span> 
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class=" col-xs-3 col-sm-3 col-md-3">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> 
+                                                        <span class="checkbox-icon"></span>
+                                                        <span class="input-text">Low Cost Uçuşlar</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class=" col-xs-3 col-sm-3 col-md-3">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row search-perfom-button-container">
+                                        <div class="col-xs-4 col-sm-4 col-md-4"></div>
+                                         <div class="col-xs-4 col-sm-4 col-md-4"></div>
+                                         <div class="col-xs-4 col-sm-4 col-md-4">
+                                             <div class="search-button"> 
+                                                <div  class="btn  btn-danger  btn-block" ng-click="onSearchPerformed()"><i class="icon-white fa fa-search"></i> Uçuş ara</div>
+                                            </div>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-6">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span>Uçak Bileti</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

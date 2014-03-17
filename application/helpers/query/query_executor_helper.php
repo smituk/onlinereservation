@@ -2,7 +2,7 @@
      class QueryExecutor {
          
          public  function query($query,$isCacheAvaible = true ,$queryTimeout = 15){
-            if($isCacheAvaible == true){
+            if($isCacheAvaible == false){
               include_once APPPATH.'/cache/cache_impl.php';
               $cacheServer = new CacheImpl();
               $result  = unserialize($cacheServer->get($query));
@@ -20,6 +20,24 @@
              $ci=& get_instance();
              $queryObject  = $ci->db->query($query);
              return $queryObject->result();
+         }
+         
+         private function beginTransaciton(){
+             
+         }
+          
+         private function completeTransaction(){
+             
+         }
+         
+         public function insertQuery($tableName , $values){
+              $ci=& get_instance();
+              $ci->db->insert($tableName, $values); 
+              return $ci->db->insert_id();
+         }
+         
+         public function updateQuery($tableName , $values , $conditions){
+             
          }
      }
 /* 

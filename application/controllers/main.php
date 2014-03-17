@@ -58,9 +58,17 @@ class Main extends CI_Controller {
         //more js file
 
         $data['js'] = $jsfiles;
-        $this->load->view("main_header");
-        $this->load->view("fly_search/fly_search");
-        $this->load->view("main_footer", $data);
+       
+       $this->load->view("header");
+      $this->load->view("flysearch/fly_search_view");
+      $this->load->view("footer", $data);
+        
+       
+             // $this->load->view("main_header");
+       //$this->load->view("fly_search/fly_search");
+       //$this->load->view("main_footer", $data);
+       
+         
     }
 
     public function searchFlyRequest() {

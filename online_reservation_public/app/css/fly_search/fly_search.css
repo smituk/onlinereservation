@@ -1,0 +1,177 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02.Mar.2014, 20:14:40
+    Author     : pasa
+*/
+
+
+.search-form-container{
+    padding: 5px;
+    margin: 1px 5px;
+
+}
+
+
+.search-form-container-header{
+    font-size: 13px;
+    font-family: 'PT Sans', sans-serif;
+    text-shadow: 1px 1px 0px #fff;
+    color: #666;
+    padding: 5px 2px;
+    border: 1px solid #dbe7ea;
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+    background: #FEFEFF;
+    background: -moz-linear-gradient(top, #FEFEFF 0%, #FEFEFF 0%, #DCE7F4 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FEFEFF), color-stop(0%,#FEFEFF), color-stop(100%,#DCE7F4));
+    background: -webkit-linear-gradient(top, #FEFEFF 0%,#FEFEFF 0%,#DCE7F4 100%);
+    background: -o-linear-gradient(top, #FEFEFF 0%,#FEFEFF 0%,#DCE7F4 100%);
+    background: -ms-linear-gradient(top, #FEFEFF 0%,#FEFEFF 0%,#DCE7F4 100%);
+    background: linear-gradient(to bottom, #FEFEFF 0%,#FEFEFF 0%,#DCE7F4 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FEFEFF', endColorstr='#DCE7F4',GradientType=0 );
+}
+
+.search-form-container-header .header-text{
+    display: inline-block;
+    position: relative; 
+    margin: 0 3px;
+    top:-3px;
+}
+
+
+.search-form-container-content{
+    border: 1px solid #dbe7ea;
+    background: #f9fbfd;
+    min-height: 400px;
+    border-radius: 0px 0px 5px 5px;
+    -moz-border-radius: 0px 0px 5px 5px;
+    -webkit-border-radius: 0px 0px 5px 5px;
+    -o-border-radius: 0px 0px 5px 5px;
+}
+
+.search-form-container-content .input-text{
+    display: inline-block;
+    min-width: 20px;
+    position: relative;
+    top:-5px;
+    font-size: 13px;
+    color: #6e6e6e;
+    font-weight: bold;
+}
+
+.search-form-container-content .journey-type-radio-container {
+    
+}
+
+.search-form-container-content .journey-type-radio-container input[type='radio']{
+      opacity: 0;
+}
+
+.search-form-container-content .journey-type-radio-container input[type='radio']+span.radio-icon{
+    background-image: url('../../img/ucuzuc_icon.png') !important; background-color: transparent !important; background-repeat: no-repeat !important;
+    width: 20px; height: 20px; background-position: -308px -47px;
+    
+   display: inline-block;
+		
+             
+    
+}
+
+.search-form-container-content .journey-type-radio-container input[type='radio']:checked + span.radio-icon{
+    background-image: url('../../img/ucuzuc_icon.png') !important; background-color: transparent !important; background-repeat: no-repeat !important;
+     width: 20px; height: 20px; background-position: -308px -67px; 
+    display: inline-block;
+    
+}
+
+.search-form-container .form-control{
+    height: 32px;
+    font-size: 12px;
+    font-weight: bold;
+    color:#717272;
+}
+
+.search-passenger-info-container{
+    margin-top: 5px;
+    padding: 10px 0px;
+    border-top: 1px dashed #ccc;
+    border-bottom: 1px dashed #ccc;
+   
+}
+
+
+.search-date-container .input-group-btn{
+    color: #0044cc;
+}
+
+.search-date-container .input-group-btn .btn-default{
+     color: #777B99;
+    font-weight: bold;
+}
+
+.search-date-container .search-date-label{
+    font-size: 12px;
+    margin: 10px  2px 5px 2px;
+}
+
+.search-date-container .search-date-label span{
+    font-weight: bold;
+    color: #178acc;
+}
+
+.search-date-container .form-control{
+    background: #FAFDFF;
+}
+
+.search-date-container .form-control[disabled]{
+    background: rgba(232, 238, 240, 0.37);
+}
+
+.search-passenger-info-container  .search-passenger-info-first-label{
+    display: inline-block;
+    margin-top:20px;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+.search-passenger-info-container  .search-passenger-info-label{
+    font-weight: bold;
+    color:#717272;
+}
+
+.search-passenger-info-container .search-passenger-info-note span{
+    font-size: 10px;
+    color:#717272;
+    font-style: italic;
+}
+
+.search-form-container-options .checkbox .input-text{
+    font-size: 12px;
+    top:3px;
+}
+
+.search-form-container .search-button{
+    margin: 8px 0px;;
+}
+
+.search-form-container .flight-class-input{
+    max-width: 100px;
+    margin-top: 15px;
+}
+
+.search-form-container .flight-class-input .form-control{
+    padding: 8px 3px;
+}
+
+
+.search-form-container .flight-class-input .input-text{
+    text-align: center;
+  
+    font-size: 12px;
+}
