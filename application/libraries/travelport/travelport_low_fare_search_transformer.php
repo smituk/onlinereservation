@@ -110,8 +110,11 @@ EOM;
         $preferredProvidersXML = $airSearchModifiersXML->addChild("PreferredProviders");
         $providerXML = $preferredProvidersXML->addChild("Provider",NULL, TravelportAccount::$common_scheme_version);
         $providerXML->addAttribute("Code","1G");
+        /*
         $providerXML = $preferredProvidersXML->addChild("Provider",NULL, TravelportAccount::$common_scheme_version);
         $providerXML->addAttribute("Code","ACH");
+         * */
+         
         if($this->searchCriteria->preferredCarriers != null){
               $preferredCarrierXML = $airSearchModifiersXML->addChild("PreferredCarriers");
             foreach($this->searchCriteria->preferredCarriers as $preferredCarrier){

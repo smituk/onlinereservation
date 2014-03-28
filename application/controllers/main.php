@@ -58,16 +58,16 @@ class Main extends CI_Controller {
         //more js file
 
         $data['js'] = $jsfiles;
-       
+      
        $this->load->view("header");
       $this->load->view("flysearch/fly_search_view");
       $this->load->view("footer", $data);
-        
+       /*
        
-             // $this->load->view("main_header");
-       //$this->load->view("fly_search/fly_search");
-       //$this->load->view("main_footer", $data);
-       
+             $this->load->view("main_header");
+       $this->load->view("fly_search/fly_search");
+       $this->load->view("main_footer", $data);
+       */
          
     }
 
@@ -79,10 +79,6 @@ class Main extends CI_Controller {
             include_once APPPATH . 'services/airport_service.php';
             $this->load->model("fly_search/fly_search_criteria");
             $search_criteria = $this->fly_search_criteria->getInstance();
-            $search_criteria->boardingCode = $this->input->post("boardingairpotCode");
-            $search_criteria->landingCode = $this->input->post("landingairpotCode");
-            $search_criteria->godate = $this->input->post("goDate");
-            $search_criteria->returndate = $this->input->post("returnDate");
             $search_criteria->flydirection = $this->input->post("directionOption");
             $search_criteria->yetiskinnumber = $this->input->post("yetiskinNumber");
             $search_criteria->bebeknumber = $this->input->post("bebekNumber");
@@ -90,6 +86,10 @@ class Main extends CI_Controller {
             $search_criteria->dateoption = $this->input->post("dateOption");
             $search_criteria->cabinclass = $this->input->post("cabinClass");
             $search_criteria->flighttype = $this->input->post("flightType");
+            $search_criteria->isFlexThirdDate = $this->input->post("isFlexibleThirdDay");
+            $search_criteria->isLowCostFlights = $this->input->post("isLowCostFlights");
+            
+                    
 
             $searchAirLegsParams = $this->input->post("airSearchLegs");
 

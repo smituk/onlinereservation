@@ -33,6 +33,7 @@ function initialize() {
 
         var defaultGoDate = new Date();
         defaultGoDate.setDate(defaultGoDate.getDate() + 1);
+        
         goDateInput.datepicker({
             showOn: "button",
             buttonImage: "../onlinefly/public_html/css/ico/calendar_small.jpg",

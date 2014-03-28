@@ -60,7 +60,7 @@ Response Headersview source
        const BOOK_APPLY_REQUEST_PASSANGER_BIRTHYEAR_PARAMETER = "birthYear";
        const INFO_TYPE = "I";
        const ERROR_TYPE = "E";
-       const SUCCESS_ERROR_CODE = "0000000";
+       const SUCCESS_ERROR_CODE = "00000";
        const TRAVELPORT_API_CODE  = "TRVPT";
        const CORENDON_API_CODE   = "CRNDN";
                

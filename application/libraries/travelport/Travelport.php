@@ -377,7 +377,7 @@ class Travelport implements AirServiceProvider {
 
     private function sendRequestWebService($transformer, $endpoint = null) {
         $requestXml = $transformer->prepareXML();
-      // file_put_contents($transformer->name . "Request.xml", $requestXml);
+        file_put_contents($transformer->name . "Request.xml", $requestXml);
         $responseXml = $this->sendMessageTravelportApi($requestXml, $endpoint);
         //$responseXml = file_get_contents($transformer->name."Response.xml");
         file_put_contents($transformer->name . "Response.xml", $responseXml);

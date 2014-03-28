@@ -15,7 +15,7 @@ class ParamService {
     
     public static function getActiveApi(){
         $activeApies = array();
-        array_push($activeApies, "CRNDN");
+        //array_push($activeApies, "CRNDN");
         array_push($activeApies, "TRVPT");
      
         return $activeApies;

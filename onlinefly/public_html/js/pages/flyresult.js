@@ -794,7 +794,7 @@ function onApplyFilter(filterType, filterCriteriaObject) {
     $(".auto-filter-loading-icon").show();
     $(".filter-request-message").hide();
     $.post(url, params, function(data) {
-        if (data != null && data.error_code == "0000000") {
+        if (data != null && data.error_code == "00000") {
             applyFilterCallback(data.data);
         }
     }, 'json');

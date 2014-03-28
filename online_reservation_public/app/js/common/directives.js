@@ -118,7 +118,7 @@
               var initSelection = opts.initSelection;
               opts.initSelection = function (element, callback) {
                 initSelection(element, function (value) {
-                  controller.$setViewValue(value);
+                  controller.$setViewValue(value.id);
                   callback(value);
                 });
               };
