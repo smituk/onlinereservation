@@ -1,0 +1,29 @@
+
+
+<div class="modal-header container">
+    <div class="row">
+        <div class="col-xs-2 col-sm-1 col-md-1 loading"></div>
+        <div class="header-text col-sm-8 col-xs-8 col-md-9">
+            <span>Size en uygun uçuşlar aranıyor</span>
+        </div>
+        <div class="col-xs-1  col-sm-1 col-md-1">
+            <div  class="ucuzuc-sprite logo-ucuzuc"></div>
+        </div>
+    </div>
+</div> 
+    <div class="modal-body container">
+        <ul>
+            <li ng-repeat="searchAirLocation in searchCriteria.searchAirLocations">
+
+                
+                 <div>{{searchAirLocation.getOriginAirportId()}}-{{searchAirLocation.getDestinationAirportId()}}</div>   
+              
+            </li>
+        </ul>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+

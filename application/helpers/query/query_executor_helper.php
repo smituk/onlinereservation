@@ -2,7 +2,7 @@
      class QueryExecutor {
          
          public  function query($query,$isCacheAvaible = true ,$queryTimeout = 15){
-            if($isCacheAvaible == false){
+            if($isCacheAvaible == true){
               include_once APPPATH.'/cache/cache_impl.php';
               $cacheServer = new CacheImpl();
               $result  = unserialize($cacheServer->get($query));

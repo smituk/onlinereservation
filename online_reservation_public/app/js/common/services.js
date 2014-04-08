@@ -13,15 +13,15 @@ var appServiceModule = angular.module(APP_NAME + '.services', []);
 
 
 //constants 
-appServiceModule.constant('ErrorCodes',function(){
+appServiceModule.constant('ErrorCodes', function() {
     return {
-        SUCCESS :'00000'     
+        SUCCESS: '00000'
     };
 });
 
 
 //Factories
-appServiceModule.factory("FlightSearchService", function($http , $q  ) {
+appServiceModule.factory("FlightSearchService", function($http, $q) {
 
     function flightSearchService() {
         this.searchAirLocations = new Array();
@@ -135,9 +135,9 @@ appServiceModule.factory("FlightSearchService", function($http , $q  ) {
             }
             return str.join("&");
         };
-        
+
         this.performSearch = function() {
-          
+
             var deferred = $q.defer();
             var requestFlySearchJsonObject = {};
             requestFlySearchJsonObject['yetiskinNumber'] = this.getAdultPassengerCount();
@@ -152,45 +152,73 @@ appServiceModule.factory("FlightSearchService", function($http , $q  ) {
             var airSearchLegs = new Array();
 
             for (var i = 0; i < this.searchAirLocations.length; i++) {
-              
+
                 var searchAirLocationObject = this.searchAirLocations[i];
                 var searchAirleg = {};
                 searchAirleg.origin = {};
                 searchAirleg.destination = {};
                 searchAirleg['origin']['airport'] = searchAirLocationObject.getOriginAirportId();
                 searchAirleg.destination.airport = searchAirLocationObject.getDestinationAirportId();
-                if(searchAirLocationObject.getFlightDate()){
-                   var year = searchAirLocationObject.getFlightDate().getFullYear();
-                   var month = ('0' + (searchAirLocationObject.getFlightDate().getMonth() + 1)).slice(-2);
-                   var day = ('0' + (searchAirLocationObject.getFlightDate().getDate())).slice(-2);
-                   searchAirleg.departureTime = year + "-" + month + '-' + day;
+                if (searchAirLocationObject.getFlightDate()) {
+                    var year = searchAirLocationObject.getFlightDate().getFullYear();
+                    var month = ('0' + (searchAirLocationObject.getFlightDate().getMonth() + 1)).slice(-2);
+                    var day = ('0' + (searchAirLocationObject.getFlightDate().getDate())).slice(-2);
+                    searchAirleg.departureTime = year + "-" + month + '-' + day;
                 }
-               if(this.getDirection() === "1" && i > 0){  // tek yonler için 
+                if (this.getDirection() === "1" && i > 0) {  // tek yonler için 
                     continue;
-               }
-               
+                }
+
                 airSearchLegs.push(searchAirleg);
             }
 
             requestFlySearchJsonObject['airSearchLegs'] = airSearchLegs;
             $http.post('index.php/searchflyrequest', this.serialize(requestFlySearchJsonObject), {
-                    responseType: 'json',
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).success(function(data, status, headers, config) {
-                            if(data != null && data.error_code){
-                                  deferred.resolve(data);
-                            }else{
-                                deferred.reject(data);
-                            }              
-                   }).error(function(data, status, headers, config){
-                             deferred.reject();
-                   });
-            
-             return deferred.promise;
+                responseType: 'json',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).success(function(data, status, headers, config) {
+                if (data != null && data.error_code) {
+                    deferred.resolve(data);
+                } else {
+                    deferred.reject(data);
+                }
+            }).error(function(data, status, headers, config) {
+                deferred.reject();
+            });
+
+            return deferred.promise;
 
         };
 
+        this.getSearchCriteria = function() {
+            var searchCriteria = {};
+            searchCriteria.searchAirLocations = this.getSearchAirLocations();
+            searchCriteria.adultPassengerCount = this.getAdultPassengerCount();
+            searchCriteria.childPassengerCount = this.getChildPassengerCount();
+            searchCriteria.infantPassengerCount = this.getInfantPassengerCount();
+            searchCriteria.cabinClass = this.getCabinClass();
+            return searchCriteria;
+        };
 
-        
+        this.getModalControllerInstance = function() {
+            var searchingFlightControllerInstance = function($scope, $modalInstance, searchCriteria, AirportService) {
+                $scope.searchCriteria = searchCriteria;
+                
+                 
+
+                $scope.ok = function() {
+                    $modalInstance.close(searchCriteria);
+                };
+
+                $scope.cancel = function() {
+                    $modalInstance.dismiss('cancel');
+                };
+
+            };
+            return searchingFlightControllerInstance;
+        };
+
+
+
 
 
     }
@@ -198,4 +226,29 @@ appServiceModule.factory("FlightSearchService", function($http , $q  ) {
 
     return new flightSearchService();
 
+});
+
+appServiceModule.factory("AirportService", function($http, $q) {
+     
+    function AirportService(){
+        this.getAirportSummary = function (airportCode){
+          var param = "airportid="+airportCode;  
+          var deferred = $q.defer();
+            $http.post('index.php/getAirportSummary',param, {
+                responseType: 'json',
+                headers: {'Content-Type':'application/x-www-form-urlencoded'}}).success(function(data, status, headers, config) {
+                if (data != null && data.id) {
+                    deferred.resolve(data);
+                } else {
+                    deferred.reject(data);
+                }
+            }).error(function(data, status, headers, config) {
+                deferred.reject();
+            });
+
+            return deferred.promise;
+        };
+     }
+     return new AirportService();
+    
 });

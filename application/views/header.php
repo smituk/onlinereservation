@@ -1,8 +1,12 @@
 <?php $appName = "flySearhPageApp"; ?>
 <?php define("PAGE_NAME","fly_search" )?> 
+<!DOCTYPE html>
 <html lang="en" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="<?php echo $appName; ?>">
     <head>
-        
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+
        <!--[if lt IE 8]>
         <script>
           document.createElement('ng-include');
@@ -15,10 +19,17 @@
           document.createElement('ng:view');
         </script>
        <![endif]-->
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-    <title>My AngularJS App</title>
+       
+        <!--[if lt IE 9]>
+          <link href="//netdna.bootstrapcdn.com/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+          <link href="<?php echo base_url();?>online_reservation_public/app/lib/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" /> 
+          <script src="<?php echo base_url();?>online_reservation_public/app/lib/html5shiv.js" type="text/javascript"></script>
+          <script src="<?php echo base_url();?>online_reservation_public/app/lib/respond.js" type="text/javascript"></script>
+        
+          <script src="<?php echo base_url();?>online_reservation_public/app/lib/respond.proxy.js" type="text/javascript"></script>
+         
+        <![endif]-->
+            <title>My AngularJS App</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cerulean/bootstrap.min.css"/>
  
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>

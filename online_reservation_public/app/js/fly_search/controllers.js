@@ -29,10 +29,10 @@ appModule.controller("navBarController", ['$scope', function($scope) {
 
 
 
-appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore', 'FlightSearchService', 'ErrorCodes', function($scope, $window, $cookieStore, FlightSearchService, ErrorCodes) {
-        
+appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore', '$modal', 'FlightSearchService', 'AirportService', 'ErrorCodes', '$q', function($scope, $window, $cookieStore, $modal, FlightSearchService, AirportService, ErrorCodes, $q) {
+
         $scope.errorMessage = "";
-       
+
         $scope.checked = true;
         $scope.journeyType = "2";
         $scope.isSecondSearchLocationOrigin = false;
@@ -42,7 +42,7 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
         $scope.goDateMax = new Date();
         $scope.goDateMax.setDate($scope.goDateMax.getDate() + 365);
         //$scope.goDateMax = new Date();
-        
+
         $scope.goDateOptions = {};
 
         $scope.returnDate = new Date($scope.goDate.getTime() + 7 * 24 * 3600000);
@@ -61,10 +61,10 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
         $scope.nonstopFlightsOption = false;
         $scope.lowCostFlightsOption = true;
         $scope.searchClass = "all";
-        
-      
-        
-        
+
+
+
+
 
         $scope.firstSearchLocationOriginClass = false;
         $scope.secondSearchLocationOriginClass = false;
@@ -78,30 +78,30 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
                 $scope.isSecondSearchLocationDestination = false;
                 $scope.returnDateDisabled = false;
                 //$scope.returnDate = $scope.tempReturnDate;
-   
-                $scope.secondSearchLocationOrigin  = $scope.firstSearchLocationDestination;
+
+                $scope.secondSearchLocationOrigin = $scope.firstSearchLocationDestination;
                 $scope.secondSearchLocationDestination = $scope.firstSearchLocationOrigin;
-                 $("#secondSearchLocationDestination").select2("val", $scope.firstSearchLocationOrigin);
-                $("#secondSearchLocationOrigin").select2("val",  $scope.firstSearchLocationDestination);
+                $("#secondSearchLocationDestination").select2("val", $scope.firstSearchLocationOrigin);
+                $("#secondSearchLocationOrigin").select2("val", $scope.firstSearchLocationDestination);
             } else if (journeyType === "1") {
                 $scope.isSecondSearchLocationOrigin = false;
                 $scope.isSecondSearchLocationDestination = false;
                 $scope.returnDateDisabled = true;
-               // $scope.tempReturnDate = $scope.returnDate;
+                // $scope.tempReturnDate = $scope.returnDate;
                 //$scope.returnDate = null;
 
-            }else if(journeyType === "3"){ // kombinasyon
-                
-                $scope.secondSearchLocationOrigin  = $scope.firstSearchLocationDestination;
+            } else if (journeyType === "3") { // kombinasyon
+
+                $scope.secondSearchLocationOrigin = $scope.firstSearchLocationDestination;
                 $scope.secondSearchLocationDestination = $scope.firstSearchLocationOrigin;
                 $scope.isSecondSearchLocationOrigin = true;
                 $scope.isSecondSearchLocationDestination = true;
                 $scope.returnDateDisabled = false;
-                 //$scope.tempReturnDate = $scope.returnDate;
+                //$scope.tempReturnDate = $scope.returnDate;
             }
         };
-        
-       
+
+
 
         $scope.goDateOpen = function($event) {
             $event.preventDefault();
@@ -143,18 +143,18 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
         $scope.onSearchPerformed = function() {
             //hide Error text
             $(".error-desc-container").hide();
-            
+
             var isValid = true;
             var errorDescritions = new Array();
-           //alert($scope.goDate);
+            //alert($scope.goDate);
             $scope.errorMessage = "";
             $scope.firstSearchLocationOriginClass = false;
             $scope.secondSearchLocationOriginClass = false;
             $scope.firstSearchLocationDestinationClass = false;
             $scope.secondSearchLocationDestinationClass = false;
-            if ($scope.firstSearchLocationOrigin === undefined  || $scope.firstSearchLocationOrigin === '' ) {
+            if ($scope.firstSearchLocationOrigin === undefined || $scope.firstSearchLocationOrigin === '') {
                 $scope.firstSearchLocationOriginClass = true;
-                 $("#firstSearchLocationOrigin").parent(".search-location-autocomplete").addClass("invalid-input");
+                $("#firstSearchLocationOrigin").parent(".search-location-autocomplete").addClass("invalid-input");
                 isValid = false;
             }
 
@@ -164,7 +164,7 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
                 isValid = false;
             }
 
-            if ($scope.firstSearchLocationDestination === undefined || $scope.firstSearchLocationDestination === '' ) {
+            if ($scope.firstSearchLocationDestination === undefined || $scope.firstSearchLocationDestination === '') {
                 $scope.firstSearchLocationDestinationClass = true;
                 $("#firstSearchLocationDestination").parent(".search-location-autocomplete").addClass("invalid-input");
                 isValid = false;
@@ -175,96 +175,124 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
                 $scope.secondSearchLocationDestinationClass = true;
                 isValid = false;
             }
-            
-            if(!isValid){
+
+            if (!isValid) {
                 return;
             }
-            
-            
-            if($scope.firstSearchLocationOrigin === $scope.firstSearchLocationDestination){
-                 $scope.errorMessage = "Kalkış ve varış havaalanı farklı  olmalıdır";
-                 $scope.firstSearchLocationOriginClass = true;
-                 $scope.firstSearchLocationDestinationClass = true;
+
+
+            if ($scope.firstSearchLocationOrigin === $scope.firstSearchLocationDestination) {
+                $scope.errorMessage = "Kalkış ve varış havaalanı farklı  olmalıdır";
+                $scope.firstSearchLocationOriginClass = true;
+                $scope.firstSearchLocationDestinationClass = true;
             }
-            
-            if($scope.secondSearchLocationOrigin === $scope.secondSearchLocationDestination){
+
+            if ($scope.secondSearchLocationOrigin === $scope.secondSearchLocationDestination) {
                 $scope.errorMessage = "Kalkış ve varış havaalanı farklı olmalıdır";
                 $scope.secondSearchLocationOriginClass = true;
                 $scope.secondSearchLocationDestinationClass = true;
             }
-             
-            if($scope.errorMessage !== ""){
+
+            if ($scope.errorMessage !== "") {
                 $(".error-desc-container").slideDown(400);
                 return;
             }
 
 
-            
-                FlightSearchService.clearSearhAirLocations();
-                var journeyType = $scope.journeyType;
-                if(journeyType === "3"){
-                    journeyType = "2";
-                }
-                FlightSearchService.setDirection(journeyType);
-                FlightSearchService.addSearchAirLocation($scope.firstSearchLocationOrigin, $scope.firstSearchLocationDestination, $scope.goDate);
-                FlightSearchService.addSearchAirLocation($scope.secondSearchLocationOrigin, $scope.secondSearchLocationDestination, $scope.returnDate);
-                FlightSearchService.setAdultPassengerCount($scope.searchAdultCount);
-                FlightSearchService.setChildPassengerCount($scope.searchChildCount);
-                FlightSearchService.setInfantPassengerCount($scope.searchInfantCount);
-                FlightSearchService.setNonStopFlight($scope.nonstopFlightsOption);
-                FlightSearchService.setFlexibleThirdDay($scope.flexThirdDateOption);
-                FlightSearchService.setLowCostFlights($scope.lowCostFlightsOption);
-                FlightSearchService.setCabinClass($scope.searchClass);
 
-                $cookieStore.put("searchAirLocations", FlightSearchService.getSearchAirLocations());
-                $scope.spinClass = "fa-spin";
-                FlightSearchService.performSearch().then(function(response) {
-                    if (response.data > 0) {
-                        $window.location.href = "index.php/searchresults";
-                    } else {
-                        alert("Uçus bulunamadı");
-                    }
+            FlightSearchService.clearSearhAirLocations();
+            var journeyType = $scope.journeyType;
+            if (journeyType === "3") {
+                journeyType = "2";
+            }
+            FlightSearchService.setDirection(journeyType);
+            FlightSearchService.addSearchAirLocation($scope.firstSearchLocationOrigin, $scope.firstSearchLocationDestination, $scope.goDate);
+            FlightSearchService.addSearchAirLocation($scope.secondSearchLocationOrigin, $scope.secondSearchLocationDestination, $scope.returnDate);
+            FlightSearchService.setAdultPassengerCount($scope.searchAdultCount);
+            FlightSearchService.setChildPassengerCount($scope.searchChildCount);
+            FlightSearchService.setInfantPassengerCount($scope.searchInfantCount);
+            FlightSearchService.setNonStopFlight($scope.nonstopFlightsOption);
+            FlightSearchService.setFlexibleThirdDay($scope.flexThirdDateOption);
+            FlightSearchService.setLowCostFlights($scope.lowCostFlightsOption);
+            FlightSearchService.setCabinClass($scope.searchClass);
 
-                }, function() {
-                    alert("bir data meydana geldi");
-                })['finally'](function(){
-                    $scope.spinClass = "";
+            var differentAirportSummaryIds = [];
+            var getAirportSummaryPromises = [];
+            angular.forEach(FlightSearchService.getSearchAirLocations(), function(searchAirlocation) {
+                getAirportSummaryPromises.push(AirportService.getAirportSummary(searchAirlocation.getOriginAirportId()));
+                getAirportSummaryPromises.push(AirportService.getAirportSummary(searchAirlocation.getDestinationAirportId()));
+            });
+
+            $q.all(getAirportSummaryPromises).then(function(results) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'online_reservation_public/app/partials/common/searchingPopup.html',
+                    controller: FlightSearchService.getModalControllerInstance(),
+                    resolve: {
+                        searchCriteria: function() {
+                            return FlightSearchService.getSearchCriteria();
+                        },
+                        getAirportService: function() {
+                            return AirportService;
+                        }
+                    },
+                    backdrop: 'static',
+                    windowClass: 'searching-flight-popup'
                 });
-            
+            });
+
+
+
+            $cookieStore.put("searchAirLocations", FlightSearchService.getSearchAirLocations());
+            $scope.spinClass = "fa-spin";
+
+
+
+            return;
+            FlightSearchService.performSearch().then(function(response) {
+                if (response.data > 0) {
+                    $window.location.href = "index.php/searchresults";
+                } else {
+                    alert("Uçus bulunamadı");
+                }
+
+            }, function() {
+                alert("bir data meydana geldi");
+            })['finally'](function() {
+                $scope.spinClass = "";
+            });
+
         };
 
         $scope.$watch('firstSearchLocationOrigin', function(newVal, oldValue) {
-            if (oldValue && oldValue !== null && newVal === oldValue) {
+            if (oldValue && oldValue !== null && (newVal === oldValue)) {
                 return;
             }
 
             $("#secondSearchLocationDestination").select2("val", newVal);
-            $scope.secondSearchLocationDestination = newVal;
             $scope.secondSearchLocationDestinationClass = false;
 
         });
 
         $scope.$watch('firstSearchLocationDestination', function(newVal, oldValue) {
-            if (oldValue && oldValue !== null && newVal === oldValue) {
+            if (oldValue && oldValue !== null && (newVal === oldValue)) {
                 return;
             }
 
 
             $("#secondSearchLocationOrigin").select2("val", newVal);
-            $scope.secondSearchLocationOrigin = newVal;
             $scope.secondSearchLocationOriginClass = false;
 
         });
 
         $scope.$watch('goDate', function(newVal, oldValue) {
-           if(!moment(newVal).isValid()){
-               
-           }
-            
-            
-            
+            if (!moment(newVal).isValid()) {
+
+            }
+
+
+
             $scope.returnDateMin = newVal;
-            
+
             if ($scope.returnDate !== null && newVal.getTime() > $scope.returnDate.getTime()) {
                 $scope.returnDate = newVal;
             }

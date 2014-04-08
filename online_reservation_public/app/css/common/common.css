@@ -45,6 +45,7 @@ body{
 .invalid-input .select2-container .select2-choice{
     background:#fff6f6; 
     color: #ac0606;
+	
 }
 
 
@@ -81,6 +82,8 @@ body{
 .select2-container .select2-choice{
     background: #fff;
     border:none;
+	height:32px;
+	padding-top:4px;
 }
 
 .select2-container .select2-chosen{
@@ -272,7 +275,7 @@ body{
 }
 .spin-button{
     display:block;
-    height: 12px;
+    height: 17px;
     margin: 0;
     min-width: 25px;
     min-height: 14px;
@@ -309,4 +312,50 @@ body{
    background-image: url('../../img/ucuzuc_icon.png') !important; background-color: transparent !important; background-repeat: no-repeat !important;
     width: 20px; height: 20px; background-position: -354px -250px; 
    display: inline-block;
+}
+
+.loading{
+    background:url(../../img/loading.gif) no-repeat;
+   
+    min-width: 40px;
+    min-height: 40px;
+    margin-left: 10px;
+}
+.searching-flight-popup .container{
+    width: 100%;
+}
+
+
+.searching-flight-popup .modal-content{
+    background: #4183C4;
+}
+
+.searching-flight-popup .header-text{
+  
+    color: #ffffff;
+   
+    
+    
+}
+
+.searching-flight-popup .header-text span{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    
+    
+}
+
+.searching-flight-popup .logo-ucuzuc{
+    
+    
+}
+
+.searching-flight-popup .modal-body{
+  background: url('../../img/search-popup-body.jpg') no-repeat ; 
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  background-size:cover;
+  height:270px;
 }
