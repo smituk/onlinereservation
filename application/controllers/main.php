@@ -85,9 +85,12 @@ class Main extends CI_Controller {
             $search_criteria->cocuknumber = $this->input->post("cocukNumber");
             $search_criteria->dateoption = $this->input->post("dateOption");
             $search_criteria->cabinclass = $this->input->post("cabinClass");
-            $search_criteria->flighttype = $this->input->post("flightType");
             $search_criteria->isFlexThirdDate = $this->input->post("isFlexibleThirdDay");
             $search_criteria->isLowCostFlights = $this->input->post("isLowCostFlights");
+            
+            if($this->input->post("isNonStopFlight") == "true"){
+                $search_criteria->flighttype = SearchCriteraFlightTypeEnum::NONSTOP;
+            }
             
                     
 

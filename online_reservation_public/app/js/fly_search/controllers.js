@@ -38,6 +38,7 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
         $scope.isSecondSearchLocationOrigin = false;
         $scope.isSecondSearchLocationDestination = false;
         $scope.goDate = new Date();
+        $scope.goDate.setDate($scope.goDate.getDate()+1);
         $scope.goDateMin = new Date();
         $scope.goDateMax = new Date();
         $scope.goDateMax.setDate($scope.goDateMax.getDate() + 365);
@@ -224,6 +225,17 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
             });
 
             $q.all(getAirportSummaryPromises).then(function(results) {
+               var airportSummaryTexts = [];
+               angular.forEach(results ,function(result){
+                   if(!airportSummaryTexts[result.id]){
+                       var cityOrAirportCode  = result.iataCode;
+                       if(!result.iataCode){
+                           cityOrAirportCode = result.cityCode;
+                       }
+                       airportSummaryTexts[result.id] = result.summary.split(",")[0]+" ("+cityOrAirportCode +")";
+                   }
+               });
+               
                 var modalInstance = $modal.open({
                     templateUrl: 'online_reservation_public/app/partials/common/searchingPopup.html',
                     controller: FlightSearchService.getModalControllerInstance(),
@@ -231,8 +243,8 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
                         searchCriteria: function() {
                             return FlightSearchService.getSearchCriteria();
                         },
-                        getAirportService: function() {
-                            return AirportService;
+                        airportSummaryTexts: function() {
+                            return airportSummaryTexts;
                         }
                     },
                     backdrop: 'static',
@@ -243,22 +255,20 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
 
 
             $cookieStore.put("searchAirLocations", FlightSearchService.getSearchAirLocations());
-            $scope.spinClass = "fa-spin";
-
-
-
-            return;
+          
             FlightSearchService.performSearch().then(function(response) {
                 if (response.data > 0) {
                     $window.location.href = "index.php/searchresults";
                 } else {
+                    $modal.close();
                     alert("Uçus bulunamadı");
                 }
 
             }, function() {
-                alert("bir data meydana geldi");
+                alert("bir hata meydana geldi");
             })['finally'](function() {
-                $scope.spinClass = "";
+ 
+                 $modal.close();
             });
 
         };

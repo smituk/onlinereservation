@@ -1,5 +1,11 @@
 <?php
 
+class SearchCriteraFlightTypeEnum{
+    const  NONSTOP = 1;
+    const  ONESTOP = 2;
+    const  ONE_MORESTOP = 3;
+}
+
 class Fly_search_criteria extends CI_Model {
     public $searchAirLegs;
     public $boardingCode;

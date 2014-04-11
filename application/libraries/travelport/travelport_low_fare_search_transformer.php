@@ -83,18 +83,21 @@ EOM;
         $airLegModifierXML = $searchAirLegXML->addChild("AirLegModifiers");
         if (isset($this->searchCriteria->cabinclass) && $this->searchCriteria->cabinclass != "all") {
             $preferredCabinsXML = $airLegModifierXML->addChild("PreferredCabins");
-            $cabinClassXML = $preferredCabinsXML->addChild("CabinClass");
+            $cabinClassXML = $preferredCabinsXML->addChild("CabinClass" ,NULL, TravelportAccount::$common_scheme_version);
             $cabinClassXML->addAttribute("Type", $this->searchCriteria->cabinclass);
         }
         
-        if (isset($this->searchCriteria->flighttype) && $this->searchCriteria->flighttype != "all") {
-            if($this->searchCriteria->flighttype == "1"){
+        /*
+        if (isset($this->searchCriteria->flighttype) && $this->searchCriteria->flighttype == SearchCriteraFlightTypeEnum::NONSTOP) {
+            if($this->searchCriteria->flighttype == SearchCriteraFlightTypeEnum::NONSTOP){
                 $flightTypeXML = $airLegModifierXML->addChild("FlightType");
                 $flightTypeXML->addAttribute("RequireSingleCarrier","true");
                 $flightTypeXML->addAttribute("MaxConnections","0");
-                $flightTypeXML->addAttribute("MaxStops","0");
+                $flightTypeXML->addAttribute("MaxStops","1");
             }
         }
+         */
+         
     }
    
     /*
@@ -107,6 +110,7 @@ EOM;
      */
     private function buildAirSearchModifierXML(SimpleXMLElement $lowFareSearchRequestXML){
         $airSearchModifiersXML = $lowFareSearchRequestXML->addChild("AirSearchModifiers");
+        
         $preferredProvidersXML = $airSearchModifiersXML->addChild("PreferredProviders");
         $providerXML = $preferredProvidersXML->addChild("Provider",NULL, TravelportAccount::$common_scheme_version);
         $providerXML->addAttribute("Code","1G");
@@ -132,11 +136,20 @@ EOM;
             }
         }
         
-        if($this->searchCriteria->flighttype == "1"){
-                $flightTypeXML = $airSearchModifiersXML->addChild("FlightType");
+        if($this->searchCriteria->flighttype == SearchCriteraFlightTypeEnum::NONSTOP){
+            /*
+             * <ns2:FlightType NonStopDirects="true" StopDirects="false" SingleOnlineCon="false" DoubleOnlineCon="false" TripleOnlineCon="false" SingleInterlineCon="false" DoubleInterlineCon="false" TripleInterlineCon="false" />
+             */    
+            $flightTypeXML = $airSearchModifiersXML->addChild("FlightType");
                 $flightTypeXML->addAttribute("RequireSingleCarrier","true");
                 $flightTypeXML->addAttribute("MaxConnections","0");
                 $flightTypeXML->addAttribute("MaxStops","0");
+                $flightTypeXML->addAttribute("NonStopDirects","true");
+                $flightTypeXML->addAttribute("StopDirects" ,"false");
+                $flightTypeXML->addAttribute("SingleOnlineCon","false");
+                $flightTypeXML->addAttribute("DoubleOnlineCon","false");
+                $flightTypeXML->addAttribute("TripleOnlineCon","false");
+                
             }
     }
     
@@ -164,6 +177,7 @@ EOM;
     private function buildAirPriceModifiersXML(SimpleXMLElement $lowFareSearchRequestXML){
          $airPricingModifiersXML = $lowFareSearchRequestXML->addChild("AirPricingModifiers");
          $airPricingModifiersXML->addAttribute("CurrencyType" , $this->searchCriteria->currency);
+         $airPricingModifiersXML->addAttribute("ETicketability","Required");
     }
 }
 

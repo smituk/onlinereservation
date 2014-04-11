@@ -12,18 +12,27 @@
     </div>
 </div> 
     <div class="modal-body container">
-        <ul>
-            <li ng-repeat="searchAirLocation in searchCriteria.searchAirLocations">
-
-                
-                 <div>{{searchAirLocation.getOriginAirportId()}}-{{searchAirLocation.getDestinationAirportId()}}</div>   
-              
-            </li>
-        </ul>
-
+            <div class="row search-air-location" ng-repeat="searchAirLocation in searchAirLocations">
+                <div class="col-xs-1 col-sm-1 col-md-1"></div>
+                <div class="col-xs-1 col-sm-1 col-md-1"><span class="ucuzuc-sprite" ng-class="searchAirLocation.directionIconClass"></span></div>
+                <div class="col-xs-5 col-sm-5 col-md-5"><span>{{searchAirLocation.originAirport}}</span>  -  <span>{{searchAirLocation.destinationAirport}}</span></div>
+                <div class=" col-xs-4 col-sm-4 col-md-4">{{searchAirLocation.departureDate}}</div>
+            </div>
+            
+        <div class="row passenger-info">
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                 <span class="ucuzuc-sprite ucus-yetiskin"></span><span class="ucuzuc-sprite ucus-cocuk"></span><span class="ucuzuc-sprite ucus-bebek"></span><span>Yolcular: {{passengerText}}</span>
+            </div>
+            
+            <div class="col-xs-5 col-sm-5 col-md-5 passenger-class">
+                <span>Ücret tipi : </span><span>{{class}}</span>
+            </div>
+        </div>
     </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <div class="modal-footer container">
+        <div class="col-md-12"> 
+            <span class="fa fa-search"></span><span>Uçuşlarınız hazırlanıyor, lütfen bekleyiniz. Uçuş araması yaklaşık 7 ile 27 saniye arasındadır.</span>
+        </div> 
     </div>
 

@@ -200,10 +200,41 @@ appServiceModule.factory("FlightSearchService", function($http, $q) {
         };
 
         this.getModalControllerInstance = function() {
-            var searchingFlightControllerInstance = function($scope, $modalInstance, searchCriteria, AirportService) {
-                $scope.searchCriteria = searchCriteria;
+            var searchingFlightControllerInstance = function($scope, $modalInstance, searchCriteria, airportSummaryTexts) {
+                var searchAirLocations = [];
+                var count = 1;
+                angular.forEach(searchCriteria.searchAirLocations , function(searchAirLocation,key){
+                    var searchAirLocationObject = {};
+                    searchAirLocationObject.originAirport = airportSummaryTexts[searchAirLocation.getOriginAirportId()];
+                    searchAirLocationObject.destinationAirport = airportSummaryTexts[searchAirLocation.getDestinationAirportId()];
+                    searchAirLocationObject.directionIconClass = 'data-gidis-ikon';
+                    if(count === 2){
+                       searchAirLocationObject.directionIconClass = 'data-donus-ikon';
+                    }
+                    moment.lang('tr');
+                    searchAirLocationObject.departureDate = moment(searchAirLocation.getFlightDate()).format("DD.MM.YYYY dddd");
+                    
+                    
+                    
+                    count++;
+                    searchAirLocations.push(searchAirLocationObject);
+                });
                 
-                 
+                $scope.searchCriteria = searchCriteria;
+                $scope.airportSummaryTetxs = airportSummaryTexts;
+                
+                $scope.passengerText = searchCriteria.adultPassengerCount + " Yetişkin ";
+                if(searchCriteria.childPassengerCount > 0){
+                    $scope.passengerText += searchCriteria.childPassengerCount + " Çocuk ";
+                }
+                
+                if(searchCriteria.infantPassengerCount > 0){
+                    $scope.passengerText += searchCriteria.infantPassengerCount + " Çocuk ";
+                }
+                
+                $scope.class = searchCriteria.cabinClass === "all"? "Hepsi" : searchCriteria.cabinClass;
+                
+                $scope.searchAirLocations = searchAirLocations;
 
                 $scope.ok = function() {
                     $modalInstance.close(searchCriteria);

@@ -29,7 +29,7 @@ class TravelportAccount {
     public static $universalRecordEndPoint = "https://emea.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/UniversalRecordService";
     public static $air_scheme_version = "http://www.travelport.com/schema/air_v26_0";
     public static $common_scheme_version = "http://www.travelport.com/schema/common_v26_0";
-    public static $universal_scheme_version = "http://www.travelport.com/schema/universal_v25_0";
+    public static $universal_scheme_version = "http://www.travelport.com/schema/universal_v26_0";
     
 }
 
