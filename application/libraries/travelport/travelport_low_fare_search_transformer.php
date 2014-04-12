@@ -155,22 +155,15 @@ EOM;
     
     private function buildSearchPassengerXMLs(SimpleXMLElement $lowFareSearchRequestXML){
         for ($i = 0; $i < (int) $this->searchCriteria->yetiskinnumber; $i++){
-            $searchPassengerXML = $lowFareSearchRequestXML->addChild("SearchPassenger",NULL,  TravelportAccount::$common_scheme_version);
-            $searchPassengerXML->addAttribute("Code" , "ADT");
-            $searchPassengerXML->addAttribute("PricePTCOnly", "false");
+            TravelportCommon::addSearchPassengerXML($lowFareSearchRequestXML, "ADT");
         }
         
         for ($i = 0; $i < (int) $this->searchCriteria->cocuknumber; $i++){
-            $searchPassengerXML = $lowFareSearchRequestXML->addChild("SearchPassenger",NULL,  TravelportAccount::$common_scheme_version);
-            $searchPassengerXML->addAttribute("Code" , "CNN");
-            $searchPassengerXML->addAttribute("PricePTCOnly", "false");
-            $searchPassengerXML->addAttribute("Age" ,"7");
+            TravelportCommon::addSearchPassengerXML($lowFareSearchRequestXML, "CNN",7);
         }
         
           for ($i = 0; $i < (int) $this->searchCriteria->bebeknumber; $i++){
-            $searchPassengerXML = $lowFareSearchRequestXML->addChild("SearchPassenger",NULL,  TravelportAccount::$common_scheme_version);
-            $searchPassengerXML->addAttribute("Code" , "INF");
-            $searchPassengerXML->addAttribute("PricePTCOnly", "false");
+           TravelportCommon::addSearchPassengerXML($lowFareSearchRequestXML, "INF");
         }
     }
     

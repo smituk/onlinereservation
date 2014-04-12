@@ -23,9 +23,8 @@ class TravelportCommon {
     const APICODE = "TRVPT";
     const DOB_FORMAT = "Y-m-d";
 
-    public static function buildAirPricingCommandXML($airSegments) {
-        $airPricingCommandXML = new SimpleXMLElement("<myxml></myxml>");
-        $airPricingCommandXML = $airPricingCommandXML->addChild("AirPricingCommand");
+    public static function addAirPricingCommandXML(SimpleXMLElement $parentRequestElement ,$airSegments ) {
+        $airPricingCommandXML = $parentRequestElement->addChild("AirPricingCommand");
         foreach ($airSegments as $airsegment) {
             $airSegmentPricingModifiersXML = $airPricingCommandXML->addChild("AirSegmentPricingModifiers");
             $airSegmentPricingModifiersXML->addAttribute("AirSegmentRef", $airsegment->key);
@@ -37,7 +36,7 @@ class TravelportCommon {
              * 
              */
         }
-        return $airPricingCommandXML->asXML();
+        return $airPricingCommandXML;
     }
 
     //put your code here
@@ -176,7 +175,7 @@ class TravelportCommon {
         $child->addAttribute("ArrivalTime", $airsegment->arrivalTime);
         $child->addAttribute("ClassOfService", $airsegment->bookingCode);
         $child->addAttribute("ProviderCode", $airsegment->providerCode);
-        if (isset($airsegment->operatingCarrier)) {
+        if (isset($airsegment->operatingCarrier) && $airsegment->operatingCarrier != "") {
             $codeShareInfoXML = $child->addChild("CodeshareInfo");
             $codeShareInfoXML->addAttribute("OperatingCarrier", $airsegment->operatingCarrier);
             $codeShareInfoXML->addAttribute("OperatingFlightNumber", $airsegment->operatingFlightNumber);
@@ -444,27 +443,29 @@ class TravelportCommon {
         return $fareInfoObject;
     }
 
-    public static function airItineraryObjectToXml($airsegmentArray) {
+    public static function airItineraryObjectToXml($airsegmentArray , SimpleXMLElement $airIternaryElement = null) {
         $xml = "";
         foreach ($airsegmentArray as $airsegment) {
+           if(!isset($airIternaryElement)){ 
             $xml = $xml . self::airsegmentObjectToXML($airsegment);
+           }else{
+               $airSegmentXML = $airIternaryElement->addChild("AirSegment");
+               self::airsegmentObjectToXML($airsegment, FALSE, $airSegmentXML);
+           }
         }
-        return "<AirItinerary>" . $xml . "</AirItinerary>";
+        return $airIternaryElement;
     }
 
-    public static function buildPassangerOption($yetiskin_number, $cocuk_number, $bebek_number) {
-        $message = "";
-        for ($i = 0; $i < (int) $yetiskin_number; $i++)
-            $message .= '<SearchPassenger xmlns = "http://www.travelport.com/schema/common_v20_0" PricePTCOnly="false" Code="ADT"/>';
-
-        for ($i = 0; $i < (int) $cocuk_number; $i++)
-            $message .= '<SearchPassenger xmlns = "http://www.travelport.com/schema/common_v20_0" PricePTCOnly="false"  Age="7" Code="CNN"/>';
-
-        for ($i = 0; $i < (int) $bebek_number; $i++)
-            $message .= '<SearchPassenger xmlns = "http://www.travelport.com/schema/common_v20_0" PricePTCOnly="false" Code="INF"/>';
-
-        return $message;
-    }
+    
+    public static function addSearchPassengerXML(SimpleXMLElement $parentElement, $passengerType , $passengerAge = null){
+        $searchPasengerXML = $parentElement->addChild("SearchPassenger",NULL,  TravelportAccount::$common_scheme_version);
+        $searchPasengerXML->addAttribute("PricePTCOnly","false");
+        $searchPasengerXML->addAttribute("Code",$passengerType);
+        if(isset($passengerAge)){
+            $searchPasengerXML->addAttribute("Age",$passengerAge);
+        }
+        return $searchPasengerXML;
+    }   
 
     public static function universalRecordXMLToObject(SimpleXMLElement $universalRecordXML) {
         $universalRecordXML->registerXPathNamespace("universal", TravelportAccount::$universal_scheme_version);
@@ -559,5 +560,7 @@ class TravelportCommon {
     }
 
 }
+
+
 
 ?>

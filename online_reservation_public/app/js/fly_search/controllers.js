@@ -263,12 +263,12 @@ appModule.controller("searchFormController", ['$scope', '$window', '$cookieStore
                     $modal.close();
                     alert("Uçus bulunamadı");
                 }
-
             }, function() {
+                $modal.close();
                 alert("bir hata meydana geldi");
             })['finally'](function() {
  
-                 $modal.close();
+                 
             });
 
         };
